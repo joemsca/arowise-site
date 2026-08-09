@@ -24,6 +24,14 @@
 
   <!-- Instantly / Leadsy website-visitor tracking pixel (identifies companies visiting arowise.com) -->
   <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="JxhgmOCJVi2eQBfa" data-version="062024"></script>
+
+  <!-- Vercel Web Analytics (page views + visitors). Same-origin path on purpose: the
+       cdn.vercel-insights.com host is on standard ad-block lists, /_vercel/insights is not.
+       Requires Web Analytics ENABLED on the Vercel project or this 404s. -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
