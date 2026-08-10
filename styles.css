@@ -115,7 +115,7 @@ img { max-width: 100%; display: block; }
 .section-title { font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 700; }
 .section-title.center { text-align: center; }
 .section-sub { color: var(--steel); font-size: 1.1rem; }
-.section-sub.center { text-align: center; max-width: 620px; margin-left: auto; margin-right: auto; }
+.section-sub.center { text-align: center; max-width: 720px; margin-left: auto; margin-right: auto; }
 .section-sub.strong { color: var(--text); font-weight: 500; }
 .problem { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
@@ -125,7 +125,9 @@ img { max-width: 100%; display: block; }
 .card::before { content: ""; position: absolute; top: -1px; left: -1px; width: 14px; height: 14px; border-top: 2px solid var(--teal); border-left: 2px solid var(--teal); opacity: .4; transition: opacity .2s ease; }
 .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--teal) 45%, var(--border)); background: var(--raised); box-shadow: 0 0 28px -10px color-mix(in srgb, var(--teal) 45%, transparent); }
 .card:hover::before { opacity: 1; }
-.card:last-child { grid-column: 1 / -1; }
+/* Only stretch a trailing card when the count is odd, so it never leaves a half-empty row.
+   With an even number of cards (currently 6) this rule correctly does nothing. */
+.card:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .card-tag { display: inline-block; font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--teal); border: 1px solid color-mix(in srgb, var(--teal) 40%, transparent); padding: 4px 10px; margin-bottom: 15px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%); }
 .card h3 { font-size: 1.22rem; }
 .card p { color: var(--muted); margin: 0; font-size: .97rem; }
@@ -142,7 +144,7 @@ html.js .reveal { opacity: 0; transform: translateY(18px); }
 html.js .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
 
 /* ============ responsive ============ */
-@media (max-width: 860px) { .cards { grid-template-columns: 1fr; } .card:last-child { grid-column: auto; } }
+@media (max-width: 860px) { .cards { grid-template-columns: 1fr; } .card:last-child:nth-child(odd) { grid-column: auto; } }
 @media (max-width: 620px) {
   .nav a:not(.btn) { display: none; }
   .wordmark { font-size: 1.12rem; }
