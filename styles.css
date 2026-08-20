@@ -477,6 +477,14 @@ body.idx-on-bus .kicker[data-circuit-node]:not([data-circuit-lift="off"]) { visi
 .page-home .about { position: relative; background:
   linear-gradient(150deg, transparent 0 72%, color-mix(in srgb, var(--steel) 7%, transparent) 72% calc(72% + 1px), color-mix(in srgb, var(--surface) 45%, transparent) calc(72% + 1px)),
   linear-gradient(180deg, var(--canvas), var(--canvas)); }
+/* founder portrait beside the bio: the framed transparent asset
+   (20-Projects/brand-assets/portrait/) sits directly on the canvas —
+   its chamfered frame + circuit traces are part of the image */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 56px; align-items: center; }
+.about-text > :last-child { margin-bottom: 0; }
+.about-portrait { margin: 0; }
+.about-portrait img { width: 100%; height: auto; }
+.about-cap { margin-top: 2px; text-align: center; font-family: var(--mono); font-size: var(--fs-idx); font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
 
 /* ------------------------------------------------------------
    7b. SERVICE SUBPAGES (body.page-sales / .page-marketing /
@@ -570,6 +578,9 @@ body.idx-on-bus .kicker[data-circuit-node]:not([data-circuit-lift="off"]) { visi
 @media (max-width: 880px) {
   .cards { grid-template-columns: 1fr; }
   .area-grid { grid-template-columns: 1fr; }
+  /* about: stack, portrait as the closing signature under the bio */
+  .about-grid { grid-template-columns: 1fr; gap: 26px; }
+  .about-portrait { max-width: 300px; margin: 0 auto; }
 }
 
 @media (max-width: 620px) {
