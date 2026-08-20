@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AroWise Automation: More sales without adding headcount</title>
-  <meta name="description" content="AroWise Automation builds AI-powered automation systems that take repetitive busywork off your sales team, so they spend more time selling and increase output without adding headcount." />
+  <title>Automation Systems &amp; AI for Business Owners | AroWise Automation</title>
+  <meta name="description" content="We build automation for business owners and implement AI for small businesses. More sales, a steadier flow of leads, faster operations, and fewer headaches." />
 
-  <meta property="og:title" content="AroWise Automation: More sales without adding headcount" />
-  <meta property="og:description" content="Automate the CRM updates, research, and follow-up so your team can focus on selling. AI-powered automation systems for sales teams." />
+  <meta property="og:title" content="Automation Systems &amp; AI for Business Owners | AroWise Automation" />
+  <meta property="og:description" content="We build automation for business owners and implement AI for small businesses. More sales, a steadier flow of leads, faster operations, and fewer headaches." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://arowise.com" />
 
-  <meta name="theme-color" content="#0A0A0B" />
+  <meta name="theme-color" content="#141615" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <script>document.documentElement.classList.add('js');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/site.js" defer></script>
 
   <!-- Instantly / Leadsy website-visitor tracking pixel (identifies companies visiting arowise.com) -->
   <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="JxhgmOCJVi2eQBfa" data-version="062024"></script>
@@ -33,148 +33,282 @@
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body>
+<body class="page-home">
 
-  <!-- ============ HEADER ============ -->
+  <!-- ===== HEADER (shared shell — reuse verbatim on subpages; see README) ===== -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="wordmark" href="#top">Aro<span>Wise</span> Automation</a>
-      <nav class="nav">
-        <a href="#work">What I build</a>
+      <a class="brand" href="#top">
+        <img class="brand-icon" src="/assets/arowise-icon-200.png" alt="" width="30" height="30" />
+        <span class="wordmark">Aro<span>Wise</span> Automation</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/sales">Sales</a>
+        <a href="/marketing">Marketing</a>
+        <a href="/operations">Operations</a>
+        <a href="/finances">Finances</a>
         <a href="#about">About</a>
-        <a class="btn btn-primary btn-sm" href="#contact">Get a free audit</a>
+        <a class="btn btn-primary btn-sm" href="https://cal.com/arowise/discovery">Free consultation</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="menu-panel" hidden>
+      <div class="menu-inner">
+        <a href="/sales">Sales</a>
+        <a href="/marketing">Marketing</a>
+        <a href="/operations">Operations</a>
+        <a href="/finances">Finances</a>
+        <a href="#about">About</a>
+        <p class="menu-cta"><a class="btn btn-primary" href="https://cal.com/arowise/discovery">Free consultation</a></p>
+      </div>
     </div>
   </header>
 
   <main id="top">
 
-    <!-- ============ HERO ============ -->
-    <section class="hero">
-      <div class="hero-bg" aria-hidden="true">
-        <span class="aurora aurora-1"></span>
-        <span class="aurora aurora-2"></span>
-        <span class="aurora aurora-3"></span>
-      </div>
+    <!-- ===== HERO ===== -->
+    <section class="hero bg-dots">
       <div class="container hero-inner">
-        <p class="kicker"><span class="pulse-dot"></span>AI automation systems for sales teams</p>
-        <h1>More sales,<br /><span class="accent rotator"><span class="rotator-word">without adding headcount.</span></span></h1>
+        <h1>Get more output from your business <span class="accent">with&nbsp;AI</span></h1>
         <p class="lede">
-          Your sales team is spending valuable time on CRM updates, manual research, and follow-up.
-          That should all be automated. I build AI-powered workflows that eliminate administrative
-          burden, allowing your team to spend more time selling and increase output without adding
-          headcount.
+          It's 2026, and you have an unprecedented opportunity to get ahead of the curve by
+          implementing powerful and affordable AI systems. Your competitors ask ChatGPT
+          questions but that's barely scratching the surface. We help business owners set up
+          advanced automations that generate strong return on investment, allowing you to scale
+          faster and more profitably.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#contact">Get a free audit</a>
-          <a class="btn btn-ghost" href="#work">See what I build</a>
+          <a class="btn btn-primary" href="https://cal.com/arowise/discovery">Start a free consultation</a>
+          <a class="btn btn-ghost" href="#areas">See where AI pays off</a>
         </div>
+        <p class="hero-tagline">Automated systems and AI for business owners</p>
       </div>
     </section>
 
-    <!-- ============ STAT COUNTER ============ -->
-    <section class="statband reveal">
+    <!-- ===== STAT BAND (instrument plate, counts 20 -> 2 once) ===== -->
+    <section class="statband">
       <div class="container center">
-        <p class="stat-line"><span class="stat-num" data-from="20" data-to="3">20</span><span class="stat-suffix">hrs</span></p>
-        <p class="stat-cap">Routine client follow-ups that used to take 20 hours a week. Automated, they take 3.</p>
-      </div>
-    </section>
-
-    <!-- ============ PROBLEM ============ -->
-    <section class="section problem reveal">
-      <div class="container narrow">
-        <p class="kicker">The problem</p>
-        <h2 class="section-title">Your best people are doing work that should be automated.</h2>
-        <p class="section-sub">
-          Quotes get filled out by hand every time, leads get copied between systems, and prospects
-          are researched click-by-click through various websites. This admin work is necessary, but
-          it doesn't let your team operate at their highest potential, and it comes out of the time
-          they would otherwise spend in front of customers.
-        </p>
-        <p class="section-sub strong">Imagine if your sales team had everything they need in front of them, at exactly the right moment. That's possible now with AI &amp; automation, if you build it right.</p>
-      </div>
-    </section>
-
-    <!-- ============ WHAT I BUILD ============ -->
-    <section id="work" class="section work reveal">
-      <div class="container">
-        <p class="kicker center">What I build</p>
-        <h2 class="section-title center">Custom-built automation systems.</h2>
-        <p class="section-sub center">I tailor each solution to your tools, your team, and the way you already work.</p>
-
-        <div class="cards">
-          <article class="card">
-            <span class="card-tag">Outreach</span>
-            <h3>Personalized Outreach at Scale</h3>
-            <p>Your reps get researched, personalized drafts ready to send, instead of losing a day to prospect research.</p>
-          </article>
-
-          <article class="card">
-            <span class="card-tag">Lead intake</span>
-            <h3>From Contact List to CRM</h3>
-            <p>Raw lists from trade shows or campaigns become clean, de-duplicated, enriched records, added to your CRM automatically.</p>
-          </article>
-
-          <article class="card">
-            <span class="card-tag">Follow-up</span>
-            <h3>Consistent Follow-Up at Scale</h3>
-            <p>Every message is tailored to the prospect and written in your team's voice. Your reps approve before anything sends.</p>
-          </article>
-
-          <article class="card">
-            <span class="card-tag">Proposals</span>
-            <h3>Accelerated Proposal Generation</h3>
-            <p>Turn call notes into a finished, on-brand proposal in minutes, drafted and formatted from your template.</p>
-          </article>
-
-          <article class="card">
-            <span class="card-tag">Pipeline</span>
-            <h3>Pipeline Monitoring &amp; Reactivation</h3>
-            <p>Stalled deals get flagged for re-engagement before they slip away, factoring in correct timing from CRM context cues.</p>
-          </article>
-
-          <article class="card">
-            <span class="card-tag">Meeting Research</span>
-            <h3>Automated Sales Meeting Prep</h3>
-            <p>Before every meeting, sales reps get a pre-researched briefing so they're ready to go. Make every meeting sharper.</p>
-          </article>
+        <div class="stat-plate">
+          <span class="stat-switch" aria-hidden="true"></span>
+          <p class="stat-line" data-circuit-node data-circuit-label="/ 00"><span class="stat-num" data-from="20" data-to="2">20</span><span class="stat-suffix">hrs</span></p>
+          <p class="stat-cap">Routine tasks that used to take 20 hours a week. Automated, they take 2.</p>
         </div>
       </div>
     </section>
 
-    <!-- ============ ABOUT ============ -->
-    <section id="about" class="section about reveal">
+    <!-- ===== WHAT AUTOMATION ACTUALLY IS ===== -->
+    <section class="section explain">
       <div class="container narrow">
-        <p class="kicker">About</p>
-        <h2 class="section-title">Who's behind it.</h2>
+        <p class="kicker" data-circuit-node><span class="sec-index">/ 01</span>What is AI Automation?</p>
+        <h2 class="section-title">Systems that do your work for you, <span class="accent">automatically.</span></h2>
         <p class="section-sub">
-          AroWise Automation is run by me, Joe Mascaro. I co-founded and ran a company that sold
-          many millions of dollars of products to architecture, design, and construction clients,
-          followed by a successful exit in 2026. Along the way I automated the repeatable work inside
-          it: outreach, quoting, follow-ups, CRM hygiene, lead filtering, and reporting, which kept
-          profits up while the team ran leaner.
+          Most people think of AI as a "more powerful Google" - you type a question, you get an
+          answer out. You ask for an image, it makes one. Helpful, but you're still the one
+          doing the work. We build affordable mini "AI employees" (AI Agents or workflows) that
+          work day and night whether you're there or not.
         </p>
         <p class="section-sub">
-          I've seen firsthand where automation creates meaningful business value, and where it
-          doesn't. I focus on systems that have a measurable impact on revenue, profitability, or
-          operating efficiency. Before automating a process, I first look for ways to make it more
-          efficient; automating a flawed process only compounds the problem. And while I believe
-          much of the work around your business can be automated, the human element should not be.
-          I build systems that support your people, and you'll have full access and ownership of
-          every system I build for you.
+          For example: A lead comes in and gets a reply in under a minute, in your voice.
+          Invoices go out instantly at project milestones. A customer from last year gets a
+          quick check-in and orders again. All the to-do list items you wish you had time for,
+          they just get done.
+        </p>
+        <p class="section-sub strong">We don't automate human judgment, relationships, the mission-critical service that sets you apart. But almost everything else can (and should) be automated.</p>
+      </div>
+    </section>
+
+    <!-- ===== THE SERVICES YOU ALREADY USE (animated workflow) =====
+         An n8n-style workflow whose nodes are monochrome service logos.
+         The circuit forks into it (all widths) the way it forks into the
+         CRISP rail; every ~1.5s one node swaps its logo to a compatible
+         alternative from its data-flow-pool. Geometry + behavior in
+         site.js (THE FLOW); logo symbols in the sprite before #signal. -->
+    <section class="section flowsec">
+      <div class="container">
+        <p class="kicker" data-circuit-node><span class="sec-index">/ 02</span>What it Looks Like</p>
+        <h2 class="section-title">We automate the services you <span class="accent">already use</span>.</h2>
+        <p class="section-sub">
+          No overhaul needed. We'll consult with you to learn about the services you already
+          know and love, and then build around them to work seamlessly into your team's
+          existing routine.
+        </p>
+        <p class="section-sub">
+          This diagram is what a typical automation system looks like. It's a linear workflow,
+          that activates when we want it to, with a sequence of functional nodes unique to each
+          business, your goals, and whatever software you use.
+        </p>
+
+        <div class="flow" data-circuit-flow data-flow-edges="1>2 2>3 3>4 4>7 2>5 5>6 6>7 7>8"
+             role="img" aria-label="Example automated workflow: a new lead triggers the system, which routes it, updates the CRM, tracks it in a spreadsheet, drafts the reply, notifies the team, then raises and collects the invoice, using services such as Gmail, HubSpot, Google Sheets, Claude, Slack, QuickBooks, and Stripe.">
+          <div class="flow-grid" aria-hidden="true">
+            <figure class="flow-node" data-flow-id="1" data-flow-pool="gmail outlook calendly docusign">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-gmail"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-gmail"/></svg></span>
+              <figcaption class="flow-label">Trigger</figcaption>
+            </figure>
+            <figure class="flow-node" data-flow-id="2" data-flow-pool="n8n zapier openai claude">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-n8n"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-n8n"/></svg></span>
+              <figcaption class="flow-label">Route</figcaption>
+            </figure>
+            <figure class="flow-node" data-flow-id="3" data-flow-pool="hubspot airtable notion salesforce">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-hubspot"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-hubspot"/></svg></span>
+              <figcaption class="flow-label">Update</figcaption>
+            </figure>
+            <figure class="flow-node" data-flow-id="4" data-flow-pool="google-sheets excel airtable notion">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-google-sheets"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-google-sheets"/></svg></span>
+              <figcaption class="flow-label">Track</figcaption>
+            </figure>
+            <figure class="flow-node" data-flow-id="5" data-flow-pool="claude openai">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-claude"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-claude"/></svg></span>
+              <figcaption class="flow-label">Draft</figcaption>
+            </figure>
+            <figure class="flow-node" data-flow-id="6" data-flow-pool="slack microsoft-teams outlook">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-slack"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-slack"/></svg></span>
+              <figcaption class="flow-label">Notify</figcaption>
+            </figure>
+            <figure class="flow-node" data-flow-id="7" data-flow-pool="quickbooks xero excel">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-quickbooks"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-quickbooks"/></svg></span>
+              <figcaption class="flow-label">Bill</figcaption>
+            </figure>
+            <figure class="flow-node" data-flow-id="8" data-flow-pool="stripe quickbooks xero">
+              <span class="flow-tile"><svg class="flow-glyph on" viewBox="0 0 24 24"><use href="#lg-stripe"/></svg><svg class="flow-glyph" viewBox="0 0 24 24"><use href="#lg-stripe"/></svg></span>
+              <figcaption class="flow-label">Collect</figcaption>
+            </figure>
+          </div>
+        </div>
+        <p class="flow-fineprint">Logos identify third-party services we build with and do not imply any endorsement or partnership.</p>
+      </div>
+    </section>
+
+    <!-- ===== WHERE IT PAYS OFF (#areas — navigational panels to the 4 subpages) ===== -->
+    <section id="areas" class="section areas bg-dots">
+      <div class="container">
+        <p class="kicker" data-circuit-node><span class="sec-index">/ 03</span>Where to Start Automating</p>
+        <h2 class="section-title">Start automating where you get the <span class="accent">best ROI</span></h2>
+        <p class="section-sub">In our first consultation we'll discuss your current systems to discover your 2-3 top automation priorities.</p>
+
+        <div class="area-grid">
+          <a class="area-panel" href="/sales">
+            <div class="area-head">
+              <h3 class="area-title">Sales</h3>
+              <span class="area-path" aria-hidden="true">/sales</span>
+            </div>
+            <p class="area-line">More sales without more salespeople. Leads answered faster, follow-up that never gets forgotten, and quotes go out in minutes instead of days.</p>
+            <span class="area-link">See sales systems <span class="area-arrow" aria-hidden="true">&#8594;</span></span>
+          </a>
+
+          <a class="area-panel" href="/marketing">
+            <div class="area-head">
+              <h3 class="area-title">Marketing</h3>
+              <span class="area-path" aria-hidden="true">/marketing</span>
+            </div>
+            <p class="area-line">New leads come to you automatically. Build a steady flow from reviews, referrals, past customers, and your website, instead of waiting to be found.</p>
+            <span class="area-link">See marketing systems <span class="area-arrow" aria-hidden="true">&#8594;</span></span>
+          </a>
+
+          <a class="area-panel" href="/operations">
+            <div class="area-head">
+              <h3 class="area-title">Operations</h3>
+              <span class="area-path" aria-hidden="true">/operations</span>
+            </div>
+            <p class="area-line">Work gets done faster, cheaper, better. Every call answered, every job visible, your team fully in sync, and happier customers than ever.</p>
+            <span class="area-link">See operations systems <span class="area-arrow" aria-hidden="true">&#8594;</span></span>
+          </a>
+
+          <a class="area-panel" href="/finances">
+            <div class="area-head">
+              <h3 class="area-title">Finances</h3>
+              <span class="area-path" aria-hidden="true">/finances</span>
+            </div>
+            <p class="area-line">Faster payments, better financial insights. Accurate invoices sent and tracked automatically, and tighter controls on your KPIs.</p>
+            <span class="area-link">See finance systems <span class="area-arrow" aria-hidden="true">&#8594;</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CRISP (process framework — static horizontal signal run) ===== -->
+    <section class="section crisp">
+      <div class="container">
+        <p class="kicker" data-circuit-node><span class="sec-index">/ 04</span>Business Process Framework</p>
+        <h2 class="section-title">Refine the process, <span class="accent">then</span> automate it.</h2>
+        <p class="section-sub">
+          The goal is fantastic results for your business. We'll work with you to optimize your
+          systems even before automating.
+        </p>
+
+        <div class="crisp-flow">
+          <div class="crisp-track" data-circuit-branch aria-hidden="true">
+            <span class="crisp-track-cell"><i class="crisp-node"></i></span>
+            <span class="crisp-track-cell"><i class="crisp-node"></i></span>
+            <span class="crisp-track-cell"><i class="crisp-node"></i></span>
+            <span class="crisp-track-cell"><i class="crisp-node"></i></span>
+            <span class="crisp-track-cell"><i class="crisp-node"></i></span>
+          </div>
+          <ol class="crisp-steps">
+            <li class="crisp-step">
+              <span class="crisp-letter" aria-hidden="true">C</span>
+              <h3 class="crisp-title">Challenge <span class="crisp-title-tail">assumptions</span></h3>
+              <p class="crisp-body">Decide what's truly required to get the desired results.</p>
+            </li>
+            <li class="crisp-step">
+              <span class="crisp-letter" aria-hidden="true">R</span>
+              <h3 class="crisp-title">Remove <span class="crisp-title-tail">what you can</span></h3>
+              <p class="crisp-body">Delete steps, parts, &amp; meetings wherever possible.</p>
+            </li>
+            <li class="crisp-step">
+              <span class="crisp-letter" aria-hidden="true">I</span>
+              <h3 class="crisp-title">Improve <span class="crisp-title-tail">what's left</span></h3>
+              <p class="crisp-body">Optimize the remaining workflow, reduce costs.</p>
+            </li>
+            <li class="crisp-step">
+              <span class="crisp-letter" aria-hidden="true">S</span>
+              <h3 class="crisp-title">Speed <span class="crisp-title-tail">it up</span></h3>
+              <p class="crisp-body">Fix bottlenecks to accelerate the whole process.</p>
+            </li>
+            <li class="crisp-step">
+              <span class="crisp-letter" aria-hidden="true">P</span>
+              <h3 class="crisp-title">Program <span class="crisp-title-tail">it</span></h3>
+              <p class="crisp-body">Automate last. Build in error handling and retries.</p>
+            </li>
+          </ol>
+        </div>
+
+        <p class="crisp-close">This is why sometimes we'll tell you a process should be cut instead of automated.</p>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT (#about) ===== -->
+    <section id="about" class="section about">
+      <div class="container narrow">
+        <p class="kicker" data-circuit-node><span class="sec-index">/ 05</span>About</p>
+        <h2 class="section-title">Who's behind Aro<span class="accent">Wise</span></h2>
+        <p class="section-sub">
+          AroWise Automation is run by me, Joe Mascaro. After co-founding and running a
+          multi-million dollar B2B company for 8 years, I automated most of the repeatable work
+          inside it, purely out of necessity.
+        </p>
+        <p class="section-sub">
+          After exiting that business, I now bring my expertise to other business owners. I have
+          seen where automation creates real business value. I focus on the work that has a
+          measurable effect on revenue, profitability, or time savings.
+        </p>
+        <p class="section-sub">
+          You will own every system we build for you, so that maintenance is easy and it becomes
+          an integrated part of your operations. No ongoing contracts required.
         </p>
       </div>
     </section>
 
-    <!-- ============ CONTACT / CTA ============ -->
-    <section id="contact" class="section contact reveal">
+    <!-- ===== CONTACT / CTA (#contact — the circuit terminates here) ===== -->
+    <section id="contact" class="section contact">
       <div class="container narrow center">
-        <p class="kicker center">Start</p>
-        <h2 class="section-title">Find your team's busywork.</h2>
-        <p class="section-sub">Show me where your team's time is being spent. If automation can materially improve the way that work gets done, I'll show you how. If it can't, I'll tell you that directly.</p>
+        <p class="kicker" data-circuit-node><span class="sec-index">/ 06</span>Start Here</p>
+        <h2 class="section-title">Discover what you can automate.</h2>
+        <p class="section-sub">Show us where your time goes in a normal week. We'll give you a prioritized action plan to get incredible value from AI and Automation in your business. That customized report will be yours, whether you work with us or not.</p>
         <div class="hero-actions center">
-          <!-- TODO: add a "Book a call" button here once Calendly is set up -->
-          <a class="btn btn-primary" href="mailto:joe@arowise.com">Get a free audit</a>
+          <span class="cta-terminal" data-circuit-terminal><a class="btn btn-primary" href="https://cal.com/arowise/discovery">Get a free consultation</a></span>
         </div>
         <p class="hero-note">joe@arowise.com</p>
       </div>
@@ -182,77 +316,56 @@
 
   </main>
 
-  <!-- ============ FOOTER ============ -->
+  <!-- ===== FOOTER (shared shell) ===== -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <span class="wordmark small">Aro<span>Wise</span> Automation</span>
-      <span class="footer-meta">© <span id="year"></span> AroWise Automation · Systems for sales teams</span>
+      <span class="footer-meta">&copy; <span id="year"></span> AroWise Automation &middot; Automated systems and AI for business owners</span>
     </div>
   </footer>
 
-  <script>
-    (function () {
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  <!-- ===== LOGO SPRITE (monochrome service marks for the flow section) =====
+       Single-path Simple-Icons glyphs, fill=currentColor, recolored by CSS.
+       Source of truth: 20-Projects/website/assets/logos/ (see its MANIFEST). -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="lg-gmail" viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></symbol>
+      <symbol id="lg-outlook" viewBox="0 0 24 24"><path d="M7.88 12.04q0 .45-.11.87-.1.41-.33.74-.22.33-.58.52-.37.2-.87.2t-.85-.2q-.35-.21-.57-.55-.22-.33-.33-.75-.1-.42-.1-.86t.1-.87q.1-.43.34-.76.22-.34.59-.54.36-.2.87-.2t.86.2q.35.21.57.55.22.34.31.77.1.43.1.88zM24 12v9.38q0 .46-.33.8-.33.32-.8.32H7.13q-.46 0-.8-.33-.32-.33-.32-.8V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h6.5V2.55q0-.44.3-.75.3-.3.75-.3h12.9q.44 0 .75.3.3.3.3.75V10.85l1.24.72h.01q.1.07.18.18.07.12.07.25zm-6-8.25v3h3v-3zm0 4.5v3h3v-3zm0 4.5v1.83l3.05-1.83zm-5.25-9v3h3.75v-3zm0 4.5v3h3.75v-3zm0 4.5v2.03l2.41 1.5 1.34-.8v-2.73zM9 3.75V6h2l.13.01.12.04v-2.3zM5.98 15.98q.9 0 1.6-.3.7-.32 1.19-.86.48-.55.73-1.28.25-.74.25-1.61 0-.83-.25-1.55-.24-.71-.71-1.24t-1.15-.83q-.68-.3-1.55-.3-.92 0-1.64.3-.71.3-1.2.85-.5.54-.75 1.3-.25.74-.25 1.63 0 .85.26 1.56.26.72.74 1.23.48.52 1.17.81.69.3 1.56.3zM7.5 21h12.39L12 16.08V17q0 .41-.3.7-.29.3-.7.3H7.5zm15-.13v-7.24l-5.9 3.54Z"/></symbol>
+      <symbol id="lg-calendly" viewBox="0 0 24 24"><path d="M19.655 14.262c.281 0 .557.023.828.064 0 .005-.005.01-.005.014-.105.267-.234.534-.381.786l-1.219 2.106c-1.112 1.936-3.177 3.127-5.411 3.127h-2.432c-2.23 0-4.294-1.191-5.412-3.127l-1.218-2.106a6.251 6.251 0 0 1 0-6.252l1.218-2.106C6.736 4.832 8.8 3.641 11.035 3.641h2.432c2.23 0 4.294 1.191 5.411 3.127l1.219 2.106c.147.252.271.519.381.786 0 .004.005.009.005.014-.267.041-.543.064-.828.064-1.816 0-2.501-.607-3.291-1.306-.764-.676-1.711-1.517-3.44-1.517h-1.029c-1.251 0-2.387.455-3.2 1.278-.796.805-1.233 1.904-1.233 3.099v1.411c0 1.196.437 2.295 1.233 3.099.813.823 1.949 1.278 3.2 1.278h1.034c1.729 0 2.676-.841 3.439-1.517.791-.703 1.471-1.306 3.287-1.301Zm.005-3.237c.399 0 .794-.036 1.179-.11-.002-.004-.002-.01-.002-.014-.073-.414-.193-.823-.349-1.218.731-.12 1.407-.396 1.986-.819 0-.004-.005-.013-.005-.018-.331-1.085-.832-2.101-1.489-3.03-.649-.915-1.435-1.719-2.331-2.395-1.867-1.398-4.088-2.138-6.428-2.138-1.448 0-2.855.28-4.175.841-1.273.543-2.423 1.315-3.407 2.299S2.878 6.552 2.341 7.83c-.557 1.324-.842 2.726-.842 4.175 0 1.448.281 2.855.842 4.174.542 1.274 1.314 2.423 2.298 3.407s2.129 1.761 3.407 2.299c1.324.556 2.727.841 4.175.841 2.34 0 4.561-.74 6.428-2.137a10.815 10.815 0 0 0 2.331-2.396c.652-.929 1.158-1.949 1.489-3.03 0-.004.005-.014.005-.018-.579-.423-1.255-.699-1.986-.819.161-.395.276-.804.349-1.218.005-.009.005-.014.005-.023.869.166 1.692.506 2.404 1.035.685.505.552 1.075.446 1.416C22.184 20.437 17.619 24 12.221 24c-6.625 0-12-5.375-12-12s5.37-12 12-12c5.398 0 9.963 3.563 11.471 8.464.106.341.239.915-.446 1.421-.717.529-1.535.873-2.404 1.034.128.716.128 1.45 0 2.166-.387-.074-.782-.11-1.182-.11-4.184 0-3.968 2.823-6.736 2.823h-1.029c-1.899 0-3.15-1.357-3.15-3.095v-1.411c0-1.738 1.251-3.094 3.15-3.094h1.034c2.768 0 2.552 2.823 6.731 2.827Z"/></symbol>
+      <symbol id="lg-docusign" viewBox="0 0 24 24"><path d="M9.517 3.31h4.966v6.621h3.31L12 16.552 6.207 9.931h3.31V3.31zM0 19.034h24v1.655H0v-1.655z"/></symbol>
+      <symbol id="lg-n8n" viewBox="0 0 24 24"><path d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632"/></symbol>
+      <symbol id="lg-zapier" viewBox="0 0 24 24"><path d="M4.157 0A4.151 4.151 0 0 0 0 4.161v15.678A4.151 4.151 0 0 0 4.157 24h15.682A4.152 4.152 0 0 0 24 19.839V4.161A4.152 4.152 0 0 0 19.839 0H4.157Zm10.61 8.761h.03a.577.577 0 0 1 .23.038.585.585 0 0 1 .201.124.63.63 0 0 1 .162.431.612.612 0 0 1-.162.435.58.58 0 0 1-.201.128.58.58 0 0 1-.23.042.529.529 0 0 1-.235-.042.585.585 0 0 1-.332-.328.559.559 0 0 1-.038-.235.613.613 0 0 1 .17-.431.59.59 0 0 1 .405-.162Zm2.853 1.572c.03.004.061.004.095.004.325-.011.646.064.937.219.238.144.431.355.552.609.128.279.189.582.185.888v.193a2 2 0 0 1 0 .219h-2.498c.003.227.075.45.204.642a.78.78 0 0 0 .646.265.714.714 0 0 0 .484-.136.642.642 0 0 0 .23-.318l.915.257a1.398 1.398 0 0 1-.28.537c-.14.159-.321.284-.521.355a2.234 2.234 0 0 1-.836.136 1.923 1.923 0 0 1-1.001-.245 1.618 1.618 0 0 1-.665-.703 2.221 2.221 0 0 1-.227-1.036 1.95 1.95 0 0 1 .48-1.398 1.9 1.9 0 0 1 1.3-.488Zm-9.607.023c.162.004.325.026.48.079.207.065.4.174.563.314.26.302.393.692.366 1.088v2.276H8.53l-.109-.711h-.065c-.064.163-.155.31-.272.439a1.122 1.122 0 0 1-.374.264 1.023 1.023 0 0 1-.453.083 1.334 1.334 0 0 1-.866-.264.965.965 0 0 1-.329-.801.993.993 0 0 1 .076-.431 1.02 1.02 0 0 1 .242-.363 1.478 1.478 0 0 1 1.043-.303h.952v-.181a.696.696 0 0 0-.136-.454.553.553 0 0 0-.438-.154.695.695 0 0 0-.378.086.48.48 0 0 0-.193.254l-.99-.144a1.26 1.26 0 0 1 .257-.563c.14-.174.321-.302.533-.378.261-.091.54-.136.82-.129.053-.003.106-.007.163-.007Zm4.384.007c.174 0 .347.038.506.114.182.083.34.211.458.374.257.423.377.911.351 1.406a2.53 2.53 0 0 1-.355 1.448 1.148 1.148 0 0 1-1.009.517c-.204 0-.401-.045-.582-.136a1.052 1.052 0 0 1-.48-.457 1.298 1.298 0 0 1-.114-.234h-.045l.004 1.784h-1.059v-4.713h.904l.117.805h.057c.068-.208.177-.401.328-.56a1.129 1.129 0 0 1 .843-.344h.076v-.004Zm7.559.084h.903l.113.805h.053a1.37 1.37 0 0 1 .235-.484.813.813 0 0 1 .313-.242.82.82 0 0 1 .39-.076h.234v1.051h-.401a.662.662 0 0 0-.313.008.623.623 0 0 0-.272.155.663.663 0 0 0-.174.26.683.683 0 0 0-.027.314v1.875h-1.054v-3.666Zm-17.515.003h3.262v.896L3.73 13.104l.034.113h1.973l.042.9H2.4v-.9l1.931-1.754-.045-.117H2.441v-.896Zm11.815 0h1.055v3.659h-1.055V10.45Zm3.443.684.019.016a.69.69 0 0 0-.351.045.756.756 0 0 0-.287.204c-.11.155-.174.336-.189.522h1.545c-.034-.526-.257-.787-.74-.787h.003Zm-5.718.163c-.026 0-.057 0-.083.004a.78.78 0 0 0-.31.053.746.746 0 0 0-.257.189 1.016 1.016 0 0 0-.204.695v.064c-.015.257.057.507.204.711a.634.634 0 0 0 .253.196.638.638 0 0 0 .314.061.644.644 0 0 0 .578-.265c.14-.223.204-.48.189-.74a1.216 1.216 0 0 0-.181-.711.677.677 0 0 0-.503-.257Zm-4.509 1.266a.464.464 0 0 0-.268.102.373.373 0 0 0-.114.276c0 .053.008.106.027.155a.375.375 0 0 0 .087.132.576.576 0 0 0 .397.11v.004a.863.863 0 0 0 .563-.182.573.573 0 0 0 .211-.457v-.14h-.903Z"/></symbol>
+      <symbol id="lg-openai" viewBox="0 0 24 24"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></symbol>
+      <symbol id="lg-claude" viewBox="0 0 24 24"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></symbol>
+      <symbol id="lg-hubspot" viewBox="0 0 24 24"><path d="M18.164 7.93V5.084a2.198 2.198 0 001.267-1.978v-.067A2.2 2.2 0 0017.238.845h-.067a2.2 2.2 0 00-2.193 2.193v.067a2.196 2.196 0 001.252 1.973l.013.006v2.852a6.22 6.22 0 00-2.969 1.31l.012-.01-7.828-6.095A2.497 2.497 0 104.3 4.656l-.012.006 7.697 5.991a6.176 6.176 0 00-1.038 3.446c0 1.343.425 2.588 1.147 3.607l-.013-.02-2.342 2.343a1.968 1.968 0 00-.58-.095h-.002a2.033 2.033 0 102.033 2.033 1.978 1.978 0 00-.1-.595l.005.014 2.317-2.317a6.247 6.247 0 104.782-11.134l-.036-.005zm-.964 9.378a3.206 3.206 0 113.215-3.207v.002a3.206 3.206 0 01-3.207 3.207z"/></symbol>
+      <symbol id="lg-airtable" viewBox="0 0 24 24"><path d="M11.992 1.966c-.434 0-.87.086-1.28.257L1.779 5.917c-.503.208-.49.908.012 1.116l8.982 3.558a3.266 3.266 0 0 0 2.454 0l8.982-3.558c.503-.196.503-.908.012-1.116l-8.957-3.694a3.255 3.255 0 0 0-1.272-.257zM23.4 8.056a.589.589 0 0 0-.222.045l-10.012 3.877a.612.612 0 0 0-.38.564v8.896a.6.6 0 0 0 .821.552L23.62 18.1a.583.583 0 0 0 .38-.551V8.653a.6.6 0 0 0-.6-.596zM.676 8.095a.644.644 0 0 0-.48.19C.086 8.396 0 8.53 0 8.69v8.355c0 .442.515.737.908.54l6.27-3.006.307-.147 2.969-1.436c.466-.22.43-.908-.061-1.092L.883 8.138a.57.57 0 0 0-.207-.044z"/></symbol>
+      <symbol id="lg-notion" viewBox="0 0 24 24"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"/></symbol>
+      <symbol id="lg-salesforce" viewBox="0 0 24 24"><path d="M10.006 5.415a4.195 4.195 0 013.045-1.306c1.56 0 2.954.9 3.69 2.205.63-.3 1.35-.45 2.1-.45 2.85 0 5.159 2.34 5.159 5.22s-2.31 5.22-5.176 5.22c-.345 0-.69-.044-1.02-.104a3.75 3.75 0 01-3.3 1.95c-.6 0-1.155-.15-1.65-.375A4.314 4.314 0 018.88 20.4a4.302 4.302 0 01-4.05-2.82c-.27.062-.54.076-.825.076-2.204 0-4.005-1.8-4.005-4.05 0-1.5.811-2.805 2.01-3.51-.255-.57-.39-1.2-.39-1.846 0-2.58 2.1-4.65 4.65-4.65 1.53 0 2.85.705 3.72 1.8"/></symbol>
+      <symbol id="lg-google-sheets" viewBox="0 0 24 24"><path d="M11.318 12.545H7.91v-1.909h3.41v1.91zM14.728 0v6h6l-6-6zm1.363 10.636h-3.41v1.91h3.41v-1.91zm0 3.273h-3.41v1.91h3.41v-1.91zM20.727 6.5v15.864c0 .904-.732 1.636-1.636 1.636H4.909a1.636 1.636 0 0 1-1.636-1.636V1.636C3.273.732 4.005 0 4.909 0h9.318v6.5h6.5zm-3.273 2.773H6.545v7.909h10.91v-7.91zm-6.136 4.636H7.91v1.91h3.41v-1.91z"/></symbol>
+      <symbol id="lg-excel" viewBox="0 0 24 24"><path d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3Z"/></symbol>
+      <symbol id="lg-slack" viewBox="0 0 24 24"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></symbol>
+      <symbol id="lg-microsoft-teams" viewBox="0 0 24 24"><path d="M20.625 8.127q-.55 0-1.025-.205-.475-.205-.832-.563-.358-.357-.563-.832Q18 6.053 18 5.502q0-.54.205-1.02t.563-.837q.357-.358.832-.563.474-.205 1.025-.205.54 0 1.02.205t.837.563q.358.357.563.837.205.48.205 1.02 0 .55-.205 1.025-.205.475-.563.832-.357.358-.837.563-.48.205-1.02.205zm0-3.75q-.469 0-.797.328-.328.328-.328.797 0 .469.328.797.328.328.797.328.469 0 .797-.328.328-.328.328-.797 0-.469-.328-.797-.328-.328-.797-.328zM24 10.002v5.578q0 .774-.293 1.46-.293.685-.803 1.194-.51.51-1.195.803-.686.293-1.459.293-.445 0-.908-.105-.463-.106-.85-.329-.293.95-.855 1.729-.563.78-1.319 1.336-.756.557-1.67.861-.914.305-1.898.305-1.148 0-2.162-.398-1.014-.399-1.805-1.102-.79-.703-1.312-1.664t-.674-2.086h-5.8q-.411 0-.704-.293T0 16.881V6.873q0-.41.293-.703t.703-.293h8.59q-.34-.715-.34-1.5 0-.727.275-1.365.276-.639.75-1.114.475-.474 1.114-.75.638-.275 1.365-.275t1.365.275q.639.276 1.114.75.474.475.75 1.114.275.638.275 1.365t-.275 1.365q-.276.639-.75 1.113-.475.475-1.114.75-.638.276-1.365.276-.188 0-.375-.024-.188-.023-.375-.058v1.078h10.875q.469 0 .797.328.328.328.328.797zM12.75 2.373q-.41 0-.78.158-.368.158-.638.434-.27.275-.428.639-.158.363-.158.773 0 .41.158.78.159.368.428.638.27.27.639.428.369.158.779.158.41 0 .773-.158.364-.159.64-.428.274-.27.433-.639.158-.369.158-.779 0-.41-.158-.773-.159-.364-.434-.64-.275-.275-.639-.433-.363-.158-.773-.158zM6.937 9.814h2.25V7.94H2.814v1.875h2.25v6h1.875zm10.313 7.313v-6.75H12v6.504q0 .41-.293.703t-.703.293H8.309q.152.809.556 1.5.405.691.985 1.19.58.497 1.318.779.738.281 1.582.281.926 0 1.746-.352.82-.351 1.436-.966.615-.616.966-1.43.352-.815.352-1.752zm5.25-1.547v-5.203h-3.75v6.855q.305.305.691.452.387.146.809.146.469 0 .879-.176.41-.175.715-.48.304-.305.48-.715t.176-.879Z"/></symbol>
+      <symbol id="lg-quickbooks" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm.642 4.1335c.9554 0 1.7296.776 1.7296 1.7332v9.0667h1.6c1.614 0 2.9275-1.3156 2.9275-2.933 0-1.6173-1.3136-2.9333-2.9276-2.9333h-.6654V7.3334h.6654c2.5722 0 4.6577 2.0897 4.6577 4.667 0 2.5774-2.0855 4.6666-4.6577 4.6666H12.642zM7.9837 7.333h3.3291v12.533c-.9555 0-1.73-.7759-1.73-1.7332V9.0662H7.9837c-1.6146 0-2.9277 1.316-2.9277 2.9334 0 1.6175 1.3131 2.9333 2.9277 2.9333h.6654v1.7332h-.6654c-2.5725 0-4.6577-2.0892-4.6577-4.6665 0-2.5771 2.0852-4.6666 4.6577-4.6666Z"/></symbol>
+      <symbol id="lg-xero" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.585 14.655c-1.485 0-2.69-1.206-2.69-2.689 0-1.485 1.207-2.691 2.69-2.691 1.485 0 2.69 1.207 2.69 2.691s-1.207 2.689-2.69 2.689zM7.53 14.644c-.099 0-.192-.041-.267-.116l-2.043-2.04-2.052 2.047c-.069.068-.16.108-.258.108-.202 0-.368-.166-.368-.368 0-.099.04-.191.111-.263l2.04-2.05-2.038-2.047c-.075-.069-.113-.162-.113-.261 0-.203.166-.366.368-.366.098 0 .188.037.258.105l2.055 2.048 2.048-2.045c.069-.071.162-.108.26-.108.211 0 .375.165.375.366 0 .098-.029.188-.104.258l-2.056 2.055 2.055 2.051c.068.069.104.16.104.258 0 .202-.165.368-.365.368h-.01zm8.017-4.591c-.796.101-.882.476-.882 1.404v2.787c0 .202-.165.366-.366.366-.203 0-.367-.165-.368-.366v-4.53c0-.204.16-.366.362-.366.166 0 .316.125.346.289.27-.209.6-.317.93-.317h.105c.195 0 .359.165.359.368 0 .201-.164.352-.375.359 0 0-.09 0-.164.008l.053-.002zm-3.091 2.205H8.625c0 .019.003.037.006.057.02.105.045.211.083.31.194.531.765 1.275 1.829 1.29.33-.003.631-.086.9-.229.21-.12.391-.271.525-.428.045-.058.09-.112.12-.168.18-.229.405-.186.54-.083.164.135.18.391.045.57l-.016.016c-.21.27-.435.495-.689.66-.255.164-.525.284-.811.345-.33.09-.645.104-.975.06-1.095-.135-2.01-.93-2.28-2.01-.06-.21-.09-.42-.09-.645 0-.855.421-1.695 1.125-2.205.885-.615 2.085-.66 3-.075.63.405 1.035 1.021 1.185 1.771.075.419-.21.794-.734.81l.068-.046zm6.129-2.223c-1.064 0-1.931.865-1.931 1.931 0 1.064.866 1.931 1.931 1.931s1.931-.867 1.931-1.931c0-1.065-.866-1.933-1.931-1.933v.002zm0 2.595c-.367 0-.666-.297-.666-.666 0-.367.3-.665.666-.665.367 0 .667.299.667.665 0 .369-.3.667-.667.666zm-8.04-2.603c-.91 0-1.672.623-1.886 1.466v.03h3.776c-.203-.855-.973-1.494-1.891-1.494v-.002z"/></symbol>
+      <symbol id="lg-stripe" viewBox="0 0 24 24"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"/></symbol>
+    </defs>
+  </svg>
 
-      document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- ===== THE SIGNAL PATH (the page's only motion — drawn by site.js) ===== -->
+  <svg id="signal" aria-hidden="true" focusable="false">
+    <path id="sig-base" />
+    <path id="sig-branch-base" />
+    <g id="sig-flow-base"></g>
+    <path id="sig-tail" />
+    <path id="sig-head" />
+    <path id="sig-branch-tail" />
+    <path id="sig-branch-head" />
+    <g id="sig-flow-tail"></g>
+    <g id="sig-flow-head"></g>
+    <g id="sig-nodes"></g>
+    <g id="sig-idx"></g>
+    <g id="sig-kick"></g>
+  </svg>
 
-      // rotating benefit line
-      var el = document.querySelector('.rotator-word');
-      var words = ['without adding headcount.', 'with the team you have.', 'without more overhead.'];
-      if (el && !reduce) {
-        var i = 0;
-        setInterval(function () {
-          el.classList.add('out');
-          setTimeout(function () {
-            i = (i + 1) % words.length;
-            el.textContent = words[i];
-            el.classList.remove('out');
-          }, 300);
-        }, 2600);
-      }
-
-      // animated count (e.g., 20 -> 3)
-      function animateCount(node) {
-        var from = +node.dataset.from, to = +node.dataset.to, dur = 5200, start = null;
-        function step(ts) {
-          if (!start) start = ts;
-          var p = Math.min((ts - start) / dur, 1);
-          // Ease-in-out, not ease-out. Ease-out cubic front-loaded the motion so badly that
-          // 19 through 14 each rendered for ~50ms (3 frames) and were impossible to read.
-          // This holds on 20 briefly, paces the middle evenly, then settles on 3.
-          var eased = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-          node.textContent = Math.round(from + (to - from) * eased);
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      var nums = document.querySelectorAll('.stat-num');
-
-      // scroll reveals + counter trigger
-      if (reduce || !('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('in'); });
-        nums.forEach(function (n) { n.textContent = n.dataset.to; });
-      } else {
-        var obs = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) {
-            if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); }
-          });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('.reveal').forEach(function (r) { obs.observe(r); });
-
-        // start the count only once the whole stat section is in view
-        var statband = document.querySelector('.statband');
-        var sobs = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) {
-            if (en.isIntersecting) {
-              en.target.querySelectorAll('.stat-num').forEach(animateCount);
-              sobs.unobserve(en.target);
-            }
-          });
-        }, { threshold: 0.9 });
-        if (statband) sobs.observe(statband);
-      }
-    })();
-  </script>
 </body>
 </html>

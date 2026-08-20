@@ -1,18 +1,110 @@
 /* ============================================================
-   AroWise Automation: homepage styles (dynamic)
-   TEROS Digital base + motion layer. Motion concentrates in the
-   hero; the rest stays calm. Honors prefers-reduced-motion.
+   AroWise Automation — arowise.com
+   Shared stylesheet for all 5 pages (home + sales / marketing /
+   operations / finances). Template: "Live Signal" v2.4.
+
+   One moving light on an otherwise perfectly still page: a 1px
+   titanium circuit drops from the header icon, runs the left
+   gutter, jogs at each section, and terminates at the primary
+   CTA. Every ~8s one teal packet travels it. Nothing else moves.
+
+   FILE MAP (keep this order when adding rules)
+     1. Design tokens        — every color / spacing / type value
+     2. Base / reset
+     3. Shell                — header, nav, mobile menu, footer
+     4. Shared components    — buttons, kickers, sections, cards,
+                               stat plate, CTA terminal, contact
+     5. Circuit system       — the SVG signal path
+     6. Backgrounds          — wedge / tick / dot-grid recipes
+     7. Page-specific blocks — scoped under body classes
+                               (body.page-home, body.page-sales …)
+     8. Responsive
+     9. Reduced motion
+
+   CONVENTIONS
+   - kebab-case classes, component-prefixed:
+     nav-*, menu-*, hero-*, stat-*, card*, area-*, crisp-*, sig-*.
+   - No raw hex/rgb inside rules — tokens only (section 1).
+   - Chamfered corners: every chamfered box sets --ch and uses the
+     same 6-point polygon. Hairline "borders" on chamfered boxes
+     are painted under-layers (outer box = line color, ::before
+     inset 1px = face) because a real border cannot follow a
+     clip-path.
+   - Brand geometry: cuts and jogs are 60deg-from-vertical
+     (tan 60 ≈ 1.732), from the brand grid.
+   ============================================================ */
+
+
+/* ============================================================
+   1. DESIGN TOKENS
    ============================================================ */
 :root {
-  --void:#000000; --canvas:#0A0A0B; --surface:#161618; --raised:#1F1F22; --oscura:#2D2D2D;
-  --text:#E8E4DD; --text-dim:#EDE8DF;
-  --steel:#b0bec5; --muted:#9aa4b2; --border:#2A2A2E; --border-2:#3a3a40;
-  --teal:#00cbbb; --teal-deep:#005f63; --red:#c33a2d; --ember:#a9473c; --gold:#c9a14a;
-  --font:"Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --maxw:1080px; --gap:22px;
+  /* surfaces (dark ladder, Void -> Raised) */
+  --void: #000000;
+  --canvas: #141615;
+  --surface: #1B1D1C;
+  --raised: #232624;
+  --oscura: #2D2D2D;
+  --well: #0E100F;              /* recessed instrument wells */
+
+  /* text */
+  --text: #E8E4DD;
+  --text-dim: #EDE8DF;
+  --steel: #ADBFC7;
+  --muted: #9AA4B2;
+
+  /* lines / borders */
+  --border: #2D2D2D;
+  --border-2: #3B3F40;
+  --edge-light: rgba(255, 255, 255, .05);   /* 1px lit chamfer edge on card faces */
+
+  /* accents */
+  --teal: #00C6CB;
+  --teal-hover: #1AD3D8;
+  --teal-deep: #00646D;
+  --red: #F24A1C;               /* Ignition — wayfinding ink: section indices ONLY (AA for small text) */
+  --red-hot: #FF6A3C;           /* index glint state */
+  --ember: #B3513C;
+  --gold: #E3A520;
+  --ink-on-teal: #06100F;       /* dark ink on teal buttons */
+
+  /* derived line inks (single source for the machined details) */
+  --line-bus: color-mix(in srgb, var(--steel) 30%, transparent);        /* circuit base + CRISP rail */
+  --line-bus-still: color-mix(in srgb, var(--steel) 22%, transparent);  /* circuit under reduced motion */
+  --node-stroke: color-mix(in srgb, var(--steel) 55%, transparent);     /* junction octagons, arrowheads */
+  --tick-ink: color-mix(in srgb, var(--steel) 13%, transparent);        /* calibration ticks */
+  --dot-ink: color-mix(in srgb, var(--steel) 16%, transparent);         /* workbench dot grid */
+  --inset-light: color-mix(in srgb, var(--steel) 7%, transparent);      /* top-lit 1px inset on section edges */
+
+  /* type */
+  --font: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --fs-h1: clamp(2.8rem, 7vw, 5rem);
+  --fs-h2: clamp(1.7rem, 3.6vw, 2.5rem);
+  --fs-lede: clamp(1.05rem, 2vw, 1.3rem);
+  --fs-body: 1.1rem;
+  --fs-kicker: .74rem;          /* also mirrored by the SVG bus labels */
+  --fs-idx: .68rem;             /* "/ 0n" indices + small mono annotations */
+
+  /* layout */
+  --maxw: 1080px;
+  --maxw-narrow: 740px;
+  --pad-x: 24px;
+  --gap: 22px;
+  --header-h: 64px;
+  --sect-pad: 112px;
+
+  /* chamfer sizes (per-component --ch defaults) */
+  --ch-btn: 8px;
+  --ch-btn-sm: 6px;
+  --ch-card: 14px;
+  --ch-plate: 16px;
 }
 
+
+/* ============================================================
+   2. BASE / RESET
+   ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -20,141 +112,487 @@ body {
   color: var(--text); background: var(--canvas); line-height: 1.55;
   -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden;
 }
-body::after {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .04;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 h1, h2, h3 { line-height: 1.12; margin: 0 0 .5em; font-weight: 700; letter-spacing: -0.02em; }
 p { margin: 0 0 1em; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-.container.narrow { max-width: 740px; }
+ol, ul { margin: 0; padding: 0; }
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad-x); }
+.container.narrow { max-width: var(--maxw-narrow); }
 .center { text-align: center; }
+.accent { color: var(--teal); }
 :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
 
-.kicker { font-family: var(--mono); font-size: .74rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--teal); margin: 0 0 16px; }
-.kicker.center { text-align: center; }
 
-/* buttons */
-.btn { display: inline-block; font-family: var(--font); font-weight: 500; font-size: 1rem; padding: 14px 26px; cursor: pointer; border: 1px solid transparent; transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease; }
-.btn-sm { padding: 9px 18px; font-size: .88rem; }
-.btn-primary { background: var(--teal); color: #06100f; font-weight: 700; clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
-.btn-primary:hover { background: #1ad8c8; box-shadow: 0 0 0 1px var(--teal), 0 0 22px -2px color-mix(in srgb, var(--teal) 70%, transparent); transform: translateY(-1px); }
-.btn-sm.btn-primary { clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); }
-.btn-ghost { background: transparent; color: var(--text); border-color: var(--border-2); }
-.btn-ghost:hover { border-color: var(--teal); color: var(--teal); box-shadow: 0 0 18px -6px color-mix(in srgb, var(--teal) 60%, transparent); }
-
-/* header */
-.site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--canvas) 82%, transparent); backdrop-filter: saturate(160%) blur(12px); border-bottom: 1px solid var(--border); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+/* ============================================================
+   3. SHELL — header, nav, mobile menu, footer
+   ============================================================ */
+/* header: solid Canvas, hairline border, no glass */
+.site-header { position: sticky; top: 0; z-index: 50; background: var(--canvas); border-bottom: 1px solid var(--border); }
+.header-inner { position: relative; display: flex; align-items: center; justify-content: space-between; height: var(--header-h); }
+.brand { display: inline-flex; align-items: center; gap: 11px; }
+.brand-icon { width: 30px; height: 30px; flex: none; }
 .wordmark { font-weight: 700; font-size: 1.3rem; letter-spacing: -0.03em; color: var(--text); white-space: nowrap; }
-.wordmark span { color: var(--teal); }
+.wordmark > span { color: var(--teal); }
 .wordmark.small { font-size: 1.05rem; }
-.nav { display: flex; align-items: center; gap: 28px; }
+
+/* desktop nav */
+.nav { display: flex; align-items: center; gap: 26px; }
 .nav a:not(.btn) { color: var(--muted); font-weight: 400; font-size: .94rem; }
 .nav a:not(.btn):hover { color: var(--text); }
-
-/* ============ HERO (dynamic) ============ */
-.hero { position: relative; padding: 112px 0 86px; overflow: hidden; background: linear-gradient(180deg, var(--void), var(--canvas) 46%); }
-.hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.hero-inner { position: relative; z-index: 2; }
-
-/* amorphous, morphing aurora blobs (bolder + faster) */
-.aurora { position: absolute; filter: blur(82px); mix-blend-mode: screen; will-change: transform, border-radius; }
-.aurora-1 { width: 540px; height: 500px; top: -170px; right: -70px; background: var(--teal); opacity: .32; animation: blob1 15s ease-in-out infinite alternate; }
-.aurora-2 { width: 480px; height: 460px; bottom: -190px; left: -90px; background: var(--red); opacity: .26; animation: blob2 18s ease-in-out infinite alternate; }
-.aurora-3 { width: 320px; height: 300px; top: 18%; left: 44%; background: var(--teal); opacity: .16; animation: blob3 12s ease-in-out infinite alternate; }
-@keyframes blob1 {
-  0%   { border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%; transform: translate(0,0) scale(1) rotate(0deg); }
-  50%  { border-radius: 64% 36% 38% 62% / 56% 62% 38% 44%; transform: translate(-46px,38px) scale(1.14) rotate(18deg); }
-  100% { border-radius: 38% 62% 52% 48% / 48% 42% 58% 52%; transform: translate(28px,-26px) scale(1.05) rotate(-10deg); }
+/* active page marker: subpages set aria-current="page" on their own link */
+.nav a[aria-current="page"] {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+  text-decoration-color: color-mix(in srgb, var(--teal) 55%, transparent);
 }
-@keyframes blob2 {
-  0%   { border-radius: 58% 42% 40% 60% / 48% 56% 44% 52%; transform: translate(0,0) scale(1) rotate(0deg); }
-  50%  { border-radius: 40% 60% 62% 38% / 60% 40% 60% 40%; transform: translate(54px,-32px) scale(1.16) rotate(-16deg); }
-  100% { border-radius: 52% 48% 46% 54% / 44% 58% 42% 56%; transform: translate(-30px,30px) scale(1.06) rotate(12deg); }
+.nav a[aria-current="page"]:hover { color: var(--teal-hover); }
+
+/* hamburger toggle — chamfered instrument button; hidden on desktop */
+.nav-toggle { display: none; position: relative; width: 44px; height: 38px; padding: 0; border: 0; cursor: pointer; background: var(--border-2); clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); }
+.nav-toggle::before { content: ""; position: absolute; inset: 1px; background: var(--canvas); clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px); }
+.nav-toggle:hover { background: var(--teal-deep); }
+/* three 1px bars; middle bar is the span, outer two are pseudos */
+.nav-toggle-bars { position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; margin: -0.75px 0 0 -8px; background: var(--text); transition: background .15s ease; }
+.nav-toggle-bars::before, .nav-toggle-bars::after { content: ""; position: absolute; left: 0; width: 16px; height: 1.5px; background: var(--text); transition: transform .15s ease; }
+.nav-toggle-bars::before { top: -5.5px; }
+.nav-toggle-bars::after { top: 5.5px; }
+/* open state: middle bar clears, outer bars form the X */
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars { background: transparent; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::before { transform: translateY(5.5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::after { transform: translateY(-5.5px) rotate(-45deg); }
+
+/* mobile menu — full-width panel under the sticky header. Solid Canvas,
+   hairline frame following a chamfered bottom edge (painted under-layer). */
+.menu-panel { position: absolute; top: 100%; left: 0; right: 0; z-index: 49; background: var(--border); padding: 0 1px 1px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
+.menu-panel[hidden] { display: none; }
+.menu-inner { background: var(--canvas); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 11px 100%, 0 calc(100% - 11px)); padding-bottom: 22px; }
+.menu-inner a:not(.btn) { display: block; padding: 16px var(--pad-x); border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: .82rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+.menu-inner a:not(.btn):hover { color: var(--text); background: var(--surface); }
+.menu-inner a[aria-current="page"] { color: var(--teal); }
+.menu-cta { padding: 20px var(--pad-x) 0; }
+/* fast settle only — the vertical bus keeps the page's one real motion */
+.menu-panel:not([hidden]) { animation: menu-settle .16s ease; }
+@keyframes menu-settle {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
 }
-@keyframes blob3 {
-  0%   { border-radius: 46% 54% 56% 44% / 52% 46% 54% 48%; transform: translate(0,0) scale(1); }
-  50%  { border-radius: 60% 40% 44% 56% / 40% 60% 40% 60%; transform: translate(36px,28px) scale(1.2); }
-  100% { border-radius: 44% 56% 52% 48% / 56% 44% 56% 44%; transform: translate(-24px,-22px) scale(1.08); }
-}
-
-/* faint schematic dot grid (kept) */
-.hero-bg::before { content: ""; position: absolute; inset: 0; opacity: .45; background-image: radial-gradient(color-mix(in srgb, var(--steel) 16%, transparent) 1px, transparent 1px); background-size: 30px 30px; -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 72%); mask-image: linear-gradient(180deg, #000 0%, transparent 72%); }
-
-.hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 700; letter-spacing: -0.03em; }
-.hero h1 .accent { color: var(--teal); }
-.rotator { display: inline-block; }
-.rotator-word { display: inline-block; transition: opacity .3s ease, transform .3s cubic-bezier(.2,.7,.2,1); }
-.rotator-word.out { opacity: 0; transform: translateY(10px); }
-
-.lede { font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--steel); max-width: 620px; margin-top: 6px; }
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin: 32px 0 18px; }
-.hero-actions.center { justify-content: center; }
-.hero-note { color: var(--muted); font-size: .9rem; font-family: var(--mono); letter-spacing: .01em; }
-
-.pulse-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-right: 9px; vertical-align: middle; box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal) 70%, transparent); animation: pulse 2.2s ease-out infinite; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal) 60%, transparent); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
-
-/* gentle hero-CTA pulse (marketing surface) */
-.hero .hero-actions .btn-primary { animation: cta-glow 3.2s ease-in-out infinite; }
-@keyframes cta-glow { 0%,100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 24px -4px color-mix(in srgb, var(--teal) 55%, transparent); } }
-
-/* ============ stat counter band ============ */
-.statband { padding: 58px 0; background: var(--canvas); border-bottom: 1px solid var(--border); }
-.stat-line { font-weight: 700; line-height: 1; margin: 0 0 12px; }
-.stat-num { font-size: clamp(3.4rem, 10vw, 6.2rem); color: var(--teal); letter-spacing: -0.04em; }
-.stat-suffix { font-size: clamp(1.4rem, 3.4vw, 2.1rem); color: var(--text); margin-left: .12em; font-weight: 500; }
-.stat-cap { color: var(--muted); font-family: var(--mono); font-size: .9rem; letter-spacing: .02em; margin: 0; }
-
-/* ============ sections ============ */
-.section { padding: 84px 0; }
-.section-title { font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 700; }
-.section-title.center { text-align: center; }
-.section-sub { color: var(--steel); font-size: 1.1rem; }
-.section-sub.center { text-align: center; max-width: 720px; margin-left: auto; margin-right: auto; }
-.section-sub.strong { color: var(--text); font-weight: 500; }
-.problem { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-/* cards */
-.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); margin-top: 46px; }
-.card { position: relative; background: var(--surface); border: 1px solid var(--border); padding: 28px; transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease, background .2s ease; }
-.card::before { content: ""; position: absolute; top: -1px; left: -1px; width: 14px; height: 14px; border-top: 2px solid var(--teal); border-left: 2px solid var(--teal); opacity: .4; transition: opacity .2s ease; }
-.card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--teal) 45%, var(--border)); background: var(--raised); box-shadow: 0 0 28px -10px color-mix(in srgb, var(--teal) 45%, transparent); }
-.card:hover::before { opacity: 1; }
-/* Only stretch a trailing card when the count is odd, so it never leaves a half-empty row.
-   With an even number of cards (currently 6) this rule correctly does nothing. */
-.card:last-child:nth-child(odd) { grid-column: 1 / -1; }
-.card-tag { display: inline-block; font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--teal); border: 1px solid color-mix(in srgb, var(--teal) 40%, transparent); padding: 4px 10px; margin-bottom: 15px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%); }
-.card h3 { font-size: 1.22rem; }
-.card p { color: var(--muted); margin: 0; font-size: .97rem; }
-.work-foot { text-align: center; color: var(--muted); font-size: .98rem; max-width: 620px; margin: 36px auto 0; }
-.contact { background: var(--surface); border-top: 1px solid var(--border); }
 
 /* footer */
 .site-footer { background: var(--void); color: var(--muted); padding: 28px 0; border-top: 1px solid var(--border); }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .footer-meta { font-size: .82rem; font-family: var(--mono); letter-spacing: .02em; }
 
-/* ============ scroll reveals (no-JS safe: only hide when html.js) ============ */
-html.js .reveal { opacity: 0; transform: translateY(18px); }
-html.js .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
 
-/* ============ responsive ============ */
-@media (max-width: 860px) { .cards { grid-template-columns: 1fr; } .card:last-child:nth-child(odd) { grid-column: auto; } }
-@media (max-width: 620px) {
-  .nav a:not(.btn) { display: none; }
-  .wordmark { font-size: 1.12rem; }
-  .hero { padding: 78px 0 60px; }
-  .section { padding: 60px 0; }
+/* ============================================================
+   4. SHARED COMPONENTS
+   ============================================================ */
+/* --- buttons: baseline chamfer signature --- */
+.btn { display: inline-block; white-space: nowrap; font-family: var(--font); font-weight: 500; font-size: 1rem; padding: 14px 26px; cursor: pointer; border: 1px solid transparent; transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease; }
+.btn-sm { padding: 9px 18px; font-size: .88rem; }
+.btn-primary { background: var(--teal); color: var(--ink-on-teal); font-weight: 700; clip-path: polygon(var(--ch-btn) 0, 100% 0, 100% calc(100% - var(--ch-btn)), calc(100% - var(--ch-btn)) 100%, 0 100%, 0 var(--ch-btn)); }
+.btn-primary:hover { background: var(--teal-hover); box-shadow: 0 0 0 1px var(--teal), 0 0 22px -2px color-mix(in srgb, var(--teal) 70%, transparent); transform: translateY(-1px); }
+.btn-sm.btn-primary { clip-path: polygon(var(--ch-btn-sm) 0, 100% 0, 100% calc(100% - var(--ch-btn-sm)), calc(100% - var(--ch-btn-sm)) 100%, 0 100%, 0 var(--ch-btn-sm)); }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border-2); }
+.btn-ghost:hover { border-color: var(--teal); color: var(--teal); box-shadow: 0 0 18px -6px color-mix(in srgb, var(--teal) 60%, transparent); }
+
+/* --- kickers + section indices --- */
+.kicker { text-align: left; font-family: var(--mono); font-size: var(--fs-kicker); font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--teal); margin: 0 0 16px; }
+/* red = wayfinding ink: editorial section indices, nothing else.
+   The inline "/ 0n" spans are the source of truth AND the narrow-viewport
+   rendering; when a real left gutter exists the circuit JS lifts them onto
+   the bus (adds .idx-on-bus to <body>) and these inline copies hide. */
+.sec-index { color: var(--red); margin-right: 14px; }
+body.idx-on-bus .kicker .sec-index { display: none; }
+/* on wide viewports every circuit-registered kicker leaves the text flow
+   and renders on the bus beside its index (see #sig-kick). The HTML copy
+   goes visibility-hidden — NOT display-none — so its layout slot, and the
+   junction latitude the circuit JS measures from it, are both preserved. */
+body.idx-on-bus .kicker[data-circuit-node]:not([data-circuit-lift="off"]) { visibility: hidden; }
+
+/* --- section scaffolding --- */
+.section { padding: var(--sect-pad) 0; }
+.section-title { font-size: var(--fs-h2); font-weight: 700; }
+.section-title.center { text-align: center; }
+.section-sub { color: var(--steel); font-size: var(--fs-body); }
+.section-sub.center { text-align: center; max-width: 720px; margin-left: auto; margin-right: auto; }
+.section-sub.strong { color: var(--text); font-weight: 500; }
+
+/* --- hero scaffolding (backgrounds live in section 6/7) --- */
+.hero { position: relative; padding: 136px 0 110px; }
+.hero-inner { position: relative; }
+.hero h1 { font-size: var(--fs-h1); font-weight: 700; letter-spacing: -0.03em; }
+.lede { font-size: var(--fs-lede); color: var(--steel); max-width: 620px; margin-top: 6px; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin: 32px 0 18px; }
+.hero-actions.center { justify-content: center; }
+.hero-tagline { font-family: var(--mono); font-size: .7rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); margin: 34px 0 0; }
+.hero-note { color: var(--muted); font-size: .9rem; font-family: var(--mono); letter-spacing: .01em; }
+
+/* --- cards: chamfered plates with directional hover ---
+   The hairline is a painted under-layer so it follows the chamfer.
+   Hover: the border ring lights directionally. The light source is the
+   circuit bus on the left margin — a full-height LINE source, so every
+   card catches parallel light on its LEFT edge (uniform, not per-column:
+   a point source would fall off per column, a line source doesn't). */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: 52px; }
+.card { --ch: var(--ch-card); position: relative; padding: 30px 26px; background: var(--border); clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); transition: transform .18s ease, filter .25s ease; }
+/* inner face: matte graphite with a 1px circuit-facing (left) edge highlight */
+.card::before { content: ""; position: absolute; inset: 1px; z-index: 1; clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); background-color: var(--surface); background-image: linear-gradient(90deg, var(--edge-light) 0 1px, transparent 1px); background-size: 2px 100%; background-repeat: no-repeat; transition: background-color .2s ease; }
+/* glint layer: lives in the 1px border ring under the face, strongest on the circuit side */
+.card::after { content: ""; position: absolute; inset: 0; z-index: 0; opacity: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--teal) 85%, transparent), color-mix(in srgb, var(--teal) 10%, transparent) 62%); transition: opacity .25s ease; }
+.card > * { position: relative; z-index: 2; }
+.card:hover { transform: translateY(-2px); filter: drop-shadow(0 0 16px color-mix(in srgb, var(--teal) 14%, transparent)); }
+.card:hover::before { background-color: var(--raised); }
+.card:hover::after { opacity: 1; }
+.card-tag { display: inline-block; font-family: var(--mono); font-size: var(--fs-idx); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--teal); border: 1px solid color-mix(in srgb, var(--teal) 40%, transparent); padding: 4px 10px; margin-bottom: 15px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%); }
+.card h3 { font-size: 1.22rem; }
+.card p { color: var(--muted); margin: 0; font-size: .97rem; }
+
+/* --- stat band: instrument plate, counts 20 -> 3 once --- */
+.statband { padding: 72px 0; background-color: var(--canvas); background-image: repeating-linear-gradient(90deg, var(--tick-ink) 0 1px, transparent 1px 90px); background-size: 100% 7px; background-repeat: no-repeat; background-position: top left; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); box-shadow: inset 0 1px 0 var(--inset-light); }
+.stat-plate { --ch: var(--ch-plate); position: relative; display: inline-block; padding: 44px 72px 34px; text-align: center; background: var(--border); clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); }
+.stat-plate::before { content: ""; position: absolute; inset: 1px; background: var(--surface); clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); }
+.stat-plate > * { position: relative; }
+.stat-line { font-weight: 700; line-height: 1; margin: 0 0 12px; }
+/* pre-run the digits sit hot (manual = red); the count cools them to teal.
+   JS sets the final teal itself for reduced-motion / no-observer paths. */
+.stat-num { font-size: clamp(3.4rem, 10vw, 6.2rem); color: var(--red); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.stat-suffix { font-size: clamp(1.4rem, 3.4vw, 2.1rem); color: var(--text); margin-left: .12em; font-weight: 500; }
+.stat-cap { color: var(--muted); font-family: var(--mono); font-size: .9rem; letter-spacing: .02em; margin: 0; max-width: 560px; }
+/* the anodized detail: one small red machined element, recessed in a well */
+.stat-switch { position: absolute; top: 14px; right: 14px; width: 22px; height: 22px; background: var(--border-2); clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); }
+.stat-switch::before { content: ""; position: absolute; inset: 1px; background: var(--well); clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px); }
+.stat-switch::after { content: ""; position: absolute; inset: 6px; background: var(--red); clip-path: polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px); }
+
+/* --- contact band (final CTA — every page ends with one) --- */
+.contact { position: relative; border-top: 1px solid var(--border); box-shadow: inset 0 1px 0 var(--inset-light); background:
+  repeating-linear-gradient(90deg, var(--tick-ink) 0 1px, transparent 1px 90px) top left / 100% 7px no-repeat,
+  radial-gradient(ellipse 130% 150% at 50% -20%, color-mix(in srgb, var(--raised) 65%, var(--surface)), var(--surface) 62%); }
+
+/* --- CTA terminal: the circuit ends here; glow fires on packet arrival --- */
+.cta-terminal { position: relative; display: inline-block; z-index: 0; }
+.cta-terminal::before { content: ""; position: absolute; inset: -18px -26px; z-index: -1; background: radial-gradient(closest-side, color-mix(in srgb, var(--teal) 38%, transparent), transparent 72%); opacity: 0; transition: opacity .45s ease; }
+.cta-terminal.arrived::before { opacity: 1; transition: opacity .12s ease; }
+.cta-terminal.arrived .btn-primary { background: var(--teal-hover); }
+
+
+/* ============================================================
+   5. CIRCUIT SYSTEM (see site.js for geometry + registration)
+   ============================================================ */
+#signal { position: absolute; top: 0; left: 0; z-index: 6; pointer-events: none; overflow: visible; }
+#sig-base { fill: none; stroke: var(--line-bus); stroke-width: 1; }
+#sig-tail { fill: none; stroke: var(--teal); stroke-width: 1.4; stroke-linecap: round; opacity: .32; }
+#sig-head { fill: none; stroke: var(--teal-hover); stroke-width: 2; stroke-linecap: round; filter: drop-shadow(0 0 5px color-mix(in srgb, var(--teal) 70%, transparent)); }
+/* the branch (home CRISP rail fork): base draws only the static bus->rail
+   extension (the rail itself is CSS); tail/head carry the child pulse —
+   same comet language as the main packet, scaled down */
+#sig-branch-base { fill: none; stroke: var(--line-bus); stroke-width: 1; }
+#sig-branch-tail { fill: none; stroke: var(--teal); stroke-width: 1.2; stroke-linecap: round; opacity: .3; }
+#sig-branch-head { fill: none; stroke: var(--teal-hover); stroke-width: 1.6; stroke-linecap: round; filter: drop-shadow(0 0 4px color-mix(in srgb, var(--teal) 70%, transparent)); }
+.sig-node { fill: var(--canvas); stroke: var(--node-stroke); stroke-width: 1; transition: fill .5s ease, stroke .5s ease, filter .5s ease; }
+.sig-node.glint { fill: var(--teal); stroke: var(--teal); filter: drop-shadow(0 0 4px color-mix(in srgb, var(--teal) 85%, transparent)); transition: fill .1s ease, stroke .1s ease, filter .1s ease; }
+/* section indices riding the bus: same red mono ink as the inline spans;
+   when the packet glints a node, its index briefly heats up alongside it */
+#sig-idx text { font-family: var(--mono); font-size: var(--fs-idx); font-weight: 500; letter-spacing: .1em; fill: var(--red); transition: fill .5s ease, filter .5s ease; }
+#sig-idx text.glint { fill: var(--red-hot); filter: drop-shadow(0 0 4px color-mix(in srgb, var(--red) 75%, transparent)); transition: fill .1s ease, filter .1s ease; }
+/* lifted kicker wording on the bus — mirrors .kicker's type exactly
+   (JS uppercases the copy; SVG text has no text-transform) */
+#sig-kick text { font-family: var(--mono); font-size: var(--fs-kicker); font-weight: 500; letter-spacing: .14em; fill: var(--teal); }
+/* the flow (home workflow diagram fork): per-edge strokes grouped —
+   base = static machined routes, tail/head = the traversing pulse
+   (same comet language as the branch, one stroke pair per edge) */
+#sig-flow-base path { fill: none; stroke: var(--line-bus); stroke-width: 1; }
+#sig-flow-tail path { fill: none; stroke: var(--teal); stroke-width: 1.2; stroke-linecap: round; opacity: .3; }
+#sig-flow-head path { fill: none; stroke: var(--teal-hover); stroke-width: 1.9; stroke-linecap: round; }
+/* the head's glow is desktop-only: animating dashoffset under nine
+   per-path drop-shadow filters repaints the filter region every frame
+   and visibly janks on mobile GPUs — small screens get a clean,
+   slightly thicker stroke instead (set above) */
+@media (min-width: 961px) {
+  #sig-flow-head path { stroke-width: 1.6; filter: drop-shadow(0 0 4px color-mix(in srgb, var(--teal) 70%, transparent)); }
+}
+.sig-flow-arrow { fill: var(--node-stroke); }
+
+
+/* ============================================================
+   6. BACKGROUNDS — wedges, calibration ticks, dot grids
+   All section atmospheres are cut from one system: 30/60-degree
+   machined wedges whose edge catches 1px of light, calibration
+   ticks along a border, and a near-subliminal workbench dot grid.
+
+   Recipes (copy into a section's background stack):
+   - wedge:  linear-gradient(<angle>, transparent 0 <stop>,
+             <edge-ink> <stop> calc(<stop> + 1px),
+             <fill> calc(<stop> + 1px))
+   - ticks:  repeating-linear-gradient(90deg, var(--tick-ink) 0 1px,
+             transparent 1px 90px) top left / 100% 7px no-repeat
+   - dots:   add class="bg-dots" (::before overlay below).
+   ============================================================ */
+/* dot-grid overlay, fading out before the content zone ends.
+   Composable: any section can take .bg-dots; keep the section's own
+   content wrapper position:relative so it stacks above the overlay. */
+.bg-dots::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .2;
+  background-image: radial-gradient(var(--dot-ink) 1px, transparent 1px);
+  background-size: 30px 30px;
+  -webkit-mask-image: linear-gradient(180deg, var(--void), transparent 60%);
+  mask-image: linear-gradient(180deg, var(--void), transparent 60%);
+}
+.bg-dots > .container { position: relative; }
+
+
+/* ============================================================
+   7. PAGE-SPECIFIC BLOCKS
+   ============================================================ */
+/* ------------------------------------------------------------
+   7a. HOME (body.page-home)
+   ------------------------------------------------------------ */
+/* hero: base gradient + one machined tonal wedge low-right (60deg cut) */
+.page-home .hero { background:
+  linear-gradient(150deg, transparent 0 66%, color-mix(in srgb, var(--steel) 10%, transparent) 66% calc(66% + 1px), color-mix(in srgb, var(--surface) 60%, transparent) calc(66% + 1px)),
+  linear-gradient(180deg, var(--void), var(--canvas) 52%); }
+.page-home .hero.bg-dots::before { opacity: .22; -webkit-mask-image: linear-gradient(180deg, var(--void), transparent 62%); mask-image: linear-gradient(180deg, var(--void), transparent 62%); }
+.page-home .hero h1 { letter-spacing: -0.03em; }
+
+/* "what automation actually is": top-lit surface plane, 120deg wedge */
+.page-home .explain { position: relative; border-bottom: 1px solid var(--border); box-shadow: inset 0 1px 0 var(--inset-light); background:
+  linear-gradient(120deg, transparent 0 62%, color-mix(in srgb, var(--steel) 9%, transparent) 62% calc(62% + 1px), color-mix(in srgb, var(--raised) 55%, transparent) calc(62% + 1px)),
+  radial-gradient(ellipse 130% 150% at 50% -20%, color-mix(in srgb, var(--raised) 65%, var(--surface)), var(--surface) 62%); }
+
+/* "where it pays off": canvas plane with the workbench dot grid */
+.page-home .areas { position: relative; background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 55%, var(--canvas)), var(--canvas) 34%); }
+
+/* area panels — navigational, deliberately NOT the service cards:
+   2x2 chamfered panels, whole panel is the link; hover = the same
+   circuit-side edge glint + the arrow advancing along its route */
+.area-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); margin-top: 52px; }
+.area-panel { --ch: var(--ch-card); position: relative; display: flex; flex-direction: column; padding: 32px 30px 26px; background: var(--border); clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); transition: transform .18s ease, filter .25s ease; }
+.area-panel::before { content: ""; position: absolute; inset: 1px; z-index: 1; clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); background-color: var(--surface); background-image: linear-gradient(90deg, var(--edge-light) 0 1px, transparent 1px); background-size: 2px 100%; background-repeat: no-repeat; transition: background-color .2s ease; }
+.area-panel::after { content: ""; position: absolute; inset: 0; z-index: 0; opacity: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--teal) 85%, transparent), color-mix(in srgb, var(--teal) 10%, transparent) 62%); transition: opacity .25s ease; }
+.area-panel > * { position: relative; z-index: 2; }
+.area-panel:hover { transform: translateY(-2px); filter: drop-shadow(0 0 16px color-mix(in srgb, var(--teal) 14%, transparent)); }
+.area-panel:hover::before { background-color: var(--raised); }
+.area-panel:hover::after { opacity: 1; }
+.area-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.area-title { font-size: 1.45rem; margin: 0; }
+/* quiet technical annotation: the destination route */
+.area-path { font-family: var(--mono); font-size: var(--fs-idx); letter-spacing: .08em; color: color-mix(in srgb, var(--muted) 55%, transparent); }
+.area-line { color: var(--muted); font-size: .98rem; margin: 10px 0 0; flex: 1; }
+.area-link { display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; font-family: var(--mono); font-size: var(--fs-kicker); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--teal); }
+.area-arrow { transition: transform .18s ease; }
+.area-panel:hover .area-arrow { transform: translateX(4px); }
+.area-panel:hover .area-link { color: var(--teal-hover); }
+
+/* "the services you already use": the animated workflow diagram. The
+   node plates + logo swap live here; the connecting edges, the fork off
+   the bus, and the traversing pulse are drawn by site.js (THE FLOW) in
+   #signal, measured from the real tile positions. Quiet canvas plane,
+   210deg wedge low-left. */
+.page-home .flowsec { position: relative; border-bottom: 1px solid var(--border); background:
+  linear-gradient(210deg, transparent 0 68%, color-mix(in srgb, var(--steel) 8%, transparent) 68% calc(68% + 1px), color-mix(in srgb, var(--surface) 50%, transparent) calc(68% + 1px)),
+  linear-gradient(180deg, var(--canvas), var(--canvas)); }
+
+/* the diagram grid: desktop = horizontal run (6 cols x 3 rows; trunk on
+   the middle row, the two branch legs above / below). The grid only
+   places tiles — edge routes are measured from wherever they land. */
+.flow { margin-top: 58px; }
+.flow-grid { display: grid; grid-template-columns: repeat(6, 1fr); row-gap: 10px; }
+.flow-node { margin: 0; display: flex; flex-direction: column; align-items: center; justify-self: center; }
+.flow-node[data-flow-id="1"] { grid-area: 2 / 1; }
+.flow-node[data-flow-id="2"] { grid-area: 2 / 2; }
+.flow-node[data-flow-id="3"] { grid-area: 1 / 3; }
+.flow-node[data-flow-id="4"] { grid-area: 1 / 4; }
+.flow-node[data-flow-id="5"] { grid-area: 3 / 3; }
+.flow-node[data-flow-id="6"] { grid-area: 3 / 4; }
+.flow-node[data-flow-id="7"] { grid-area: 2 / 5; }
+.flow-node[data-flow-id="8"] { grid-area: 2 / 6; }
+/* pull the branch legs in toward the trunk (desktop only — the branch
+   columns never share a column with the trunk tiles, so the rows can
+   overlap safely). Negative margins, not transforms: they shrink the
+   grid's real footprint, and the edge router measures the real DOM. */
+@media (min-width: 961px) {
+  .flow-node[data-flow-id="3"], .flow-node[data-flow-id="4"] { margin-bottom: -18px; }
+  .flow-node[data-flow-id="5"], .flow-node[data-flow-id="6"] { margin-top: -18px; }
 }
 
-/* ============ reduced motion ============ */
+/* node tile: small chamfered instrument plate (same painted under-layer
+   trick as the cards); the glyph is the recolorable monochrome mark */
+.flow-tile { --ch: 10px; position: relative; display: block; width: 74px; height: 74px; background: var(--border-2); clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); transition: background .5s ease, filter .5s ease; }
+.flow-tile::before { content: ""; position: absolute; inset: 1px; background: var(--surface); clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px); transition: background .5s ease; }
+.flow-glyph { position: absolute; inset: 0; margin: auto; width: 34px; height: 34px; fill: currentColor; color: var(--steel); opacity: 0; transition: color .5s ease; }
+.flow-glyph.on { opacity: .92; }
+/* pulse pass: the same brief teal heat as every other junction
+   (site.js adds/removes .glint; fast in, .5s settle out) */
+.flow-tile.glint { background: var(--teal); filter: drop-shadow(0 0 6px color-mix(in srgb, var(--teal) 70%, transparent)); transition: background .1s ease, filter .1s ease; }
+.flow-tile.glint .flow-glyph { color: var(--teal-hover); transition: color .1s ease; }
+/* the logo swap: a relay blip, not a fade — opacity switches in three
+   hard steps so the change reads as a machine re-registering, then the
+   new mark is simply there. site.js drives the class choreography. */
+.flow-glyph.out { animation: glyph-out .24s steps(3, jump-none) forwards; }
+.flow-glyph.in { animation: glyph-in .24s steps(3, jump-none) forwards; }
+@keyframes glyph-out { from { opacity: .92; } to { opacity: 0; } }
+@keyframes glyph-in { from { opacity: 0; } to { opacity: .92; } }
+/* the constant beneath the flicker: each station's function */
+.flow-label { margin: 10px 0 0; font-family: var(--mono); font-size: var(--fs-idx); font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+/* trademark note — quiet technical annotation, not body copy */
+.flow-fineprint { margin: 42px 0 0; font-family: var(--mono); font-size: .64rem; letter-spacing: .06em; color: color-mix(in srgb, var(--muted) 60%, transparent); }
+
+/* CRISP: the framework as a horizontal signal run — a static sibling of
+   the vertical bus (1px titanium rail, octagon junctions, a stub dropping
+   into each station). Precision, no glow, no motion: the vertical bus
+   keeps the page's one moving light. */
+.page-home .crisp { position: relative; background:
+  linear-gradient(240deg, transparent 0 64%, color-mix(in srgb, var(--steel) 8%, transparent) 64% calc(64% + 1px), color-mix(in srgb, var(--surface) 55%, transparent) calc(64% + 1px)),
+  linear-gradient(180deg, color-mix(in srgb, var(--surface) 45%, var(--canvas)), var(--canvas) 38%); }
+.crisp-flow { margin-top: 56px; }
+/* the rail: one continuous 1px line across all five columns, an octagon
+   junction over each station, a 1px stub dropping into the station top,
+   and a small machined arrowhead at the end of the run */
+.crisp-track { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gap); height: 30px; }
+.crisp-track-cell { position: relative; }
+.crisp-track-cell::before { content: ""; position: absolute; top: 10px; left: calc(-1 * var(--gap)); right: 0; height: 1px; background: var(--line-bus); }
+.crisp-track-cell:first-child::before { left: 0; }
+.crisp-track-cell::after { content: ""; position: absolute; top: 14px; bottom: 0; left: 50%; width: 1px; background: var(--line-bus); }
+.crisp-node { position: absolute; top: 7px; left: 50%; width: 7px; height: 7px; margin-left: -3.5px; background: var(--node-stroke); clip-path: polygon(2.3px 0, 4.7px 0, 7px 2.3px, 7px 4.7px, 4.7px 7px, 2.3px 7px, 0 4.7px, 0 2.3px); transition: background .5s ease, filter .5s ease; }
+.crisp-node::before { content: ""; position: absolute; inset: 1px; background: var(--canvas); clip-path: polygon(1.6px 0, 3.4px 0, 5px 1.6px, 5px 3.4px, 3.4px 5px, 1.6px 5px, 0 3.4px, 0 1.6px); transition: background .5s ease; }
+/* branch child-pulse pass: same brief teal heat as the bus octagons
+   (site.js adds/removes .glint; fast in, .5s settle out) */
+.crisp-node.glint { background: var(--teal); filter: drop-shadow(0 0 4px color-mix(in srgb, var(--teal) 85%, transparent)); transition: background .1s ease, filter .1s ease; }
+.crisp-node.glint::before { background: var(--teal); transition: background .1s ease; }
+.crisp-track::after { content: ""; position: absolute; right: -3px; top: 7px; width: 6px; height: 7px; background: var(--node-stroke); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+/* step stations: chamfered plates, static (not interactive — no hover) */
+.crisp-steps { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gap); list-style: none; }
+.crisp-step { --ch: var(--ch-card); position: relative; padding: 22px 20px 20px; background: var(--border); clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); }
+.crisp-step::before { content: ""; position: absolute; inset: 1px; z-index: 0; clip-path: polygon(var(--ch) 0, 100% 0, 100% calc(100% - var(--ch)), calc(100% - var(--ch)) 100%, 0 100%, 0 var(--ch)); background-color: var(--surface); background-image: linear-gradient(90deg, var(--edge-light) 0 1px, transparent 1px); background-size: 2px 100%; background-repeat: no-repeat; }
+.crisp-step > * { position: relative; z-index: 1; }
+.crisp-letter { display: block; font-family: var(--mono); font-size: clamp(2.4rem, 3.6vw, 3.2rem); font-weight: 700; line-height: .9; letter-spacing: -0.04em; color: var(--steel); opacity: .42; }
+.crisp-title { font-size: 1.08rem; margin: 14px 0 0; line-height: 1.25; }
+.crisp-title-tail { font-weight: 400; color: var(--muted); }
+.crisp-body { color: var(--muted); font-size: .92rem; margin: 9px 0 0; }
+.crisp-close { margin: 46px 0 0; max-width: 720px; color: var(--text); font-weight: 500; font-size: 1.05rem; }
+
+/* about: quiet canvas plane with a faint 150deg wedge low-right */
+.page-home .about { position: relative; background:
+  linear-gradient(150deg, transparent 0 72%, color-mix(in srgb, var(--steel) 7%, transparent) 72% calc(72% + 1px), color-mix(in srgb, var(--surface) 45%, transparent) calc(72% + 1px)),
+  linear-gradient(180deg, var(--canvas), var(--canvas)); }
+
+/* ------------------------------------------------------------
+   7b. SERVICE SUBPAGES (body.page-sales / .page-marketing /
+       .page-operations / .page-finances)
+   Siblings of the home recipes, not clones: the same wedge /
+   tick / dot system, with the hero wedge cut differently per
+   page. Sections per page: hero -> problem (/ 01) -> work
+   (/ 02, the #work cards) -> contact (/ 03, shared band).
+   ------------------------------------------------------------ */
+/* hero: the home hero's void->canvas fall + one machined tonal wedge.
+   Each page sets its own cut via the two custom properties below —
+   angles stay in the brand's 30/60-degree family (120/150/210/240). */
+.page-sales .hero, .page-marketing .hero, .page-operations .hero, .page-finances .hero {
+  --hero-wedge-angle: 150deg;
+  --hero-wedge-stop: 68%;
+  background:
+    linear-gradient(var(--hero-wedge-angle), transparent 0 var(--hero-wedge-stop), color-mix(in srgb, var(--steel) 9%, transparent) var(--hero-wedge-stop) calc(var(--hero-wedge-stop) + 1px), color-mix(in srgb, var(--surface) 55%, transparent) calc(var(--hero-wedge-stop) + 1px)),
+    linear-gradient(180deg, var(--void), var(--canvas) 52%);
+}
+.page-marketing .hero { --hero-wedge-angle: 210deg; --hero-wedge-stop: 66%; }
+.page-operations .hero { --hero-wedge-angle: 120deg; --hero-wedge-stop: 72%; }
+.page-finances .hero { --hero-wedge-angle: 240deg; --hero-wedge-stop: 64%; }
+
+/* problem band: the home "explain" treatment — top-lit raised plane
+   between hairline seams (no wedge; the hero above carries this page's) */
+.page-sales .problem, .page-marketing .problem, .page-operations .problem, .page-finances .problem {
+  position: relative;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 var(--inset-light);
+  background: radial-gradient(ellipse 130% 150% at 50% -20%, color-mix(in srgb, var(--raised) 65%, var(--surface)), var(--surface) 62%);
+}
+
+/* work band: the home "areas" plane (workbench dot grid via .bg-dots) */
+.page-sales .work, .page-marketing .work, .page-operations .work, .page-finances .work {
+  position: relative;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 55%, var(--canvas)), var(--canvas) 34%);
+}
+
+/* finances sells four systems, not six — that is the complete finance
+   catalog, so the grid sits 2x2 on desktop instead of stranding one card
+   in a 3-col row. Min-width scoped so section 8's one-column rule at
+   <=880px still wins (this selector would otherwise out-rank it). */
+@media (min-width: 881px) {
+  .page-finances .cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+
+/* ============================================================
+   8. RESPONSIVE
+   ============================================================ */
+/* nav breaks with 5 links + button ≈ 900px: switch to the mobile menu */
+@media (max-width: 900px) {
+  .nav { display: none; }
+  .nav-toggle { display: block; }
+}
+@media (min-width: 901px) {
+  .menu-panel { display: none; }
+}
+
+/* the flow: below 960px the horizontal run gets cramped — turn the
+   workflow vertical (trunk down the center, the two branch legs side
+   by side). The edge router reads the orientation from the real tile
+   positions, so this reflow is pure CSS. */
+@media (max-width: 960px) {
+  .flow-grid { grid-template-columns: repeat(2, 1fr); row-gap: 42px; }
+  /* tile glints drop their drop-shadow on small screens for the same
+     repaint-cost reason as the flow head's glow (see section 5) —
+     the teal ring + glyph heat still carry the moment */
+  .flow-tile.glint { filter: none; }
+  .flow-node[data-flow-id="1"] { grid-area: 1 / 1 / auto / span 2; }
+  .flow-node[data-flow-id="2"] { grid-area: 2 / 1 / auto / span 2; }
+  .flow-node[data-flow-id="3"] { grid-area: 3 / 1; }
+  .flow-node[data-flow-id="4"] { grid-area: 4 / 1; }
+  .flow-node[data-flow-id="5"] { grid-area: 3 / 2; }
+  .flow-node[data-flow-id="6"] { grid-area: 4 / 2; }
+  .flow-node[data-flow-id="7"] { grid-area: 5 / 1 / auto / span 2; }
+  .flow-node[data-flow-id="8"] { grid-area: 6 / 1 / auto / span 2; }
+}
+
+/* CRISP: five columns get cramped before the bus fallback kicks in —
+   stack the stations and let the connector turn vertical (a 1px line
+   behind the opaque plates, visible only in the gaps between them) */
+@media (max-width: 960px) {
+  .crisp-track { display: none; }
+  .crisp-steps { grid-template-columns: 1fr; }
+  .crisp-steps::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 30px; width: 1px; background: var(--line-bus); }
+  .crisp-step { z-index: 1; }
+}
+
+@media (max-width: 880px) {
+  .cards { grid-template-columns: 1fr; }
+  .area-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .wordmark { font-size: 1rem; }
+  .brand-icon { width: 26px; height: 26px; }
+  .brand { gap: 8px; }
+  .hero { padding: 88px 0 68px; }
+  .section { padding: 68px 0; }
+  .statband { padding: 58px 0; }
+  .stat-plate { padding: 38px 30px 28px; width: 100%; }
+  .flow-tile { width: 64px; height: 64px; }
+  .flow-glyph { width: 29px; height: 29px; }
+  .flow-grid { row-gap: 38px; }
+}
+
+
+/* ============================================================
+   9. REDUCED MOTION — packet off, path stays as a still circuit
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; scroll-behavior: auto !important; }
-  .aurora, .pulse-dot, .hero .hero-actions .btn-primary { animation: none !important; }
-  html.js .reveal { opacity: 1; transform: none; }
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  #sig-tail, #sig-head, #sig-branch-tail, #sig-branch-head, #sig-flow-tail, #sig-flow-head { display: none; }
+  #sig-base, #sig-branch-base { stroke: var(--line-bus-still); }
+  #sig-flow-base path { stroke: var(--line-bus-still); }
+  /* the logo swap never runs (site.js guards it); the first set stays */
 }
