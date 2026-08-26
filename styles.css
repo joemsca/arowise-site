@@ -578,9 +578,14 @@ body.idx-on-bus .kicker[data-circuit-node]:not([data-circuit-lift="off"]) { visi
 @media (max-width: 880px) {
   .cards { grid-template-columns: 1fr; }
   .area-grid { grid-template-columns: 1fr; }
-  /* about: stack, portrait as the closing signature under the bio */
+  /* about: stack, portrait as the closing signature under the bio.
+     width:100% matters: with margin:0 auto a grid item sizes to
+     fit-content, and before the lazy portrait loads its intrinsic
+     width is 0 — the figure shrink-wrapped to the caption (~169px),
+     then jumped to 300px on load, shifting everything below by
+     ~131px and stranding the circuit nodes above their kickers. */
+  .about-portrait { width: 100%; max-width: 300px; margin: 0 auto; }
   .about-grid { grid-template-columns: 1fr; gap: 26px; }
-  .about-portrait { max-width: 300px; margin: 0 auto; }
 }
 
 @media (max-width: 620px) {

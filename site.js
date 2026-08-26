@@ -33,13 +33,14 @@
    ready, and (debounced) on resize.
 
    WIDE vs NARROW: when the centered .container leaves a real left
-   gutter (> 70px), the bus runs at ~55% of the gutter, indices +
-   kicker wording render ON the bus as SVG text, and the inline
-   HTML copies hide (body gets .idx-on-bus; the kicker keeps its
-   layout slot via visibility:hidden so the measured junction
-   latitude — and the vertical rhythm — both hold). Below that
-   (~1220px viewport) the bus edge-routes at x=10 with no labels
-   and the inline "/ 0n" spans + kickers render normally in flow.
+   gutter (> 44px — includes iPad landscape), the bus runs at ~55%
+   of the gutter, indices + kicker wording render ON the bus as SVG
+   text, and the inline HTML copies hide (body gets .idx-on-bus;
+   the kicker keeps its layout slot via visibility:hidden so the
+   measured junction latitude — and the vertical rhythm — both
+   hold). Below that (~1170px viewport) the bus edge-routes at x=10
+   with no labels and the inline "/ 0n" spans + kickers render
+   normally in flow.
 
    Every ~8s one teal packet travels the path; each junction and
    its index glint as the head passes; the CTA terminal pulses on
@@ -63,9 +64,10 @@
    the ONE existing rAF loop, dashoffset only. The child glints
    each .crisp-node in sequence (same .glint contract as bus
    nodes) and expires at the arrowhead. The main packet's timing,
-   glints and CTA arrival are completely untouched. Wide mode
-   only (same precedent as the "/ 0n" labels); in narrow/stacked
-   layouts and under reduced motion no branch pulse ever runs.
+   glints and CTA arrival are completely untouched. Runs at every
+   width where the rail is visible (like the flow); in the stacked
+   layout (rail display:none) and under reduced motion no branch
+   pulse ever runs.
 
    THE FLOW (optional, one per page — the home workflow diagram):
    an element carrying data-circuit-flow whose .flow-node children
@@ -426,7 +428,12 @@
 
     var cont = document.querySelector('main .container');
     var cLeft = cont.getBoundingClientRect().left;
-    var wide = cLeft > 70;
+    /* wide when the centered container leaves a usable left gutter. 44px
+       is the floor at which the bus (55% of the gutter) still clears the
+       viewport edge and the node run stays left of the content column —
+       chosen so iPad landscape (1180/1194 logical, gutter 50/57px) gets
+       the full desktop treatment instead of the phone edge route. */
+    var wide = cLeft > 44;
     var g = wide ? Math.round(cLeft * 0.55) : 10;   /* gutter x; edge route on mobile */
     var jog = wide ? 14 : 6;
 
@@ -515,9 +522,10 @@
     /* ---- branch geometry (see THE BRANCH in the header) ----
        Measured, like everything else, from the real DOM: the rail latitude
        comes from the first .crisp-node's center (the markers sit ON the
-       rail line), so no CSS offsets are duplicated here. Wide mode only —
-       in the stacked layout the rail is display:none and the fork's bus
-       geometry doesn't exist. */
+       rail line), so no CSS offsets are duplicated here. Built whenever
+       the rail is visible (like the flow) — the bus exists at every
+       width, so tablet/narrow viewports keep the fork + child pulse. In
+       the stacked layout the rail is display:none and no branch builds. */
     branch = null;
     if (bBase) {
       bBase.removeAttribute('d');
@@ -526,7 +534,7 @@
     }
     var railEl = document.querySelector('[data-circuit-branch]');
     var railNodes = (railEl && bBase) ? railEl.querySelectorAll('.crisp-node') : [];
-    if (wide && railNodes.length && getComputedStyle(railEl).display !== 'none') {
+    if (railNodes.length && getComputedStyle(railEl).display !== 'none') {
       var tr = railEl.getBoundingClientRect();
       var n0 = railNodes[0].getBoundingClientRect();
       var railY = n0.top + sy + n0.height / 2;
@@ -807,9 +815,15 @@
   window.addEventListener('load', build);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
   var rT;
-  window.addEventListener('resize', function () {
+  var rebuild = function () {
     clearTimeout(rT);
     rT = setTimeout(build, 180);
-  });
+  };
+  window.addEventListener('resize', rebuild);
+  /* self-heal against LATE layout changes the resize event never sees —
+     lazy images, embeds, font fallbacks — by watching the document's own
+     size. The circuit SVG is position:absolute, so build() writing its
+     width/height never re-triggers this observer (no feedback loop). */
+  if ('ResizeObserver' in window) new ResizeObserver(rebuild).observe(document.body);
   if (!reduce) timer = setTimeout(launch, 1400);
 })();
