@@ -433,12 +433,180 @@
     body.pdf a{color:var(--teal) !important}
   }
   @media(prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
+
+  /*TOGGLE-START - generated from LIGHT_TOKENS/LIGHT_ACCENTS/LIGHT_HEAT + LIGHT_PATCH*/
+  html[data-theme="light"]{
+    /* ---- LIGHT MODE (Layer 3, approved 2026-08-28) ----
+       For client PDFs and printed one-pagers. Dark stays the hero.
+
+       The previous light pass was rejected as "too dull / washed out, too much pale
+       blue-grey, just generic - could be any SaaS". The diagnosis was NOT saturation: every
+       value sat inside one narrow mid-tone band and there was no dark anywhere on the page.
+       Contrast here comes from a graphite anchor (--plate) and Black-weight structural rules,
+       not from tinting the accents.
+
+       NOT Oat. Oat #ECE4D6 is YONGO VALLEY's ground, a separate company of Joe's in the same
+       TEROS scheme. A warm AroWise page pulls against Future Industrial; the ground is cool. */
+    --canvas:#F2F6F6; --surface:#FFFFFF; --raised:#EDF2F3; --plate:#1B1D1C;
+    --text:#1B2226; --text-dim:#3A464B; --muted:#5A676C;
+    /* --border is TEROS Black, unchanged from dark, and is STRUCTURAL only: page frame and
+       category dividers. --border-2 is card edges; --hairline is in-card dividers. Letting a
+       pale blue-grey carry hierarchy is what made the previous pass read as weak. */
+    --border:#2D2D2D; --border-2:#C4D0D4; --hairline:#DCE5E7;
+    /* A plate is a dark surface, so it takes dark-mode ink in either theme. */
+    --ink-on-plate:#E8E4DD; --ink-on-plate-dim:#EDE8DF; --muted-on-plate:#9AA4B2;
+    /* --steel is not in the Layer 3 set but the shared stylesheet still reads it, so it
+       tracks --text-dim here rather than being left on a dark-mode value. */
+    --steel:#3A464B;
+    /* Reef is a FILL on light, never type - always with --ink-on-teal on top. Teal type
+       steps down at Reef's own hue with NO desaturation at any tier: --teal-lg for 18px+
+       (3.3:1, AA large only), --teal for body (4.8:1 on canvas). */
+    --teal:#00777A; --teal-hover:#00C6CB; --ink-on-teal:#06100F;
+    --accent-fill:#00C6CB; --teal-lg:#009599;    /* Ignition undiluted, GRAPHIC only: panel rules, ticks, the bus registration mark.
+       --ignition-type #C2360B is the one heat LABEL colour (5.5:1 on white). The rejected
+       pass darkened the whole HEAT family into brown mud (#A2340F / #8E3D2B); that is what
+       "not heat" meant, and neither value survives.
+
+       --gold #7A5609 is NOT part of that retraction. Gold is not heat - it is the
+       "makes money" impact tag - and #7A5609 is Gold at ink weight, 6.6:1 on white.
+       Layer 3 does not define it, which is a gap in the spec, so it is set here.
+       --ember aliases Ignition so the shared .pnl.prb RULE lands on the right hue; the
+       label that token also feeds is re-pointed at --ignition-type in LIGHT_PATCH. */
+    --ignition:#F24A1C; --ignition-type:#C2360B; --ember:#F24A1C; --gold:#7A5609;
+  }
+  html[data-theme="light"] body{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto}
+  html[data-theme="light"] body::before{background-image:radial-gradient(color-mix(in srgb, var(--steel) 7%, transparent) 1px, transparent 1px)}
+  html[data-theme="light"] header.hero{background:var(--plate);position:relative;overflow:hidden; margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw); padding:26px calc(50vw - 50% + var(--pad)) 34px; clip-path:none}
+  html[data-theme="light"] header.hero .brand,html[data-theme="light"] header.hero h1,html[data-theme="light"] header.hero .lede,html[data-theme="light"] header.hero .sub{position:relative}
+  html[data-theme="light"] header.hero h1{color:var(--ink-on-plate)}
+  html[data-theme="light"] header.hero h1 em{color:var(--accent-fill)}
+  html[data-theme="light"] header.hero .lede{color:var(--ink-on-plate-dim)}
+  html[data-theme="light"] header.hero .sub{color:var(--muted-on-plate)}
+  html[data-theme="light"] header.hero .wordmark{color:var(--ink-on-plate)}
+  html[data-theme="light"] header.hero .wordmark b{color:var(--accent-fill)}
+  html[data-theme="light"] .close{background:var(--plate);border-color:var(--border);color:var(--ink-on-plate-dim);clip-path:none}
+  html[data-theme="light"] body.pdf .close{clip-path:none !important}
+  html[data-theme="light"] .close .kick{color:var(--accent-fill)}
+  html[data-theme="light"] .close h2{color:var(--ink-on-plate)}
+  html[data-theme="light"] .close p{color:var(--ink-on-plate-dim)}
+  html[data-theme="light"] .close::after{display:none}
+  html[data-theme="light"] .btn.ghost{color:var(--ink-on-plate);border-color:#3B3F40}
+  html[data-theme="light"] .btn.ghost:hover{border-color:var(--accent-fill);color:var(--accent-fill)}
+  html[data-theme="light"] .cat-h{border-bottom:1px solid var(--border)}
+  html[data-theme="light"] footer{border-top:1px solid var(--border-2);margin-top:10px;padding-top:20px}
+  html[data-theme="light"] .svc{border-color:var(--border-2)}
+  html[data-theme="light"] .svc:hover{border-color:var(--teal)}
+  html[data-theme="light"] .btn:hover{box-shadow:none}
+  html[data-theme="light"] .stn.on .tick{box-shadow:none}
+  html[data-theme="light"] .svc::before{display:none}
+  html[data-theme="light"] .cat-n{background:var(--accent-fill);border-color:var(--accent-fill);color:var(--ink-on-teal)}
+  html[data-theme="light"] .pip-c.on{color:var(--text)}
+  html[data-theme="light"] .pip-c{color:var(--border-2)}
+  html[data-theme="light"] svg.pip{fill:var(--border-2)}
+  html[data-theme="light"] svg.pip.on{fill:var(--accent-fill)}
+  html[data-theme="light"] .mtr-l{color:var(--muted)}
+  html[data-theme="light"] .pnl.prb{border-left-color:var(--ignition)}
+  html[data-theme="light"] .pnl.prb .pnl-l{color:var(--ignition-type)}
+  html[data-theme="light"] .pnl.sol{border-left-color:var(--accent-fill)}
+  html[data-theme="light"] .pnl.sol .pnl-l{color:var(--teal)}
+  html[data-theme="light"] .pnl p{color:var(--text-dim)}
+  html[data-theme="light"] details.deliv{border-top:1px solid var(--hairline)}
+  html[data-theme="light"] details.deliv summary{color:var(--muted)}
+  html[data-theme="light"] details.deliv li{color:var(--text-dim)}
+  html[data-theme="light"] details.deliv li::before{background:var(--accent-fill);width:7px;height:7px}
+  html[data-theme="light"] .bdg.im.res{color:var(--ignition-type);border-color:color-mix(in srgb,var(--ignition-type) 55%,transparent)}
+  html[data-theme="light"] body.pdf .bdg.im.res{color:var(--ignition-type) !important}
+  html[data-theme="light"] body.pdf .pdfhead{background:var(--plate) !important;border-bottom-color:#3B3F40 !important}
+  html[data-theme="light"] body.pdf .pdffoot{background:var(--plate) !important;border-top-color:#3B3F40 !important}
+  html[data-theme="light"] body.pdf .pdfchrome{color:var(--muted-on-plate) !important}
+  html[data-theme="light"] body.pdf .pdfhead .hl{color:var(--ink-on-plate) !important}
+  html[data-theme="light"] body.pdf .pdfhead .hl b{color:var(--accent-fill) !important}
+  html[data-theme="light"] body.pdf header.hero{background:var(--plate) !important;position:relative;overflow:hidden; margin:0 -13mm 5mm !important;padding:2mm 13mm 8mm !important;clip-path:none !important}
+  html[data-theme="light"] body.pdf .hero h1{color:var(--ink-on-plate) !important}
+  html[data-theme="light"] body.pdf .hero h1 em{color:var(--accent-fill) !important}
+  html[data-theme="light"] body.pdf .cat-h{border-bottom:1px solid var(--border) !important}
+  html[data-theme="light"] body.pdf .pip-c.on{color:var(--text) !important}
+  html[data-theme="light"] body.pdf .pip-c{color:var(--border-2) !important}
+  html[data-theme="light"] body.pdf svg.pip{fill:var(--border-2) !important}
+  html[data-theme="light"] body.pdf svg.pip.on{fill:var(--accent-fill) !important}
+  html[data-theme="light"] body.pdf .pnl.prb{border-left:2px solid var(--ignition) !important}
+  html[data-theme="light"] body.pdf .pnl.prb .pnl-l{color:var(--ignition-type) !important}
+  html[data-theme="light"] body.pdf .pnl.sol{border-left:2px solid var(--accent-fill) !important}
+  html[data-theme="light"] body.pdf .pnl.sol .pnl-l{color:var(--teal) !important}
+  html[data-theme="light"] body.pdf .pnl p{color:var(--text-dim) !important}
+  html[data-theme="light"] body.pdf details.deliv{border-top:1px solid var(--hairline) !important}
+  html[data-theme="light"] body.pdf details.deliv li{color:var(--text-dim) !important}
+  html[data-theme="light"] body.pdf details.deliv li::before{background:var(--accent-fill) !important}
+  html[data-theme="light"] body.pdf .svc{border-color:var(--border-2) !important}
+
+  #theme-toggle{position:absolute;top:38px;right:0;z-index:3;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);background:transparent;
+    border:1px solid var(--border-2);padding:6px 10px;cursor:pointer;
+    clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+    transition:color .16s,border-color .16s}
+  /* In light mode the hero goes full-bleed (margin-left:calc(50% - 50vw)) to lay the
+     graphite plate across the viewport, so right:0 resolves to the true screen edge and the
+     button hangs off it. Re-inset it by the hero's own side padding to put it back on the
+     content column. */
+  html[data-theme="light"] #theme-toggle{right:calc(50vw - 50% + var(--pad))}
+  #theme-toggle:hover{color:var(--teal-lg);border-color:var(--teal-lg)}
+  #theme-toggle:focus-visible{outline:2px solid var(--teal-lg);outline-offset:2px}
+  @media print{#theme-toggle{display:none}}
+  @media(max-width:759px){#theme-toggle{top:34px;font-size:9px;padding:5px 8px}}
+  /*TOGGLE-END*/
 </style>
+<script>
+(function(){
+  var r=document.documentElement,k='arowise-menu-theme',s=null;
+  try{s=localStorage.getItem(k)}catch(e){}
+  if(s==='light')r.setAttribute('data-theme','light');
+  function sync(){
+    var lit=r.getAttribute('data-theme')==='light',b=document.getElementById('theme-toggle'),
+        m=document.querySelector('meta[name="theme-color"]');
+    if(b){b.textContent=lit?'Dark mode':'Light mode';b.setAttribute('aria-pressed',lit?'true':'false');}
+    if(m)m.setAttribute('content',lit?'#F2F6F6':'#141615');
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    var b=document.getElementById('theme-toggle');
+    if(!b)return;
+    b.addEventListener('click',function(){
+      var lit=r.getAttribute('data-theme')==='light';
+      if(lit)r.removeAttribute('data-theme');else r.setAttribute('data-theme','light');
+      try{localStorage.setItem(k,lit?'dark':'light')}catch(e){}
+      sync();
+    });
+    sync();
+  });
+})();
+</script>
 </head>
 <body>
 
 <div class="wrap">
   <header class="hero">
+<button id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch between light and dark mode">Light mode</button>
+<svg aria-hidden="true" viewBox="0 0 344 30" width="344" height="30"
+     style="position:absolute;top:0;right:8px;pointer-events:none;shape-rendering:geometricPrecision">
+  <defs>
+    <linearGradient id="bus-comet" x1="216" y1="0" x2="322" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0"   stop-color="#00C6CB" stop-opacity="0"></stop>
+      <stop offset=".5"  stop-color="#00C6CB" stop-opacity=".22"></stop>
+      <stop offset=".86" stop-color="#00C6CB" stop-opacity=".7"></stop>
+      <stop offset="1"   stop-color="#00C6CB" stop-opacity="1"></stop>
+    </linearGradient>
+  </defs>
+  <path d="M0 0 L32 18.5 L322 18.5" fill="none" stroke="#ADBFC7" stroke-opacity=".30" stroke-width="1"></path>
+  <path d="M216 18.5 L322 18.5" fill="none" stroke="url(#bus-comet)" stroke-width="1"></path>
+  <path d="M-2.3 -3.5 L2.3 -3.5 L3.5 -2.3 L3.5 2.3 L2.3 3.5 L-2.3 3.5 L-3.5 2.3 L-3.5 -2.3 Z"
+        transform="translate(80 18.5)" fill="#1B1D1C" stroke="#ADBFC7" stroke-opacity=".42" stroke-width="1"></path>
+  <path d="M-2.3 -3.5 L2.3 -3.5 L3.5 -2.3 L3.5 2.3 L2.3 3.5 L-2.3 3.5 L-3.5 2.3 L-3.5 -2.3 Z"
+        transform="translate(150 18.5)" fill="#1B1D1C" stroke="#ADBFC7" stroke-opacity=".42" stroke-width="1"></path>
+  <path d="M-2.3 -3.5 L2.3 -3.5 L3.5 -2.3 L3.5 2.3 L2.3 3.5 L-2.3 3.5 L-3.5 2.3 L-3.5 -2.3 Z"
+        transform="translate(220 18.5)" fill="#00C6CB"></path>
+  <path d="M322 15 L329 18.5 L322 22 Z" fill="#00C6CB"></path>
+</svg>
     <div class="brand">
       <img class="mark" src="data:image/png;base64,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" alt="" width="36" height="36">
       <div class="wordmark">Aro<b>Wise</b> Automation</div>
