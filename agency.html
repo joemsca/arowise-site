@@ -559,9 +559,16 @@
 </style>
 <script>
 (function(){
-  var r=document.documentElement,k='arowise-menu-theme',s=null;
-  try{s=localStorage.getItem(k)}catch(e){}
-  if(s==='light')r.setAttribute('data-theme','light');
+  var r=document.documentElement,k='arowise-menu-theme',q=null,saved=null;
+  // Precedence: ?theme= in the link, then the reader's own saved choice, then dark.
+  // The link wins so Joe can send a prospect a light-mode URL and have it open light no
+  // matter what that person picked last time.
+  try{q=new URLSearchParams(location.search).get('theme')}catch(e){}
+  if(q!=='light'&&q!=='dark')q=null;
+  try{saved=localStorage.getItem(k)}catch(e){}
+  var pick=q||saved;
+  if(pick==='light')r.setAttribute('data-theme','light');
+  if(q){try{localStorage.setItem(k,q)}catch(e){}}
   function sync(){
     var lit=r.getAttribute('data-theme')==='light',b=document.getElementById('theme-toggle'),
         m=document.querySelector('meta[name="theme-color"]');
@@ -572,9 +579,13 @@
     var b=document.getElementById('theme-toggle');
     if(!b)return;
     b.addEventListener('click',function(){
-      var lit=r.getAttribute('data-theme')==='light';
-      if(lit)r.removeAttribute('data-theme');else r.setAttribute('data-theme','light');
-      try{localStorage.setItem(k,lit?'dark':'light')}catch(e){}
+      var lit=r.getAttribute('data-theme')!=='light';
+      if(lit)r.setAttribute('data-theme','light');else r.removeAttribute('data-theme');
+      try{localStorage.setItem(k,lit?'light':'dark')}catch(e){}
+      // Keep the address bar honest: whatever is on screen is what the URL now shares, so
+      // copying it out of the bar sends the theme the sender is actually looking at.
+      try{var u=new URL(location.href);u.searchParams.set('theme',lit?'light':'dark');
+          history.replaceState(null,'',u)}catch(e){}
       sync();
     });
     sync();
