@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#141615">
+<title>AI Agents for Agencies &middot; AroWise Automation</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#141615; --surface:#1B1D1C; --raised:#232624;
+    --text:#E8E4DD; --text-dim:#EDE8DF; --steel:#ADBFC7; --muted:#9AA4B2;
+    --border:#2D2D2D; --border-2:#3B3F40;
+    /* --plate and --hairline are light-mode concepts; in dark they collapse onto the
+       existing ramp. They live INSIDE this block so the theme swap replaces them - a token
+       declared outside it survives into the light build and silently wins on source order. */
+    --plate:#1B1D1C; --hairline:#3B3F40;
+    /* Ink for the two graphite plates. A plate is a dark surface in BOTH themes, so these
+       hold the same values either way - but they still live inside the swapped block, or
+       they would be orphaned tokens carrying a dark value by accident rather than by rule. */
+    --ink-on-plate:#E8E4DD; --ink-on-plate-dim:#EDE8DF; --muted-on-plate:#9AA4B2;
+    --teal:#00C6CB; --teal-hover:#1AD3D8; --ink-on-teal:#06100F;
+    /* Reef as a FILL, split from --teal so a light theme can keep the bright brand
+       accent on solid shapes while type and hairlines drop to the deep teal. In the
+       dark theme the two are the same colour, so this is a no-op here. */
+    --accent-fill:#00C6CB;
+    /* Reef is 1.9:1 on a light ground, so it cannot carry the hero accent there even though
+       it does exactly that on arowise.com against near-black. --teal-lg is the large-text
+       tier: WCAG lets 18px+ run at 3:1, which buys back a much brighter teal than the body
+       one. Same hex as Reef in the dark theme, so this is a no-op here. */
+    --teal-lg:#00C6CB;
+    --ignition:#F24A1C; --ignition-type:#F24A1C; --ember:#B3513C; --gold:#E3A520;
+    --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --maxw:1080px; --pad:20px;
+    --glow:0 0 0 1px var(--teal), 0 0 22px -2px color-mix(in srgb, var(--teal) 70%, transparent);
+    --cham-btn:polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+    --cham-tag:polygon(0 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%);
+    --cham-card:polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--canvas);color:var(--text);font:16px/1.62 var(--sans);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(color-mix(in srgb, var(--steel) 14%, transparent) 1px, transparent 1px);
+    background-size:30px 30px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 62%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 62%)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);position:relative;z-index:1}
+  .mono{font-family:var(--mono)}
+  .kick{font:600 11px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--teal)}
+  h1,h2,h3{margin:0}
+  a{color:var(--teal);text-decoration:none}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:34px 0 28px;position:relative;z-index:1}
+  .brand{display:flex;align-items:center;gap:11px}
+  .mark{display:block;width:36px;height:36px;flex:0 0 auto}
+  /* The INLINE lockup, matching the site header exactly (redesign/site/styles.css:135):
+     one continuous Space Grotesk 700 string at tight tracking, only "Wise" in teal.
+     NOT the stacked lockup, which sets a tracked mono "AUTOMATION" as a subtitle beneath
+     the wordmark - that treatment belongs to the LinkedIn/avatar art, and borrowing it for
+     an inline masthead is what made this read as two mismatched pieces. */
+  .wordmark{font:700 20px/1 var(--sans);letter-spacing:-.03em;color:var(--text);
+    display:inline-block;white-space:nowrap}
+  .wordmark b{color:var(--teal);font-weight:700}
+  .hero h1{font:600 clamp(28px,6.4vw,46px)/1.08 var(--sans);letter-spacing:-.03em;
+    margin:26px 0 0;max-width:19ch;text-wrap:balance}
+  .hero h1 em{font-style:normal;color:var(--teal-lg)}
+  .hero .lede{font-size:clamp(15px,2.1vw,17px);line-height:1.5;color:var(--text-dim);margin:20px 0 0}
+  .hero .sub{font-size:14.5px;line-height:1.6;color:var(--muted);margin:9px 0 0}
+
+  /* ---------- the calibration scale ----------
+     The Controlled Weirdness moment on the OWNER menu. On the agency menu this whole nav is
+     stripped (browse_ui:false) and the light build's masthead bus claims the slot instead,
+     so do not assume from this comment that the scale is present. Exactly one, either way. */
+  .scale-wrap{position:sticky;top:0;z-index:40;margin-top:30px;
+    background:color-mix(in srgb,var(--canvas) 92%, transparent);backdrop-filter:blur(12px);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .scale-lbl{max-width:var(--maxw);margin:0 auto;padding:9px var(--pad) 0;
+    font:600 9.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .scale{max-width:var(--maxw);margin:0 auto;padding:6px var(--pad) 9px;display:flex;gap:0;
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .scale::-webkit-scrollbar{display:none}
+  .stn{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;gap:5px;
+    padding:7px 15px 6px 0;margin-right:15px;position:relative;min-width:62px;
+    border-left:1px solid var(--border-2);padding-left:9px;transition:border-color .2s}
+  .stn .tick{position:absolute;left:-1px;top:0;width:1px;height:11px;background:var(--border-2);transition:background .2s,height .2s}
+  .stn-n{font:600 10px/1 var(--mono);letter-spacing:.08em;color:var(--muted);transition:color .2s}
+  .stn-l{font:500 12px/1 var(--sans);color:var(--steel);white-space:nowrap;transition:color .2s}
+  .stn:hover .stn-l,.stn:hover .stn-n{color:var(--teal)}
+  .stn:hover{border-color:var(--teal)}
+  .stn:hover .tick{background:var(--teal);height:16px}
+  .stn.on{border-color:var(--teal)}
+  .stn.on .tick{background:var(--teal);height:18px;box-shadow:0 0 10px -1px var(--teal)}
+  .stn.on .stn-l{color:var(--teal)} .stn.on .stn-n{color:var(--teal)}
+  .stn.off{opacity:.28;pointer-events:none}
+
+  /* ---------- filters ---------- */
+  .filters{padding:24px 0 6px}
+  .filters .flabel{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);display:block;margin-bottom:11px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font:500 13px/1 var(--sans);padding:11px 15px;border:1px solid var(--border-2);
+    background:var(--surface);cursor:pointer;color:var(--steel);clip-path:var(--cham-tag);
+    transition:border-color .16s,color .16s,background .16s;display:inline-flex;align-items:center;gap:8px}
+  .chip:hover{border-color:var(--teal);color:var(--teal)}
+  .chip.active{background:var(--accent-fill);border-color:var(--accent-fill);color:var(--ink-on-teal);font-weight:600}
+  .chip.active .dot{background:var(--ink-on-teal)}
+  .dot{width:8px;height:8px;display:inline-block;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+  .dot.rev{background:var(--gold)} .dot.eff{background:var(--steel)} .dot.res{background:var(--ember)}
+  .fnote{font-size:13px;color:var(--muted);margin:12px 0 0}
+  .fnote b{color:var(--teal);font-weight:600;font-family:var(--mono)}
+
+  main{padding:8px 0 40px;position:relative;z-index:1}
+
+  /* ---------- category ---------- */
+  .cat{padding:38px 0 4px;scroll-margin-top:92px}
+  .cat.hide{display:none}
+  .cat-h{display:flex;align-items:flex-start;gap:14px;padding-bottom:12px;margin-bottom:20px;border-bottom:1px solid var(--border-2)}
+  .cat-n{font:600 12px/1 var(--mono);color:var(--teal);border:1px solid var(--teal);padding:6px 8px;
+    clip-path:var(--cham-tag);flex:0 0 auto;margin-top:3px}
+  .cat-tx{flex:1;min-width:0}
+  .cat-h h2{font:600 clamp(20px,4.2vw,27px)/1.16 var(--sans);letter-spacing:-.02em;color:var(--text);text-wrap:balance}
+  .cat-tag{margin:6px 0 0;font-size:14.5px;line-height:1.45;color:var(--teal)}
+  .cat-ct{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+    flex:0 0 auto;margin-top:7px;white-space:nowrap}
+
+  /* ---------- service card ---------- */
+  .grid{display:grid;grid-template-columns:1fr;gap:12px}
+  .svc{background:var(--surface);border:1px solid var(--border);clip-path:var(--cham-card);
+    padding:20px 20px 16px;transition:border-color .18s;position:relative;
+    display:flex;flex-direction:column;min-width:0}
+  .svc:hover{border-color:var(--border-2)}
+  .svc.hide{display:none}
+  .svc-name{font:600 17.5px/1.28 var(--sans);letter-spacing:-.015em;color:var(--text);text-wrap:balance}
+  .bdgs{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 0}
+  .bdg{font:600 10px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;padding:6px 8px;
+    clip-path:var(--cham-tag);border:1px solid var(--border-2);color:var(--muted);
+    display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .bdg.start{background:var(--accent-fill);border-color:var(--accent-fill);color:var(--ink-on-teal)}
+  .bdg.pay{color:var(--steel);border-color:color-mix(in srgb,var(--steel) 40%,transparent)}
+  .bdg.im.rev{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 45%,transparent)}
+  .bdg.im.eff{color:var(--steel);border-color:color-mix(in srgb,var(--steel) 40%,transparent)}
+  .bdg.im.res{color:var(--ember);border-color:color-mix(in srgb,var(--ember) 55%,transparent)}
+  /* header: title, then badges left and the cost/value readout right */
+  .svc-meta{display:flex;flex-wrap:wrap;gap:9px 14px;align-items:center;
+    justify-content:space-between;margin:11px 0 15px}
+  .svc-meta .bdgs{margin:0}
+
+  /* before / after, stacked so each keeps a readable measure at half width */
+  .panels{display:grid;grid-template-columns:1fr;gap:11px}
+  .pnl{background:var(--raised);padding:13px 15px;border-left:2px solid var(--border-2);min-width:0}
+  .pnl-l{font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+    display:block;margin-bottom:8px}
+  .pnl p{margin:0;font-size:14.4px;line-height:1.58;color:var(--text-dim)}
+  .pnl.prb{border-left-color:var(--ember)}
+  .pnl.prb .pnl-l{color:var(--ember)}
+  .pnl.sol{border-left-color:var(--accent-fill)}
+  .pnl.sol .pnl-l{color:var(--teal)}
+
+  /* what you get: collapsed by default, one tap to open */
+  details.deliv{margin-top:15px;padding-top:13px;border-top:1px solid var(--border)}
+  details.deliv summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;
+    font:600 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+    padding:4px 0;user-select:none;transition:color .16s}
+  details.deliv summary::-webkit-details-marker{display:none}
+  details.deliv summary:hover{color:var(--teal)}
+  .dv-c{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+    transform:rotate(45deg) translate(-2px,-2px);transition:transform .22s}
+  details.deliv[open] summary{color:var(--teal)}
+  details.deliv[open] .dv-c{transform:rotate(-135deg) translate(-3px,-3px)}
+  details.deliv ul{margin:11px 0 2px;padding:0;list-style:none;display:grid;gap:7px}
+  details.deliv li{position:relative;padding-left:19px;font-size:14.2px;line-height:1.5;color:var(--steel)}
+  details.deliv li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;
+    background:var(--teal);clip-path:polygon(0 0,100% 50%,0 100%)}
+
+  /* cost / value balance readout */
+  .meters{display:flex;gap:14px;align-items:center}
+  .mtr{display:inline-flex;align-items:center;gap:5px}
+  .mtr-l{font:600 9px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+  .pip-c{font:600 12px/1 var(--mono);color:var(--border-2);transition:color .16s}
+  .pip-c.on{color:var(--steel)}
+  svg.pip{width:9px;height:9px;display:block;fill:var(--border-2);transition:fill .16s}
+  svg.pip.on{fill:var(--teal)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin:14px 0 0;
+    font-size:12.5px;color:var(--muted)}
+  .legend .lg{display:inline-flex;align-items:center;gap:7px}
+  .legend b{color:var(--steel);font-weight:500;display:inline-flex;align-items:center;gap:2px;
+    font-family:var(--mono);letter-spacing:.08em}
+
+  .empty{display:none;padding:44px 0;color:var(--muted);font-size:15px;text-align:center}
+  .empty.on{display:block}
+
+  /* ---------- close ---------- */
+  .close{margin:54px 0 0;padding:30px 24px;background:var(--surface);border:1px solid var(--border-2);
+    clip-path:var(--cham-card);position:relative}
+  .close::after{content:"";position:absolute;right:0;bottom:0;width:14px;height:14px;
+    background:linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--accent-fill) 45%,transparent) 50%)}
+  .close h2{font:600 clamp(21px,3.4vw,28px)/1.2 var(--sans);letter-spacing:-.02em;margin:12px 0 0}
+  .close p{font-size:15.4px;line-height:1.62;color:var(--text-dim);margin:16px 0 0;max-width:62ch}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent-fill);
+    border:1px solid var(--accent-fill);color:var(--ink-on-teal);padding:14px 20px;cursor:pointer;
+    font:600 13px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;clip-path:var(--cham-btn);
+    transition:background .18s,box-shadow .18s}
+  .btn:hover{background:var(--teal-hover);box-shadow:var(--glow)}
+  .btn.ghost{background:transparent;color:var(--text);border-color:var(--border-2)}
+  .btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
+  footer{padding:34px 0 46px;color:var(--muted);font-size:12.5px;
+    display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+  footer .mono{letter-spacing:.1em;text-transform:uppercase;font-size:10.5px}
+
+  /* ---------- desktop ---------- */
+  @media(min-width:760px){
+    :root{--pad:34px}
+    header.hero{padding:52px 0 34px}
+    .cat{scroll-margin-top:104px}
+    .svc{padding:22px 24px}
+    .svc-name{font-size:19px}
+    /* Half-page-width cards. Full width was tried and read as empty. At this width
+       the before/after panels and the bullets stay stacked so nothing wraps badly. */
+    .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+    .close{padding:40px 38px}
+  }
+  @media(min-width:1080px){ .grid{gap:16px} }
+
+  /* ---------- print: light, ink-friendly ---------- */
+  /*LIGHT-PRINT-START*/
+  @media print{
+    body{background:#fff;color:#1a1a1a;font-size:10.5pt}
+    body::before,.scale-wrap,.filters,.cta,.no-print{display:none !important}
+    .wrap{max-width:100%;padding:0}
+    .hero h1{color:#111;font-size:24pt} .hero h1 em{color:#00646D}
+    .hero .lede,.hero .sub{color:#333}
+    .kick,.cat-n,.cat-tag{color:#00646D !important}
+    .cat{page-break-inside:avoid;padding-top:20pt}
+    .cat-h h2{color:#111}
+    .cat-n{border-color:#00646D}
+    .grid{grid-template-columns:1fr 1fr;gap:8pt}
+    .svc{background:#fff;border:1px solid #ccc;clip-path:none;page-break-inside:avoid;padding:10pt}
+    .svc-name{color:#111;font-size:12pt}
+    .bdg{color:#555;border-color:#bbb;clip-path:none}
+    .bdg.start{background:#00646D;border-color:#00646D;color:#fff}
+    .pnl{background:#f4f4f2}
+    .pnl.prb{border-left:2px solid #B3513C} .pnl.prb .pnl-l{color:#B3513C !important}
+    .pnl.sol{border-left:2px solid #00646D} .pnl.sol .pnl-l{color:#00646D !important}
+    .pnl p{color:#333}
+    .panels{grid-template-columns:1fr;gap:6pt}
+    details.deliv{border-top:1px solid #ddd}
+    details.deliv summary{color:#00646D} .dv-c{display:none}
+    details.deliv li{color:#333} details.deliv li::before{background:#00646D}
+    .mtr-l{color:#777} .pip-c{color:#ccc} .pip-c.on{color:#444}
+    svg.pip{fill:#ccc} svg.pip.on{fill:#00646D}
+    .close{background:#f4f4f2;border-color:#ccc;clip-path:none}
+    .close h2{color:#111} .close p{color:#333}
+    footer{color:#666}
+    a{color:#00646D}
+  }
+  /*LIGHT-PRINT-END*/
+
+  /* ---------- PDF mode: same dark scheme, paged ----------
+     Opt-in via --pdf, which puts class="pdf" on the body element. These rules come after the
+     light print block and are more specific, so they win when both apply. */
+  .pdfchrome,.pdfcover{display:none}
+  @media print{
+    body.pdf{background:var(--canvas) !important;color:var(--text) !important;font-size:11pt}
+    body.pdf *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    /* Probed in Chrome: a fixed element at top:0 / bottom:0 lands on the PAGE edge
+       (inside the margin band), and negative offsets misbehave. The @page margins
+       below reserve the strip those bars occupy on every page. */
+    /* margin:0 because Chrome never paints the @page margin band; any margin
+       would show as a white frame around a dark page. Spacing comes from the
+       wrapper padding below, which also keeps content clear of the bars. */
+    /* The top/bottom margins reserve the strips the fixed running bars occupy on EVERY
+       page. Left/right stay 0 so the masthead plate can bleed edge to edge. */
+    /* margin:0 so the page content box IS the page box - that is what makes a fixed bar at
+       top:0 / bottom:0 land on the paper edge. Space for the bars is reserved per page by
+       the spacer table below, not by page margins. */
+    @page{size:letter;margin:0}
+    /* running header and footer: negative offsets place them in the page margin */
+    /* The bars live in a table thead/tfoot, which Chrome repeats on every page AND
+       reserves vertical space for. position:fixed repeats but reserves nothing, so the
+       header printed on top of the first heading of every page. */
+    body.pdf .pdfchrome{display:flex;align-items:center;justify-content:space-between;
+      color:var(--muted);font:500 8.5pt/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    /* Running bars are position:fixed, NOT a repeating table thead/tfoot.
+       Two reasons the table had to go:
+         1. thead repetition is not dependable across print paths. Headless --print-to-pdf
+            repeated it on all 5 pages; Joe's own export put the header on page 1 and the
+            footer on page 5 only, because the whole document sat in ONE giant <td> and
+            Chrome fragments that inconsistently. A fixed element repeats either way.
+         2. tfoot follows the content on the LAST page instead of pinning to the bottom, so
+            a short final page left ~17mm of pale ground below the footer bar.
+       A fixed element at top:0 / bottom:0 lands on the PAGE edge, inside the @page margin
+       band reserved above, which is why it does not print on top of content. */
+    /* MEASURED, not assumed. Two facts drove this shape, both verified by rendering and
+       sampling pixels rather than by reading a spec:
+         1. A fixed element resolves against the page CONTENT box. With @page margins it sat
+            inside them, leaving pale bands at both paper edges, and negative offsets were
+            clamped rather than pulling it back out. With margin:0 the two boxes coincide and
+            top:0 / bottom:0 land on the paper edge, which is what we want.
+         2. A fixed element repeats on every page but reserves NO space, so on its own it
+            prints over content.
+       So the visible bars are fixed, and space is reserved per page by an otherwise empty
+       spacer table whose thead/tfoot repeat. Belt and braces, but each part does one job.
+       This also fixes the last page: a tfoot follows content and left ~17mm of pale ground
+       under the footer, whereas a fixed bar is pinned to the bottom on every page. */
+    body.pdf .pdfhead{position:fixed;top:0;left:0;right:0;z-index:5}
+    body.pdf .pdffoot{position:fixed;bottom:0;left:0;right:0;z-index:5}
+    body.pdf table.pgt{width:100%;border-collapse:collapse}
+    body.pdf table.pgt > thead{display:table-header-group}
+    body.pdf table.pgt > tfoot{display:table-footer-group}
+    body.pdf table.pgt td{padding:0;vertical-align:top}
+    body.pdf .pgt-h{height:15mm} body.pdf .pgt-f{height:11mm}
+    body.pdf .pdfhead{padding:5mm 13mm 4mm;border-bottom:1px solid var(--border-2);background:var(--canvas)}
+    body.pdf .pdffoot{padding:3mm 13mm 5mm;border-top:1px solid var(--border-2);background:var(--canvas)}
+    body.pdf .pdfhead .hl{display:flex;align-items:center;gap:9px;color:var(--text);
+      font-family:var(--sans);font-size:11pt;letter-spacing:-.01em;text-transform:none}
+    body.pdf .pdfhead .hl b{color:var(--teal)}
+    body.pdf .pdfhead .hl .wm{white-space:nowrap}
+    body.pdf .pdfhead img{width:22px;height:22px;display:block}
+    /* screen-only furniture */
+    body.pdf .scale-wrap{display:none !important}
+    /* The cover explains the $ and arrow scales in full, so the compact legend strip
+       is redundant in the PDF. */
+    body.pdf .filters{display:none !important}
+    body.pdf .legend{margin:8mm 0 0;gap:6px 14mm;font-size:9pt;color:var(--muted) !important;
+      border-top:1px solid var(--border-2);padding-top:5mm}
+    body.pdf .legend b{color:var(--steel) !important}
+    body.pdf .filters{break-before:avoid;page-break-before:avoid}
+    /* Full-bleed dark on every page. The canvas/root background does not paint the
+       @page margin band in Chrome's PDF export, but a position:fixed element at
+       inset:0 lands on the PAGE edge and repeats per page (probe-verified), so this
+       backdrop is what actually makes the export dark edge to edge. */
+    body.pdf::before{content:"";position:fixed;inset:0;z-index:-1;display:block !important;
+      background:var(--canvas) !important;background-image:none !important;
+      -webkit-mask-image:none !important;mask-image:none !important}
+    body.pdf .wrap{max-width:100%;padding:0 13mm}
+    body.pdf main{padding:0 0 6mm}
+    /* the hero was splitting between its two intro lines and leaving page 1 nearly
+       empty. Make it a deliberate cover page instead. */
+    body.pdf header.hero{padding:7mm 0 0;break-inside:avoid;page-break-inside:avoid}
+
+    /* ---- cover page: hero + what this is + who I am + next step, all on page 1 ----
+       Page 1 and the old closing page were each mostly blank, so they are merged. */
+    body.pdf .pdfcover{display:block;margin:5mm 0 0;break-inside:avoid;page-break-inside:avoid}
+    body.pdf .pc-row{display:flex;gap:11mm;margin:0 0 4.5mm}
+    body.pdf .pc-col{flex:1 1 0;min-width:0}
+    body.pdf .pc-l{display:block;font:600 8.5pt/1 var(--mono);letter-spacing:.16em;
+      text-transform:uppercase;color:var(--teal);margin:0 0 3.5mm}
+    body.pdf .pdfcover p{margin:0;font-size:10pt;line-height:1.5;color:var(--text-dim)}
+    body.pdf .pdfcover p + .pc-p2{margin-top:3mm}
+    body.pdf .pc-lede{font-size:11pt !important;color:var(--text-dim) !important;margin:0 0 4mm !important}
+    body.pdf .pc-explain{border-top:1px solid var(--border-2);padding-top:4.5mm;margin-bottom:4.5mm}
+    body.pdf .pdfcover b{color:var(--text);font-weight:600}
+    body.pdf .pc-next{border-top:1px solid var(--border-2);padding-top:5mm}
+    body.pdf .pc-next .cta{display:flex;gap:4mm;margin:3mm 0 0}
+    body.pdf .pdfcover .btn{background:var(--accent-fill) !important;color:var(--ink-on-teal) !important;
+      border-color:var(--accent-fill) !important;font-size:9pt;padding:3mm 6mm;clip-path:none}
+    body.pdf .pdfcover .btn.ghost{background:transparent !important;color:var(--text) !important;
+      border-color:var(--border-2) !important}
+    /* the old standalone closing page is now part of the cover */
+    body.pdf .close{display:none !important}
+    /* the cover ends after the legend, not after the hero */
+    body.pdf .pdfcover{break-after:page;page-break-after:always;break-before:avoid}
+    body.pdf .cat{padding-top:9mm;padding-bottom:6mm}
+    body.pdf header.hero{padding:0 0 4mm;page-break-after:avoid}
+    body.pdf .hero h1{color:var(--text) !important;font-size:26pt;max-width:20ch;line-height:1.06}
+    body.pdf .hero h1 em{color:var(--teal-lg) !important}
+    /* the cover blocks say this better and in first person, so the screen intro
+       lines would just repeat themselves here */
+    body.pdf .hero .lede, body.pdf .hero .sub{display:none}
+    /* one mark per page. The hero lockup fought the running header, so it goes. */
+    body.pdf .brand{display:none}
+    /* one category per page, cards never split */
+    body.pdf .cat{break-before:page;page-break-before:always;padding:9mm 0 3mm}
+    body.pdf .cat-h{margin-bottom:5.5mm;padding-bottom:4mm;gap:5mm;page-break-after:avoid}
+    body.pdf .cat-h h2{color:var(--text) !important;font-size:24pt;letter-spacing:-.025em}
+    body.pdf .cat-tag{color:var(--teal) !important;font-size:11.5pt;margin-top:2.5mm}
+    body.pdf .cat-n{color:var(--teal) !important;border-color:var(--teal) !important;
+      font-size:11pt;padding:2.5mm 3mm}
+    body.pdf .cat-ct{color:var(--muted) !important}
+    /* Cards live in a 2-column table (built in the --pdf branch). Table cells in a
+       row share a height, so card bottoms line up; inline-block and css grid both
+       left them ragged. Rows fragment cleanly, so nothing splits mid-card. */
+    body.pdf table.cardgrid{width:100%;border-collapse:separate;border-spacing:3.4mm 2.6mm;
+      margin:-3.4mm -3.4mm -2.6mm}
+    body.pdf table.cardgrid td{width:50%;vertical-align:top;padding:0;height:1px}
+    body.pdf table.cardgrid tr{break-inside:avoid;page-break-inside:avoid}
+    body.pdf .svc{display:block;width:auto;margin:0;height:100%;font-size:11pt;
+      background:var(--surface) !important;border:1px solid var(--border) !important;
+      padding:3.1mm;break-inside:avoid;page-break-inside:avoid;
+      /* Chamfer kept in print (2026-08-28, Joe: "I like the chamfered boxes/cards"). The
+         earlier note here feared clipping near a page edge; cards sit inside the card table
+         with 13mm of page padding outside them, so there is no edge to clip against. */
+      clip-path:var(--cham-card) !important}
+    body.pdf table.cardgrid td:empty{border:0;background:none}
+    body.pdf .svc-name{color:var(--text) !important;font-size:11.5pt}
+    body.pdf .bdg{font-size:7pt;padding:3px 5px;color:var(--muted) !important;border-color:var(--border-2) !important}
+    body.pdf .bdg.start{background:var(--accent-fill) !important;border-color:var(--accent-fill) !important;color:var(--ink-on-teal) !important}
+    body.pdf .bdg.im.rev{color:var(--gold) !important} body.pdf .bdg.im.eff{color:var(--steel) !important}
+    body.pdf .bdg.im.res{color:var(--ember) !important}
+    body.pdf .mtr-l{color:var(--muted) !important;font-size:6.5pt}
+    body.pdf .pip-c{color:var(--border-2) !important} body.pdf .pip-c.on{color:var(--steel) !important}
+    body.pdf svg.pip{fill:var(--border-2) !important} body.pdf svg.pip.on{fill:var(--teal) !important}
+    body.pdf .pnl{background:var(--raised) !important;padding:2.4mm 3mm}
+    body.pdf .pnl p{color:var(--text-dim) !important;font-size:9pt;line-height:1.4}
+    body.pdf .pnl.prb{border-left:2px solid var(--ember) !important}
+    body.pdf .pnl.prb .pnl-l{color:var(--ember) !important}
+    body.pdf .pnl.sol{border-left:2px solid var(--accent-fill) !important}
+    body.pdf .pnl.sol .pnl-l{color:var(--teal) !important}
+    body.pdf .pnl-l{font-size:6.5pt}
+    body.pdf details.deliv{border-top:1px solid var(--border) !important}
+    body.pdf details.deliv summary{color:var(--muted) !important;font-size:7pt}
+    body.pdf .dv-c{display:none}
+    body.pdf details.deliv li{color:var(--steel) !important;font-size:8.5pt;line-height:1.35}
+    body.pdf details.deliv li::before{background:var(--teal) !important;top:5px}
+    body.pdf .close{background:var(--surface) !important;border-color:var(--border-2) !important;
+      padding:6mm;break-inside:avoid}
+    body.pdf .close h2{color:var(--text) !important;font-size:16pt}
+    body.pdf .close p{color:var(--text-dim) !important;font-size:10pt}
+    body.pdf .kick{color:var(--teal) !important}
+    body.pdf .cta{display:flex !important}
+    body.pdf .btn{background:var(--accent-fill) !important;color:var(--ink-on-teal) !important;
+      border-color:var(--accent-fill) !important;font-size:8.5pt;padding:3mm 5mm}
+    body.pdf .btn.ghost{background:transparent !important;color:var(--text) !important;border-color:var(--border-2) !important}
+    body.pdf footer{display:none}
+    body.pdf a{color:var(--teal) !important}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">
+      <img class="mark" src="data:image/png;base64,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" alt="" width="36" height="36">
+      <div class="wordmark">Aro<b>Wise</b> Automation</div>
+    </div>
+    <h1>Put <em>AI Agents</em> to Work in Your Agency</h1>
+    <p class="lede">Systems we can automate within your agency, plus a menu you can <strong>offer your clients</strong>.</p>
+  </header>
+</div>
+
+
+<div class="wrap">
+
+  <main>
+<section class="cat" id="cat-your-clients" data-cat="your-clients">
+  <header class="cat-h">
+    <span class="cat-n mono">01</span>
+    <div class="cat-tx">
+      <h2>Automation for Client Relationships</h2>
+      <p class="cat-tag">Cultivate better client relationships</p>
+    </div>
+      </header>
+  <div class="grid">
+<article class="svc" data-impact="rev" data-start="1" data-cost="1" data-value="3">
+  <h3 class="svc-name">Reminders to keep in touch</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 3 of 3: makes money in the near term; serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>You can't easily see who you haven't spoken to lately, so check-ins happen late or not at all.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>You see every client sorted by last contact, and overdue ones get a followup task &amp; email drafted for you.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Last-contacted date on every client</li><li>A list of overdue check-ins</li><li>An alert when a client sits too long</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="rev eff" data-start="0" data-cost="1" data-value="3">
+  <h3 class="svc-name">See what each client has paid</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 3 of 3: makes money in the near term; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>You find out who is behind on invoices by opening the books, or when someone asks.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Paid, owed, and overdue show in one view, without anyone building a spreadsheet.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Paid and owed, per client</li><li>Overdue flagged automatically</li><li>A total you can check any time</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="eff" data-start="1" data-cost="1" data-value="2">
+  <h3 class="svc-name">Meeting-Prep AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 2 of 3: serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>You spend the morning reading old emails to remember where a client left off.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>You walk into every meeting with talking points prepped either as a one-pager or podcast.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Talking points from recent emails</li><li>Open items and last decisions</li><li>A one-page brief or 15-min audio brief before you sit down</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="eff" data-start="1" data-cost="2" data-value="2">
+  <h3 class="svc-name">Mention and coverage dashboard</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 2 of 3. Value 2 of 3: serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c on">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Coverage lives in screenshots and forwarded emails, so nobody sees the month at a glance.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Every mention is in one place, so a client report takes minutes, not a scramble.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Mentions pulled in automatically</li><li>A live dashboard per client</li><li>A monthly report that builds itself</li></ul>
+  </details>
+</article>
+  </div>
+</section>
+<section class="cat" id="cat-your-agency" data-cat="your-agency">
+  <header class="cat-h">
+    <span class="cat-n mono">02</span>
+    <div class="cat-tx">
+      <h2>Automation for Agency Operations</h2>
+      <p class="cat-tag">AI Agents to make your agency run smoother</p>
+    </div>
+      </header>
+  <div class="grid">
+<article class="svc" data-impact="rev" data-start="1" data-cost="1" data-value="3">
+  <h3 class="svc-name">Missed-Call AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 3 of 3: makes money in the near term; serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>A journalist or client calls, it goes to voicemail, and they try someone else.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Every missed call gets a text back in seconds, so the conversation stays alive.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>A text back after every missed call</li><li>The message turned into a task</li><li>After-hours coverage on your line</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="eff" data-start="1" data-cost="1" data-value="2">
+  <h3 class="svc-name">Meeting-Notes AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 2 of 3: serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Nobody takes notes while on the call, so everything discussed is at high risk of being forgotten or misunderstood.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Every meeting ends with notes, decisions, and next steps already written and filed to the client.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Minutes written from the call itself</li><li>Next steps captured as tasks</li><li>Filed to the right client automatically</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="rev res" data-start="0" data-cost="1" data-value="2">
+  <h3 class="svc-name">How happy each client is</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 2 of 3: serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>You find out an account was unhappy when they don't renew, which is far too late to do anything about it.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>A less-than-thrilled client gets the chance to raise concerns while there is still time to pick up the phone.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>A short check-in after key work</li><li>Replies scored so trends show up</li><li>An alert before a renewal is at risk</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="eff" data-start="1" data-cost="1" data-value="1">
+  <h3 class="svc-name">Email-Drafting AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 1 of 3: leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Your team writes the same client emails all day, in slightly different words each time.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>A draft is waiting in their voice, and they just edit and send instead of starting from scratch.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Replies drafted in your voice</li><li>Common emails already templated</li><li>You just edit and hit send</li></ul>
+  </details>
+</article>
+  </div>
+</section>
+<section class="cat" id="cat-you-can-sell" data-cat="you-can-sell">
+  <header class="cat-h">
+    <span class="cat-n mono">03</span>
+    <div class="cat-tx">
+      <h2>AI Agents You Can Sell</h2>
+      <p class="cat-tag">Put AI Agents on your own list of services. We&#x27;ll build them for your clients on your behalf.</p>
+    </div>
+      </header>
+  <div class="grid">
+<article class="svc" data-impact="rev" data-start="1" data-cost="1" data-value="3">
+  <h3 class="svc-name">Client Missed-Call AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 3 of 3: makes money in the near term; serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Their customers call, hit voicemail, and take the work to whoever answers.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>You give them 24/7 coverage they can put their name on, without hiring a receptionist.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>A text back after every missed call</li><li>A voice assistant on their number</li><li>They stay the face of it</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="rev" data-start="1" data-cost="1" data-value="3">
+  <h3 class="svc-name">Lead-Response AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 3 of 3: makes money in the near term; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>New inquiries sit in their inbox until someone gets to them, and a competitor wins.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Every prospect hears back in under a minute, so they win more of the leads they already pay for.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>A text and email in 60 seconds</li><li>The lead scored and assigned</li><li>An alert if nobody follows up</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="rev" data-start="0" data-cost="2" data-value="3">
+  <h3 class="svc-name">Follow-Up AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 2 of 3. Value 3 of 3: makes money in the near term; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c on">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Most of their sales take five or more contacts, and their team stops after two.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Every lead gets a full follow-up sequence, so they get more sales, thanks to your agency.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Emails or texts on a schedule</li><li>Each message uses their details</li><li>Sending stops when they reply</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="rev eff" data-start="0" data-cost="2" data-value="3">
+  <h3 class="svc-name">Website Chatbot AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 2 of 3. Value 3 of 3: makes money in the near term; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c on">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Their visitors have questions at 9pm and nobody is there to answer them.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Questions get answered around the clock and meetings land on their calendar.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Answers from their own content</li><li>Books a meeting inside the chat</li><li>Hands off to a person when needed</li></ul>
+  </details>
+</article>
+  </div>
+</section>
+<section class="cat" id="cat-content-you-can-sell" data-cat="content-you-can-sell">
+  <header class="cat-h">
+    <span class="cat-n mono">04</span>
+    <div class="cat-tx">
+      <h2>Content Creation AI Agents You Can Sell</h2>
+      <p class="cat-tag">We&#x27;ll build the systems that produce content for your clients, around the clock.</p>
+    </div>
+      </header>
+  <div class="grid">
+<article class="svc" data-impact="rev eff" data-start="1" data-cost="1" data-value="3">
+  <h3 class="svc-name">Newsletter AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 3 of 3: makes money in the near term; serves customers you already have; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Newsletters get sent out only when their marketing team has spare time.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Email campaigns are planned, written, populated, and sent. On schedule, every single time.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Aggregate their other popular content</li><li>Email formatted in brand template</li><li>Ready to send upon review</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="rev" data-start="0" data-cost="3" data-value="3">
+  <h3 class="svc-name">A website built in days</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 3 of 3. Value 3 of 3: makes money in the near term; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c on">$</b><b class="pip-c on">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Their site looks dated, and an expensive rebuild with a web design agency takes months.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>They get a modern site in days, and you are the agency that delivered it.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>A modern site built with AI</li><li>Their services, proof, and work</li><li>Fast and easy to read on a phone</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="rev" data-start="0" data-cost="3" data-value="3">
+  <h3 class="svc-name">SEO Blog AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 3 of 3. Value 3 of 3: makes money in the near term; leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c on">$</b><b class="pip-c on">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>They need ranking pages and have no one to write them, so competitors show up first.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>A blog in their voice goes out on a schedule, aimed at what their buyers search for.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Articles in their own voice</li><li>Aimed at what buyers search</li><li>A content calendar that runs itself</li></ul>
+  </details>
+</article>
+<article class="svc" data-impact="eff" data-start="1" data-cost="1" data-value="1">
+  <h3 class="svc-name">Social-Post AI Agent</h3>
+  <div class="svc-meta">
+        <div class="meters" title="Cost 1 of 3. Value 1 of 3: leaves a repeatable system behind."><span class="mtr"><span class="mtr-l">Cost</span><b class="pip-c on">$</b><b class="pip-c">$</b><b class="pip-c">$</b></span><span class="mtr"><span class="mtr-l">Value</span><svg class="pip on" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg><svg class="pip" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.6 L11.4 6.6 L8.9 6.6 L8.9 11.6 L3.1 11.6 L3.1 6.6 L0.6 6.6 Z"/></svg></span></div>
+  </div>
+  <div class="panels">
+    <div class="pnl prb"><span class="pnl-l">Before</span><p>Posting to every channel by hand takes hours, and it slips the moment client work piles up.</p></div>
+    <div class="pnl sol"><span class="pnl-l">After</span><p>Their channels stay active every week without anyone remembering to post.</p></div>
+  </div>
+  <details class="deliv">
+    <summary><span class="dv-t">What you get</span><span class="dv-c" aria-hidden="true"></span></summary>
+    <ul><li>Posts drafted in their voice</li><li>Scheduled across channels</li><li>Retries if a platform fails</li></ul>
+  </details>
+</article>
+  </div>
+</section>
+
+    <section class="close">
+      <span class="kick">What happens next</span>
+      <h2>Let's figure out where AI can help in your agency.</h2>
+      <p>Walk me through a typical week at the agency. I'll identify where AI Agents help your agency directly, and which ones you could sell to your clients. After working together, you would own the system, documentation, and credentials.</p>
+      <div class="cta no-print">
+        <a class="btn" href="https://cal.com/arowise/discovery" target="_blank" rel="noopener">Book a meeting with me</a>
+        <a class="btn ghost" href="mailto:joe@arowise.com?subject=Agency%20automation%20menu">Email Joe</a>
+        <a class="btn ghost" href="https://arowise.com" target="_blank" rel="noopener">arowise.com</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 AroWise Automation</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function(){
+  // "What you get" is collapsed on screen. Open every block for print / PDF, then restore.
+  var prior = [];
+  window.addEventListener('beforeprint', function(){
+    prior = [];
+    document.querySelectorAll('details').forEach(function(d, i){ prior[i] = d.open; d.open = true; });
+  });
+  window.addEventListener('afterprint', function(){
+    document.querySelectorAll('details').forEach(function(d, i){ d.open = !!prior[i]; });
+  });
+})();
+</script>
+</body>
+</html>
