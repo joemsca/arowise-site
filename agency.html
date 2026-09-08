@@ -445,6 +445,29 @@
   }
   @media(prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
 
+  /*EXPLAINER-START - the PDF cover copy, laid out for screen.
+    Written entirely in design tokens, so `--theme light` and the `--toggle` override both
+    reach it with no parallel set of rules to keep in sync. It sits later in the sheet than
+    the base `.pdfchrome,.pdfcover{display:none}`, which is what un-hides it. */
+  .pdfcover{display:block;margin:34px 0 0}
+  .pdfcover p{margin:0;font-size:16px;line-height:1.62;color:var(--text-dim);max-width:66ch}
+  .pdfcover p + p{margin-top:14px}
+  /* (0,2,1) so it beats `.pdfcover p` on its own, without reaching for !important. */
+  .pdfcover p.pc-lede{font-size:clamp(16.5px,2.2vw,19px);line-height:1.55}
+  .pdfcover strong{color:var(--text);font-weight:600}
+  .pc-l{display:block;font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal);margin:0 0 13px}
+  .pc-explain{margin:32px 0 0;padding:26px 22px;background:var(--surface);
+    border:1px solid var(--border-2);clip-path:var(--cham-card);position:relative}
+  .pc-explain::after{content:"";position:absolute;right:0;bottom:0;width:14px;height:14px;
+    background:linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--accent-fill) 45%,transparent) 50%)}
+  .pc-row{margin:32px 0 0;padding-top:28px;border-top:1px solid var(--border)}
+  @media(min-width:760px){
+    .pdfcover{margin-top:46px}
+    .pc-explain{padding:30px 32px}
+  }
+  /*EXPLAINER-END*/
+
   /*TOGGLE-START - generated from LIGHT_TOKENS/LIGHT_ACCENTS/LIGHT_HEAT + LIGHT_PATCH*/
   html[data-theme="light"]{
     /* ---- LIGHT MODE (Layer 3, approved 2026-08-28) ----
@@ -657,6 +680,23 @@
 
 
 <div class="wrap">
+  <section class="pdfcover">
+    <p class="pc-lede">Agencies run on client work, and a lot of repeatable admin around it. I build AI Agents that help you run your business, and that you can offer your clients under your name. The following pages walk through both. First your agency, then what you can sell.</p>
+
+    <div class="pc-explain">
+      <span class="pc-l">How AI Agents Could Work in Your Agency</span>
+      <p>Most people picture ChatGPT: a box you type into, one answer at a time. What I build is different. These are AI Agents and automations that operate in the background, connect the software your agency already uses, handle work automatically, and escalate to people when judgment is required.</p>
+    </div>
+
+    <div class="pc-row">
+      <div class="pc-col">
+        <span class="pc-l">Who you would work with</span>
+        <p>I'm Joe Mascaro, founder of AroWise. I automated my own company, and now help other business owners get more from implementing AI.</p>
+        <p class="pc-p2">I build with n8n, Make, Airtable, Claude Code, and the OpenAI and Anthropic APIs, using the tools your agency already has in place.</p>
+      </div>
+    </div>
+
+  </section>
 
   <main>
 <section class="cat" id="cat-your-clients" data-cat="your-clients">
