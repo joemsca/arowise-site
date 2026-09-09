@@ -1,6 +1,6 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/clients/:client/submit", "destination": "/api/codebook-submit?client=:client" }
+  "redirects": [
+    { "source": "/small-business", "destination": "/small-business-menu", "permanent": true }
   ]
 }
