@@ -1,3 +1,6 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/clients/:client/submit", "destination": "/api/codebook-submit?client=:client" }
+  ]
 }
