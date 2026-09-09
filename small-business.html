@@ -445,29 +445,6 @@
   }
   @media(prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
 
-  /*EXPLAINER-START - the PDF cover copy, laid out for screen.
-    Written entirely in design tokens, so `--theme light` and the `--toggle` override both
-    reach it with no parallel set of rules to keep in sync. It sits later in the sheet than
-    the base `.pdfchrome,.pdfcover{display:none}`, which is what un-hides it. */
-  .pdfcover{display:block;margin:34px 0 0}
-  .pdfcover p{margin:0;font-size:16px;line-height:1.62;color:var(--text-dim);max-width:66ch}
-  .pdfcover p + p{margin-top:14px}
-  /* (0,2,1) so it beats `.pdfcover p` on its own, without reaching for !important. */
-  .pdfcover p.pc-lede{font-size:clamp(16.5px,2.2vw,19px);line-height:1.55}
-  .pdfcover strong{color:var(--text);font-weight:600}
-  .pc-l{display:block;font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
-    color:var(--teal);margin:0 0 13px}
-  .pc-explain{margin:32px 0 0;padding:26px 22px;background:var(--surface);
-    border:1px solid var(--border-2);clip-path:var(--cham-card);position:relative}
-  .pc-explain::after{content:"";position:absolute;right:0;bottom:0;width:14px;height:14px;
-    background:linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--accent-fill) 45%,transparent) 50%)}
-  .pc-row{margin:32px 0 0;padding-top:28px;border-top:1px solid var(--border)}
-  @media(min-width:760px){
-    .pdfcover{margin-top:46px}
-    .pc-explain{padding:30px 32px}
-  }
-  /*EXPLAINER-END*/
-
   /*TOGGLE-START - generated from LIGHT_TOKENS/LIGHT_ACCENTS/LIGHT_HEAT + LIGHT_PATCH*/
   html[data-theme="light"]{
     /* ---- LIGHT MODE (Layer 3, approved 2026-08-28) ----
@@ -681,25 +658,6 @@
 
 
 <div class="wrap">
-  <section class="pdfcover">
-    <p class="pc-lede">When you run a business yourself you wear every hat, and the repetitive parts of the job inevitably take up your valuable time.</p>
-      <p>The usual advice is to delegate, but that's not much help when there is nobody to delegate to. AI Automation is the other answer.</p>
-      <p>Every system in here gets set up once and then runs on its own in the background, answering, following up, invoicing and reminding while you do the actual work. It is not software you have to learn, and it is not a person you have to hire.</p>
-
-    <div class="pc-explain">
-      <span class="pc-l">How These Run Without You</span>
-      <p>Most people picture ChatGPT: a box you type into, one answer at a time. You are still the one doing the work. These AI Agents are different. They run on their own schedule in the background, connect to the apps you already use, do the repetitive work without being asked, and only come to you when a decision is genuinely yours to make.</p>
-    </div>
-
-    <div class="pc-row">
-      <div class="pc-col">
-        <span class="pc-l">Who you would work with</span>
-        <p>I'm Joe Mascaro, founder of AroWise. I know what it's like to wear all the hats and have no one to delegate to. I co-founded and ran a B2B company for years, automated it myself, and now build the same systems for other owners.</p>
-        <p class="pc-p2">I build these systems with the tools and software you already have in place, so it fits seamlessly with how you already work. To link it all together I use n8n, Make, Airtable, Claude Code, and the OpenAI and Anthropic APIs.</p>
-      </div>
-    </div>
-
-  </section>
 
   <main>
 <section class="cat" id="cat-winning-work" data-cat="winning-work">
