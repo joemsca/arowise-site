@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /clients/
 
 Sitemap: https://arowise.com/sitemap.xml
-User-agent: *
-Disallow: /clients/
