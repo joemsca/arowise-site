@@ -21,7 +21,7 @@ the template for the four subpages (`/sales`, `/marketing`, `/operations`, `/fin
 | `site.js` | **One behavior module for all 5 pages** (footer year, mobile menu, stat counter, signal circuit). Fully documented in its header comment. Subpages should not need to touch it. |
 | `agency.html`, `small-business-menu.html` | **Generated build artifacts. Never hand-edit.** The agency and small-business services menus, rendered from the private vault by `skills/automation_services_catalog/scripts/render_menu.py`; the words live in that repo's `catalog.json`. Each is one self-contained file sharing nothing with `styles.css` or `site.js`. Neither is linked from any page, and both are indexable, so `sitemap.xml` is the only way a crawler finds them. Re-render and re-commit after any catalog edit or they go stale silently. |
 | `sitemap.xml`, `robots.txt` | The discovery path for the two unlinked menu pages (Joe, 2026-09-08: indexed, but no link from arowise.com). Add a `<url>` when a page is added; nothing generates this file. |
-| `vercel.json` | `cleanUrls: true` so `/sales` serves `sales.html` (no `.html` in URLs). Also holds `redirects`: `/small-business` -> `/small-business-menu` (renamed 2026-09-09; 308 so an already-shared link still lands and Google moves the indexed URL instead of seeing a duplicate). JSON has no comments and Vercel rejects unknown keys in a redirect object, so the reason for a redirect gets recorded here, not in the file. |
+| `vercel.json` | `cleanUrls: true` so `/sales` serves `sales.html` (no `.html` in URLs). Also holds `redirects`: `/small-business` -> `/small-business-menu` (renamed 2026-09-09; 308 so an already-shared link still lands and Google moves the indexed URL instead of seeing a duplicate). JSON has no comments and Vercel rejects unknown keys in a redirect object, so the reason for a redirect gets recorded here, not in the file. Also holds `rewrites`: `/clients/:client/submit` -> `/api/codebook-submit?client=:client`, the client portal's submit endpoint (the Done button on `/clients/<slug>/codebook` POSTs to it). Without that rewrite the POST falls through to the filesystem and 404s; that happened 2026-09-09 to 2026-10-07 when the redirect below was added in place of the rewrite instead of beside it. Add keys to this object, never replace it. |
 | `assets/` | Brand icon PNGs. Favicons sit at the root. |
 | `shots-final-*.png` | Verification screenshots (desktop 1440 / mobile 390), regenerated after visual changes. |
 
@@ -128,6 +128,10 @@ repo and push. Notes:
 
 - `vercel.json` (`cleanUrls: true`) must ship with the files — the nav links (`/sales` etc)
   and the `.html`-less URLs depend on it.
+- After every deploy, smoke-check the client portal's submit route: sign in at `/clients/login`, then open
+  `https://arowise.com/clients/advanced-back-and-neck/submit` in the same browser. `{"error":"POST only"}` means the
+  rewrite is live. A 404 page means the `rewrites` block in `vercel.json` is gone and the Done button on the codebook
+  page is broken. An unsigned request proves nothing: the middleware answers it (302/401) before routing happens.
 - Vercel Web Analytics must be enabled on the project or `/_vercel/insights/script.js` 404s
   (harmless but noisy). The Leadsy pixel needs no config.
 - Verify after deploy: `/ 0n` indices on the bus at ≥1440w, mobile menu at ≤900w, counter

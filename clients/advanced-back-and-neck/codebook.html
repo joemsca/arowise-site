@@ -107,6 +107,8 @@ function load(){for(const [id,v] of Object.entries(st)){const it=document.queryS
 async function submit(){save();const btn=document.getElementById('submit');btn.disabled=true;btn.textContent='Sending…';
  try{const r=await fetch('submit',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({form:'codebook',respondent:'dan',answers:st,items:ITEMS})});
   if(!r.ok)throw new Error('HTTP '+r.status);document.querySelector('main').innerHTML='<div class="done"><h1>Thank you, Dr. Dan.</h1><p>Your answers were received. Joe will follow up with the next batch.</p></div>';document.querySelector('footer').style.display='none';}
- catch(e){btn.disabled=false;btn.textContent='Done - send my answers';alert('Could not send just now ('+e.message+'). Your answers are saved in this browser; please try again in a minute.');}}
+ catch(e){btn.disabled=false;btn.textContent='Done - send my answers';
+  if(e.message==='HTTP 401'){alert('Your sign-in has expired. Your answers are saved in this browser. Please sign in again on the next screen, then press Done once more.');location.href='/clients/login?next='+encodeURIComponent(location.pathname);return;}
+  alert('Could not send just now ('+e.message+'). Your answers are saved in this browser; please try again in a minute.');}}
 document.addEventListener('change',save);document.addEventListener('input',e=>{if(e.target.matches('.fix input'))save();});load();
 </script></body></html>
