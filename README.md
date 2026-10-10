@@ -5,7 +5,7 @@ the template for the four subpages (`/sales`, `/marketing`, `/operations`, `/fin
 
 **Frozen references — never modify:**
 
-- `../c-signal-v2/` — the client-approved single-page design (v2.4). This folder is the
+- `../../archive/redesign-comps/c-signal-v2/` — the client-approved single-page design (v2.4), archived with the other three comps. This folder is the
   backup of record. If something here breaks, diff against it.
 - `../../copy/` — the copy spec (`index.md`, `sales.md`, `marketing.md`, `operations.md`,
   `finances.md`). Every text slot on a page is transcribed from its `.md` file
@@ -19,10 +19,12 @@ the template for the four subpages (`/sales`, `/marketing`, `/operations`, `/fin
 | `index.html` | Homepage. Sections: Hero → Stat band → What automation actually is → The services you already use (the flow diagram) → Where it pays off (`#areas`) → CRISP → About (`#about`) → Contact (`#contact`). Also carries the monochrome logo sprite (`#lg-*` symbols, sourced from `../../assets/logos/`) used by the flow tiles. |
 | `styles.css` | **One stylesheet for all 5 pages.** Organized into 9 commented sections (tokens → base → shell → shared components → circuit → backgrounds → page-specific → responsive → reduced motion). All colors/spacing/type are custom properties in `:root`; add no raw hex to rules. Page-specific blocks are scoped under body classes (`body.page-home`, add `body.page-sales` etc). |
 | `site.js` | **One behavior module for all 5 pages** (footer year, mobile menu, stat counter, signal circuit). Fully documented in its header comment. Subpages should not need to touch it. |
+| `vercel.json` | `cleanUrls: true` so `/sales` serves `sales.html` (no `.html` in URLs). Also holds `redirects`: `/small-business` -> `/small-business-menu` (renamed 2026-09-09; 308 so an already-shared link still lands and Google moves the indexed URL instead of seeing a duplicate). JSON has no comments and Vercel rejects unknown keys in a redirect object, so the reason for a redirect gets recorded here, not in the file. Also holds `rewrites`: `/clients/:client/submit` -> `/api/codebook-submit?client=:client`, the client portal's submit endpoint (the Done button on `/clients/<slug>/codebook` POSTs to it). Without that rewrite the POST falls through to the filesystem and 404s; that happened 2026-09-09 to 2026-10-07 when the redirect below was added in place of the rewrite instead of beside it. Add keys to this object, never replace it. Also `/go` -> `/api/go` and `/go/:spot` -> `/api/go?spot=:spot`, the flyer QR router (added 2026-10-09). **The `/go` route is permanent: it is printed on physical flyers. Never remove or rename it.** |
+| `assets/` | Brand icon PNGs. Favicons sit at the root. |
 | `agency.html`, `small-business-menu.html` | **Generated build artifacts. Never hand-edit.** The agency and small-business services menus, rendered from the private vault by `skills/automation_services_catalog/scripts/render_menu.py`; the words live in that repo's `catalog.json`. Each is one self-contained file sharing nothing with `styles.css` or `site.js`. Neither is linked from any page, and both are indexable, so `sitemap.xml` is the only way a crawler finds them. Re-render and re-commit after any catalog edit or they go stale silently. |
 | `sitemap.xml`, `robots.txt` | The discovery path for the two unlinked menu pages (Joe, 2026-09-08: indexed, but no link from arowise.com). Add a `<url>` when a page is added; nothing generates this file. |
-| `vercel.json` | `cleanUrls: true` so `/sales` serves `sales.html` (no `.html` in URLs). Also holds `redirects`: `/small-business` -> `/small-business-menu` (renamed 2026-09-09; 308 so an already-shared link still lands and Google moves the indexed URL instead of seeing a duplicate). JSON has no comments and Vercel rejects unknown keys in a redirect object, so the reason for a redirect gets recorded here, not in the file. Also holds `rewrites`: `/clients/:client/submit` -> `/api/codebook-submit?client=:client`, the client portal's submit endpoint (the Done button on `/clients/<slug>/codebook` POSTs to it). Without that rewrite the POST falls through to the filesystem and 404s; that happened 2026-09-09 to 2026-10-07 when the redirect below was added in place of the rewrite instead of beside it. Add keys to this object, never replace it. |
-| `assets/` | Brand icon PNGs. Favicons sit at the root. |
+| `api/go.js`, `lib/config.js`, `lib/log.js`, `lib/go-default.js` | The flyer QR router and its helpers (deploy repo only, like `api/codebook-submit.js`). `/go/<spot>` logs a `scan` event to Upstash Redis, sets the `aw_v` visitor cookie, and 302s to Cal.com (mode `book`) or `/demo` (mode `demo`). The live mode is the Vercel Global Config store `arowise-flyer-go` (Joe flips it in the dashboard, no deploy); `lib/go-default.js` is the fallback and every failure lands on booking. Spec and as-built: `20-Internal-Projects/flyer-qr-demo/README.md`. |
+| `demo.html` | Phase 1 placeholder for the flyer demo screen (`noindex`; reached only in mode `demo`). Reuses site copy verbatim; replaced by the real demo app in phase 2. |
 | `shots-final-*.png` | Verification screenshots (desktop 1440 / mobile 390), regenerated after visual changes. |
 
 ## The circuit system (the page's one moving element)
@@ -115,7 +117,7 @@ is always physically connected. Full architecture notes are in `site.js`'s heade
 ## Local preview
 
 ```bash
-cd 20-Projects/website/redesign/site && python3 -m http.server 8080
+cd 20-Internal-Projects/website/redesign/site && python3 -m http.server 8080
 # open http://localhost:8080  (subpage links 404 locally until built — Vercel's
 # cleanUrls handles /sales -> sales.html in production)
 ```
@@ -132,6 +134,14 @@ repo and push. Notes:
   `https://arowise.com/clients/advanced-back-and-neck/submit` in the same browser. `{"error":"POST only"}` means the
   rewrite is live. A 404 page means the `rewrites` block in `vercel.json` is gone and the Done button on the codebook
   page is broken. An unsigned request proves nothing: the middleware answers it (302/401) before routing happens.
+- Also after every deploy: `curl -sI https://arowise.com/go/test-1 | grep -i location` must be a 302 to
+  `https://cal.com/arowise/discovery?...utm_content=test-1` (or `/demo?s=test-1` when the mode is `demo`). Anything else means
+  the `/go` rewrites or `api/go.js` broke, and every printed flyer now dead-ends. A `test-*` spot pings Joe's phone with `[TEST]`.
+- Env vars on the Vercel project (set in the dashboard or `vercel env add`, never in the repo): `CLIENT_PORTAL_USER`,
+  `CLIENT_PORTAL_PASS`, `CLIENT_PORTAL_SECRET`, `VAULT_GITHUB_TOKEN`, `NTFY_TOPIC` (client portal + flyer pings);
+  `GLOBAL_CONFIG` (flyer router live config, the connection string of the `arowise-flyer-go` store on the
+  `edge-config.vercel.com` host, which is the one that answers for legacy `ecfg_` ids); `KV_REST_API_URL` + `KV_REST_API_TOKEN`
+  (Upstash Redis via the Vercel Marketplace, the flyer event log and, from phase 2, results + rate limits).
 - Vercel Web Analytics must be enabled on the project or `/_vercel/insights/script.js` 404s
   (harmless but noisy). The Leadsy pixel needs no config.
 - Verify after deploy: `/ 0n` indices on the bus at ≥1440w, mobile menu at ≤900w, counter

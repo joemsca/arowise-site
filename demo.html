@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a free consultation | AroWise Automation</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#141615" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <!-- PHASE 1 PLACEHOLDER for the flyer QR demo (spec: ~/AroWise/20-Internal-Projects/flyer-qr-demo/README.md).
+       Reached only when the live config mode is "demo"; it fails toward booking by design. Every word
+       here is reused verbatim from index.html / the flyer; the real demo screen replaces this in phase 2. -->
+  <style>
+    body.page-demo { min-height: 100svh; display: grid; place-items: center; padding: var(--pad-x); }
+    body.page-demo .demo-card { width: min(100%, 420px); text-align: center; }
+    body.page-demo .demo-card .brand { justify-content: center; margin-bottom: 28px; }
+    body.page-demo .demo-card h1 { font-size: clamp(1.9rem, 8vw, 2.6rem); letter-spacing: -.02em; margin: 0 0 14px; }
+    body.page-demo .demo-card p { color: var(--steel); margin: 0 0 26px; }
+    body.page-demo .demo-card .btn { width: 100%; justify-content: center; min-height: 56px; font-size: 1.05rem; }
+  </style>
+</head>
+<body class="page-demo">
+  <main class="demo-card">
+    <a class="brand" href="/"><img src="/assets/arowise-icon-200.png" alt="" width="30" height="30" /><span class="wordmark">Aro<span>Wise</span> Automation</span></a>
+    <p class="kicker">For Denver small business owners</p>
+    <h1>Book a free consultation</h1>
+    <p>In our first consultation we'll discuss your current systems to discover your 2-3 top automation priorities.</p>
+    <a class="btn btn-primary" id="book" href="https://cal.com/arowise/discovery?utm_source=flyer&amp;utm_medium=qr&amp;utm_campaign=flyer-qr">Start a free consultation</a>
+  </main>
+  <script>
+    // Carry the spot from /go/<spot> into utm_content so the booking still says which flyer it came from.
+    (function () {
+      var s = new URLSearchParams(location.search).get('s') || '';
+      if (!/^[a-z0-9-]{1,40}$/.test(s)) return;
+      var a = document.getElementById('book'); var u = new URL(a.href); u.searchParams.set('utm_content', s); a.href = u.toString();
+    })();
+  </script>
+</body>
+</html>
