@@ -1,0 +1,9 @@
+{
+  "name": "arowise-site",
+  "private": true,
+  "type": "module",
+  "description": "arowise.com: static pages plus Vercel functions (client portal, flyer QR router and demo). Source of truth for static pages is the AroWise vault; see README.md.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0"
+  }
+}

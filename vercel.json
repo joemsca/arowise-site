@@ -19,6 +19,18 @@
     {
       "source": "/go/:spot",
       "destination": "/api/go?spot=:spot"
+    },
+    {
+      "source": "/demo",
+      "destination": "/api/demo"
+    },
+    {
+      "source": "/r/:id",
+      "destination": "/api/result?id=:id"
+    },
+    {
+      "source": "/privacy-demo",
+      "destination": "/api/privacy"
     }
   ]
 }
