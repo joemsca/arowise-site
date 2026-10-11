@@ -30,10 +30,12 @@ export default async function handler(req, res) {
   const notes = String((p.responses && p.responses.notes && (p.responses.notes.value ?? p.responses.notes)) || p.additionalNotes || p.description || '');
   const rid = (RID.exec(notes) || [])[1] || '';
   const utm = (p.tracking || p.metadata || {});
-  const spot = String(utm.utm_content || utm.utmContent || (p.metadata && p.metadata.spot) || '').slice(0, 40) || 'unknown';
+  const fromNotes = (/\(spot ([a-z0-9-]{1,40})\)/.exec(notes) || [])[1] || '';
+  const spot = String(utm.utm_content || utm.utmContent || (p.metadata && p.metadata.spot) || fromNotes || '').slice(0, 40) || 'unknown';
+  const isTest = spot.startsWith('test-') || /@example\.com$/.test(String(attendee.email || '').toLowerCase());
   const row = { ts: new Date().toISOString(), uid: String(p.uid || ''), start: String(p.startTime || ''), email: String(attendee.email || '').toLowerCase(), name: String(attendee.name || ''), result_id: rid, spot, notes: notes.slice(0, 300) };
   await logEvent(req, { event: 'booking_made', spot, result_id: rid, button: rid ? 'screenshot' : '', booking_uid: row.uid, visitor_id: '' });
   try { await redis(['XADD', 'flyer:bookings', '*', ...Object.entries(row).flat()]); if (rid) await redis(['SET', `flyer:booked:${rid}`, row.uid || '1', 'EX', 7776000]); } catch {}
-  if (rid || spot !== 'unknown') await ping(`${spot.startsWith('test-') ? '[TEST] ' : ''}Flyer booking: ${row.name || row.email}`, `${row.start} via ${spot}${rid ? `\nhttps://arowise.com/r/${rid}` : ''}`, { priority: 4, tags: 'calendar' });
+  if (rid || spot !== 'unknown') await ping(`${isTest ? '[TEST] ' : ''}Flyer booking: ${row.name || row.email}`, `${row.start} via ${spot}${rid ? `\nhttps://arowise.com/r/${rid}` : ''}`, { priority: 4, tags: 'calendar' });
   return res.status(200).json({ ok: true });
 }
