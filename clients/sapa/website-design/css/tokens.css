@@ -1,0 +1,130 @@
+/* Small Arms Pistol Academy design tokens. Generated from tokens.json; edit that and regenerate rather than this.
+   Light theme is the default; add data-theme="dark" on <html> (or any ancestor) for the dark theme. */
+:root, [data-theme="light"] {
+  --gold-100: #FBF5DF;
+  --gold-300: #E3C565;
+  --gold-500: #D4AF37;
+  --black-900: #100F0D;
+  --gunmetal-800: #1F2225;
+  --gunmetal-700: #2E3236;
+  --gunmetal-500: #565D64;
+  --steel-300: #A7ADB3;
+  --stone-200: #E7E5E0;
+  --bone-50: #F7F6F3;
+  --paper-100: #F4F2EE;
+  --white: #FFFFFF;
+  --red-600: #B3261E;
+  --red-300: #EE7B72;
+  --blue-700: #1F5F86;
+  --blue-300: #7FB6DA;
+  --surface: var(--white);
+  --surface-alt: var(--bone-50);
+  --surface-inverse: var(--black-900);
+  --text: var(--black-900);
+  --text-muted: var(--gunmetal-500);
+  --text-inverse: var(--paper-100);
+  --text-inverse-muted: var(--steel-300);
+  --text-gold: var(--black-900);
+  --text-gold-inverse: var(--gold-500);
+  --accent: var(--gold-500);
+  --accent-hover: var(--gold-300);
+  --on-accent: var(--black-900);
+  --accent-soft: var(--gold-100);
+  --border: var(--stone-200);
+  --border-strong: var(--gunmetal-500);
+  --focus-ring: var(--black-900);
+  --link-underline: var(--gold-500);
+  --danger: var(--red-600);
+  --success: var(--blue-700);
+  --photo-scrim: rgba(16, 15, 13, 0.60);
+  --shadow-md: 0 2px 4px rgba(16, 15, 13, 0.06), 0 10px 28px rgba(16, 15, 13, 0.10);
+}
+
+[data-theme="dark"] {
+  --gold-100: #FBF5DF;
+  --gold-300: #E3C565;
+  --gold-500: #D4AF37;
+  --black-900: #100F0D;
+  --gunmetal-800: #1F2225;
+  --gunmetal-700: #2E3236;
+  --gunmetal-500: #565D64;
+  --steel-300: #A7ADB3;
+  --stone-200: #E7E5E0;
+  --bone-50: #F7F6F3;
+  --paper-100: #F4F2EE;
+  --white: #FFFFFF;
+  --red-600: #B3261E;
+  --red-300: #EE7B72;
+  --blue-700: #1F5F86;
+  --blue-300: #7FB6DA;
+  --surface: var(--black-900);
+  --surface-alt: var(--gunmetal-800);
+  --surface-inverse: var(--gunmetal-700);
+  --text: var(--paper-100);
+  --text-muted: var(--steel-300);
+  --text-inverse: var(--paper-100);
+  --text-inverse-muted: var(--steel-300);
+  --text-gold: var(--gold-500);
+  --text-gold-inverse: var(--gold-500);
+  --accent: var(--gold-500);
+  --accent-hover: var(--gold-300);
+  --on-accent: var(--black-900);
+  --accent-soft: var(--gunmetal-800);
+  --border: var(--gunmetal-700);
+  --border-strong: var(--steel-300);
+  --focus-ring: var(--gold-500);
+  --link-underline: var(--gold-500);
+  --danger: var(--red-300);
+  --success: var(--blue-300);
+  --photo-scrim: rgba(16, 15, 13, 0.70);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.4), 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-full: 9999px;
+  --notch-sm: 8px;
+  --notch-md: 14px;
+  --notch-lg: 28px;
+  --rake-angle: 16deg;
+  --rake-offset: 32px;
+  --grip-rake: 29%;
+  --rule-hairline: 1px;
+  --grip-pitch: 18px;
+  --grip-groove: 5px;
+  --container-max: 1180px;
+  --measure: 68ch;
+  --header-height: 96px;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-sans: Barlow, "Helvetica Neue", Arial, sans-serif;
+  --font-name-saira: "Saira Condensed", "Arial Narrow", sans-serif;
+  --font-name-chakra: "Chakra Petch", "Arial Narrow", sans-serif;
+  --font-name-slab: "Zilla Slab", Rockwell, Georgia, serif;
+}
+
+/* Type styles (class names match tokens.json) */
+.display-1 { font-family: var(--font-display); font-size: 72px; line-height: 66px; font-weight: 800; }
+.display-2 { font-family: var(--font-display); font-size: 48px; line-height: 50px; font-weight: 700; }
+.heading-1 { font-family: var(--font-display); font-size: 36px; line-height: 40px; font-weight: 700; }
+.heading-2 { font-family: var(--font-display); font-size: 28px; line-height: 32px; font-weight: 700; }
+.heading-3 { font-family: var(--font-display); font-size: 22px; line-height: 26px; font-weight: 600; }
+.price { font-family: var(--font-display); font-size: 40px; line-height: 40px; font-weight: 800; }
+.name-d-chakra { font-family: var(--font-name-chakra); font-size: 36px; line-height: 38px; font-weight: 700; font-style: italic; }
+.name-a-barlow { font-family: var(--font-name-chakra); font-size: 40px; line-height: 40px; font-weight: 800; }
+.name-b-saira { font-family: var(--font-name-saira); font-size: 40px; line-height: 40px; font-weight: 800; }
+.name-c-slab { font-family: var(--font-name-slab); font-size: 34px; line-height: 36px; font-weight: 700; }
+.lead { font-family: var(--font-sans); font-size: 20px; line-height: 32px; font-weight: 400; }
+.body { font-family: var(--font-sans); font-size: 17px; line-height: 28px; font-weight: 400; }
+.body-sm { font-family: var(--font-sans); font-size: 15px; line-height: 24px; font-weight: 400; }
+.label { font-family: var(--font-sans); font-size: 15px; line-height: 20px; font-weight: 600; }
+.caption { font-family: var(--font-sans); font-size: 13px; line-height: 18px; font-weight: 500; }

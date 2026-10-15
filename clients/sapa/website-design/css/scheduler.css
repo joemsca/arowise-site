@@ -1,0 +1,109 @@
+/* Small Arms Pistol Academy - scheduler.css
+   The SAPA skin for the embedded class signup (js/scheduler.js). Light theme: white cards on the
+   bone section, black date blocks with gold month, gold primary buttons. Tokens from tokens.css. */
+
+.scheduler { max-width: 880px; }
+.sch-card { background: var(--surface); border: var(--rule-hairline) solid var(--border); border-radius: var(--radius-sm); padding: var(--space-5); margin-bottom: var(--space-4); }
+.sch-group { margin-bottom: var(--space-7); }
+.sch-group h3 { margin-bottom: var(--space-4); }
+.sch-group:last-child { margin-bottom: 0; }
+.sch-intro { margin-bottom: var(--space-6); color: var(--text-muted); }
+
+/* one class in the list */
+.sch-class { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: var(--space-3) var(--space-5); align-items: start; }
+.sch-date { text-align: center; padding: var(--space-3) 0 var(--space-2); background: var(--surface-inverse); color: var(--text-inverse); }
+.sch-date.is-soldout { background: var(--gunmetal-700); }
+.sch-date .m { display: block; font-family: var(--font-display); font-weight: 700; font-size: 15px; line-height: 18px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-gold-inverse); }
+.sch-date .d { display: block; font-family: var(--font-display); font-weight: 800; font-size: 40px; line-height: 42px; font-variant-numeric: tabular-nums; }
+.sch-date .y { display: block; font-size: 13px; line-height: 18px; color: var(--text-inverse-muted); }
+.sch-class h4 { font-size: 24px; line-height: 28px; margin: 0; }
+.sch-class .sub { color: var(--text-muted); font-size: 15px; line-height: 22px; margin: 0; }
+.sch-dl { grid-column: 2; margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-1) var(--space-3); font-size: 15px; line-height: 22px; }
+.sch-dl dt { font-weight: 600; color: var(--text-muted); }
+.sch-dl dd { margin: 0; }
+.sch-dl dd.num { font-weight: 700; font-variant-numeric: tabular-nums; }
+.sch-dl dd.num.is-zero { color: var(--danger); }
+.sch-foot { grid-column: 2; display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-2); }
+
+/* headings inside the widget */
+.sch-steps { font-size: 15px; line-height: 20px; color: var(--text-muted); margin: 0 0 var(--space-1); }
+.sch-head { margin-bottom: var(--space-4); }
+.sch-head h3 { font-size: 32px; line-height: 36px; margin: 0; }
+.sch-head .sub { color: var(--text-muted); margin: var(--space-1) 0 0; }
+.sch-tags { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+.sch-card h4 { font-size: 22px; line-height: 26px; margin: 0 0 var(--space-3); }
+.sch-card h5 { font-family: var(--font-sans); font-size: 15px; line-height: 20px; font-weight: 600; color: var(--text-muted); margin: 0 0 var(--space-1); }
+
+/* forms */
+.sch-field { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-3); }
+.sch-field > label, .sch-label { font-weight: 600; font-size: 15px; line-height: 20px; }
+.sch-input, .sch-select, .sch-textarea { width: 100%; min-height: 44px; padding: 0 var(--space-3); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface); color: var(--text); font: inherit; font-size: 16px; }
+.sch-select { padding-right: var(--space-6); }
+.sch-input[readonly] { background: var(--surface-alt); }
+.sch-input:focus, .sch-select:focus { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+.sch-help { font-size: 14px; line-height: 20px; color: var(--text-muted); margin: 0; }
+.sch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.sch-grid .full { grid-column: 1 / -1; }
+.sch-check-row { display: flex; align-items: flex-start; gap: var(--space-3); cursor: pointer; font-size: 16px; line-height: 24px; }
+.sch-check { appearance: none; -webkit-appearance: none; flex: none; width: 24px; height: 24px; margin: 1px 0 0; border: 2px solid var(--text); border-radius: var(--radius-sm); background: var(--surface); position: relative; cursor: pointer; }
+.sch-check:checked { background: var(--accent); }
+.sch-check:checked::after { content: ""; position: absolute; left: 7px; top: 2px; width: 6px; height: 12px; border: solid var(--on-accent); border-width: 0 3px 3px 0; transform: rotate(45deg); }
+.sch-check:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.sch-row { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-3); }
+.sch-addon { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-3) 0; border-top: var(--rule-hairline) solid var(--border); }
+.sch-addon label { display: block; min-width: 0; cursor: pointer; }
+.sch-addon label b { display: block; }
+.sch-addon label .sch-help { display: block; margin-top: 2px; }
+.sch-addon .sch-select { width: 84px; flex: none; }
+.sch-addon .price { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 18px; margin: 2px 0; }
+
+/* messages */
+.sch-alert { padding: var(--space-3) var(--space-4); border: 2px solid var(--danger); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); margin-bottom: var(--space-4); font-weight: 500; }
+.sch-alert::before { content: "Please check: "; font-weight: 700; }
+.sch-notice { padding: var(--space-3) var(--space-4); background: var(--accent-soft); border-radius: var(--radius-sm); margin: 0; }
+.sch-demo { padding: var(--space-3) var(--space-4); background: var(--accent-soft); border-radius: var(--radius-sm); font-size: 15px; line-height: 22px; margin-bottom: var(--space-4); }
+.sch-code-error { color: var(--danger); font-weight: 600; font-size: 15px; margin: var(--space-2) 0 0; }
+.sch-code-ok { color: var(--success); font-weight: 600; font-size: 15px; margin: var(--space-2) 0 0; }
+
+/* actions */
+.sch-actions { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4); }
+.sch-actions .sapa-btn-link { min-height: 48px; }
+
+/* totals */
+.sch-totals { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 24px; }
+.sch-totals td { padding: var(--space-2) 0; border-bottom: var(--rule-hairline) solid var(--border); }
+.sch-totals td:last-child { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; }
+.sch-totals tr.is-total td { font-family: var(--font-display); font-size: 26px; line-height: 30px; font-weight: 800; border-bottom: 0; padding-top: var(--space-3); }
+.sch-totals tr.is-info td { color: var(--text-muted); font-weight: 500; }
+.sch-totals tr.is-credit td:last-child { color: var(--success); }
+.sch-code { display: flex; gap: var(--space-2); align-items: flex-end; }
+.sch-code .sch-field { flex: 1; margin: 0; }
+
+/* terms */
+.sch-terms { max-height: 300px; overflow: auto; padding: var(--space-4); background: var(--surface-alt); border-radius: var(--radius-sm); white-space: pre-line; font-size: 15px; line-height: 24px; margin-bottom: var(--space-4); }
+
+/* lists */
+.sch-students { list-style: none; margin: 0; padding: 0; }
+.sch-students li { display: flex; gap: var(--space-3); padding: var(--space-1) 0; }
+.sch-students .seat { flex: none; width: 64px; font-weight: 600; color: var(--text-muted); font-size: 15px; }
+.sch-sessions { list-style: none; margin: 0; padding: 0; }
+.sch-sessions li { padding: var(--space-1) 0; }
+.sch-sessions b { font-weight: 600; }
+
+/* notify form for empty class types */
+.sch-notify { display: grid; grid-template-columns: 1fr 1fr auto; gap: var(--space-3); align-items: end; margin-top: var(--space-4); }
+.sch-notify .sch-field { margin: 0; }
+
+.sch-confirm-badge { display: inline-flex; gap: var(--space-2); align-items: center; }
+
+@media (max-width: 719px) {
+  .sch-class { grid-template-columns: 76px minmax(0, 1fr); }
+  .sch-dl, .sch-foot { grid-column: 1 / -1; }
+  .sch-grid { grid-template-columns: 1fr; }
+  .sch-notify { grid-template-columns: 1fr; }
+  .sch-date .d { font-size: 32px; line-height: 34px; }
+  .sch-head h3 { font-size: 26px; line-height: 30px; }
+  .sch-card { padding: var(--space-4); }
+  .sch-actions { flex-direction: column-reverse; align-items: stretch; }
+  .sch-actions .sapa-btn { width: 100%; }
+}

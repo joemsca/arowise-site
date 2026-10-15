@@ -1,0 +1,48 @@
+/* Small Arms Pistol Academy - services.css
+   Firearm Services page: the pick-your-services list and the running total. */
+
+.services-layout { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: var(--space-7); align-items: start; }
+#calc-summary { position: sticky; top: calc(56px + var(--header-height) + var(--space-4)); }
+
+.svc-group { margin-bottom: var(--space-7); }
+.svc-group h3 { margin-bottom: var(--space-2); }
+.group-note { margin: 0 0 var(--space-2); color: var(--text-muted); font-size: 15px; line-height: 22px; }
+.svc-list { list-style: none; margin: 0; padding: 0; border-top: var(--rule-hairline) solid var(--border); }
+.svc { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); align-items: center; padding: var(--space-3) var(--space-2); border-bottom: var(--rule-hairline) solid var(--border); }
+.svc.is-on { background: var(--accent-soft); }
+.svc-check { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; margin: 0; border: 2px solid var(--text); border-radius: var(--radius-sm); background: var(--surface); position: relative; cursor: pointer; }
+.svc-check:checked { background: var(--accent); }
+.svc-check:checked::after { content: ""; position: absolute; left: 7px; top: 2px; width: 6px; height: 12px; border: solid var(--on-accent); border-width: 0 3px 3px 0; transform: rotate(45deg); }
+.svc-check:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.svc-name { font-weight: 600; cursor: pointer; }
+.svc-price { font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 24px; white-space: nowrap; text-align: right; }
+.svc-note { grid-column: 2 / -1; font-size: 14px; line-height: 20px; color: var(--text-muted); }
+.qty-wrap { display: none; grid-column: 2 / -1; align-items: center; gap: var(--space-2); }
+.svc.is-on .qty-wrap { display: inline-flex; }
+.qty { width: 72px; min-height: 40px; text-align: center; border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface); font: inherit; font-weight: 600; }
+.qty:focus { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+.qty-unit { font-size: 14px; color: var(--text-muted); }
+.special-deals { margin-top: var(--space-4); }
+
+.calc-box { padding: var(--space-5); border-radius: var(--radius-sm); }
+.calc-box h2 { margin-bottom: var(--space-3); }
+#calc-lines { list-style: none; margin: 0; padding: 0; font-size: 15px; line-height: 22px; }
+#calc-lines li { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: var(--rule-hairline) solid var(--gunmetal-700); }
+#calc-lines li span:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
+#calc-empty, #calc-min, #calc-quote { font-size: 14px; line-height: 20px; color: var(--text-inverse-muted); margin: var(--space-2) 0 0; }
+.calc-total-row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); margin: var(--space-4) 0 var(--space-2); font-weight: 600; border-top: 1px solid var(--gunmetal-500); padding-top: var(--space-3); }
+#calc-total { font-family: var(--font-display); font-weight: 800; font-size: 40px; line-height: 40px; color: var(--text-gold-inverse); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.calc-fine { font-size: 14px; line-height: 20px; color: var(--text-inverse-muted); margin: 0; }
+.calc-actions { display: grid; gap: var(--space-2); margin-top: var(--space-4); }
+.calc-actions .sapa-btn { width: 100%; }
+
+@media (max-width: 1000px) {
+  .services-layout { grid-template-columns: 1fr; }
+  #calc-summary { position: static; }
+}
+@media (max-width: 639px) {
+  .svc { grid-template-columns: 28px minmax(0, 1fr); }
+  .svc-price { grid-column: 2; text-align: left; font-size: 18px; }
+  .svc-note, .qty-wrap { grid-column: 2; }
+  #calc-total { font-size: 34px; line-height: 36px; }
+}

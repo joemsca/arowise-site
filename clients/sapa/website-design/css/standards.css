@@ -1,0 +1,62 @@
+/* Small Arms Pistol Academy - standards.css
+   Challenge Standards page: drill cards with a four-level time ladder, the accuracy rules and the totals.
+   Level colors: Novice steel, Intermediate gunmetal, Advanced black, Expert gold (a fill, never text). */
+
+.drills { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5); }
+.drill { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+.drill:last-child { grid-column: 1 / -1; }
+.drill:last-child .ladder { max-width: 720px; }
+.drill h3 { margin: 0; }
+.drill-desc { margin: 0; color: var(--text-muted); }
+
+.ladder { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; gap: var(--space-2); }
+.tier { display: grid; grid-template-columns: 120px minmax(0, 1fr) 96px; align-items: center; gap: var(--space-3); font-size: 15px; line-height: 20px; }
+.tier-name { font-weight: 600; }
+.tier-track { display: block; height: 16px; background: var(--stone-200); border-radius: var(--radius-sm); overflow: hidden; }
+.tier-bar { display: block; height: 100%; background: var(--gunmetal-500); }
+.tier[data-tier="novice"] .tier-bar { background: var(--steel-300); }
+.tier[data-tier="intermediate"] .tier-bar { background: var(--gunmetal-500); }
+.tier[data-tier="advanced"] .tier-bar { background: var(--black-900); }
+.tier[data-tier="expert"] .tier-bar { background: var(--gold-500); }
+.tier-time { font-family: var(--font-display); font-weight: 800; font-size: 22px; line-height: 24px; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.standards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: start; }
+.standards-grid h2 { margin-bottom: var(--space-4); }
+.accuracy { display: grid; gap: var(--space-3); }
+.accuracy .tier-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: var(--space-3); align-items: start; padding: var(--space-3) 0; border-top: var(--rule-hairline) solid var(--border); }
+.accuracy .tier-row p { margin: 0; }
+.tier-chip { display: inline-flex; align-items: center; justify-content: center; min-height: 32px; padding: 0 var(--space-3); font-weight: 600; font-size: 14px; line-height: 20px; background: var(--surface-inverse); color: var(--text-inverse); clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
+.tier-row[data-tier="novice"] .tier-chip { background: var(--steel-300); color: var(--black-900); }
+.tier-row[data-tier="intermediate"] .tier-chip { background: var(--gunmetal-500); }
+.tier-row[data-tier="advanced"] .tier-chip { background: var(--black-900); }
+.tier-row[data-tier="expert"] .tier-chip { background: var(--gold-500); color: var(--black-900); }
+.totals .tier { grid-template-columns: 190px minmax(0, 1fr) 136px; }
+.totals .tier-track { height: 20px; }
+
+.how-band .prose { color: var(--text-inverse); }
+.how-band h2 { margin-bottom: var(--space-4); }
+.how-band .prose p { color: var(--text-inverse-muted); }
+.how-band .prose strong { color: var(--text-inverse); }
+.how-band .photo { --rake: 40px; aspect-ratio: 4 / 3; }
+
+.lists-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); align-items: start; }
+.completion-list { padding: var(--space-5); border-top: 4px solid var(--border-strong); }
+.completion-list[data-level="advanced"] { border-top-color: var(--black-900); }
+.completion-list[data-level="expert"] { border-top-color: var(--gold-500); }
+.completion-list h3 { margin-bottom: var(--space-3); }
+.completion-list .names { list-style: none; margin: 0; padding: 0; }
+.completion-list .names li { padding: var(--space-2) 0; border-top: var(--rule-hairline) solid var(--border); font-weight: 600; }
+.completion-list p { margin: 0; }
+
+@media (max-width: 860px) {
+  .drills, .standards-grid, .lists-grid { grid-template-columns: 1fr; }
+  .how-band .photo { max-height: 300px; }
+}
+@media (max-width: 639px) {
+  .drill { padding: var(--space-4); }
+  .tier { grid-template-columns: 96px minmax(0, 1fr) 84px; gap: var(--space-2); }
+  .tier-time { font-size: 19px; }
+  .totals .tier { grid-template-columns: 1fr 100px; }
+  .totals .tier-track { grid-column: 1 / -1; order: 3; }
+  .accuracy .tier-row { grid-template-columns: 1fr; gap: var(--space-2); }
+}
