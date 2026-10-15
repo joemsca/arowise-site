@@ -92,7 +92,7 @@ window.SAPA_SCHEDULE = (function () {
       { code: 'EARLY10', name: 'Early bird 10%', type: 'percent', value: 10, typeId: 'ccw' }
     ],
     payments: {
-      offlineInstructions: 'Your seats are reserved. Payment is collected by Mike before class: text 716-397-5769 to arrange it, or pay at the door on day one.'
+      offlineInstructions: 'Your seats are reserved. Payment is collected by the instructor before class: text 716-397-5769 to arrange it, or pay at the door on day one.'
     }
   };
 })();
