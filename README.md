@@ -138,6 +138,11 @@ repo and push. Notes:
 - Also after every deploy: `curl -sI https://arowise.com/go/test-1 | grep -i location` must be a 302 to
   `https://cal.com/arowise/discovery?...utm_content=test-1` (or `/demo?s=test-1` when the mode is `demo`). Anything else means
   the `/go` rewrites or `api/go.js` broke, and every printed flyer now dead-ends. A `test-*` spot pings Joe's phone with `[TEST]`.
+- Client portal logins are **one per client**: `CLIENT_PORTAL_USERS` (production env) is a JSON array of
+  `{"user","pass","clients":[slug, ...]}`; `"*"` opens every client folder. A valid login outside its scope gets a 403
+  page with a sign-out link. The old `CLIENT_PORTAL_USER` / `CLIENT_PORTAL_PASS` pair is only read when
+  `CLIENT_PORTAL_USERS` is unset. To add a client: `vercel env pull`, edit the JSON, `vercel env rm CLIENT_PORTAL_USERS production`,
+  `printf '%s' "$JSON" | vercel env add CLIENT_PORTAL_USERS production`, redeploy. Tests: `node --test tests/middleware.test.mjs`.
 - Env vars on the Vercel project (set in the dashboard or `vercel env add`, never in the repo): `CLIENT_PORTAL_USER`,
   `CLIENT_PORTAL_PASS`, `CLIENT_PORTAL_SECRET`, `VAULT_GITHUB_TOKEN`, `NTFY_TOPIC` (client portal + flyer pings);
   `GLOBAL_CONFIG` (flyer router live config, the connection string of the `arowise-flyer-go` store on the
