@@ -35,6 +35,14 @@
     {
       "source": "/clients/sapa/class-scheduler/:path*",
       "destination": "https://sapa-class-scheduler.vercel.app/clients/sapa/class-scheduler/:path*"
+    },
+    {
+      "source": "/discovery-questionnaire",
+      "destination": "/api/questionnaire?op=page"
+    },
+    {
+      "source": "/discovery-questionnaire/api/:op",
+      "destination": "/api/questionnaire?op=:op"
     }
   ]
 }

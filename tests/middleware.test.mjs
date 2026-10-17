@@ -60,6 +60,37 @@ test('logout clears the cookie', async () => {
   assert.match(res.headers.get('set-cookie'), /Max-Age=0/);
 });
 
+test('the questionnaire opens only for a "*" login; client logins get 403, signed-out gets login', async () => {
+  const sapa = cookieOf(await login('sapa', 'sapa-pass'));
+  const joe = cookieOf(await login('joe', 'joe-pass', '/discovery-questionnaire'));
+  const signedOut = await get('/discovery-questionnaire');
+  assert.equal(signedOut.status, 302);
+  assert.equal(signedOut.headers.get('location'), '/clients/login?next=%2Fdiscovery-questionnaire');
+  assert.equal((await get('/discovery-questionnaire/api/state', null, 'PUT')).status, 401);
+  assert.equal((await get('/discovery-questionnaire', sapa)).status, 403);
+  assert.equal((await get('/discovery-questionnaire/api/list', sapa, 'POST')).status, 403);
+  assert.equal(await get('/discovery-questionnaire', joe), undefined);
+  assert.equal(await get('/discovery-questionnaire/api/state', joe, 'PUT'), undefined);
+});
+
+test('login sets the cookie on Path=/ and honors a questionnaire next; foreign next falls back', async () => {
+  const res = await login('joe', 'joe-pass', '/discovery-questionnaire');
+  assert.equal(res.status, 303);
+  assert.equal(res.headers.get('location'), '/discovery-questionnaire');
+  assert.match(res.headers.get('set-cookie'), /Path=\/;/);
+  assert.equal((await login('joe', 'joe-pass', '//evil.example/x')).headers.get('location'), '/clients/');
+  assert.equal((await login('joe', 'joe-pass', '/clients/login')).headers.get('location'), '/clients/');
+});
+
+test('an old Path=/clients cookie alongside a bad one still counts; logout clears both paths', async () => {
+  const joe = cookieOf(await login('joe', 'joe-pass'));
+  assert.equal(await get('/clients/sapa/website-design', `aw_portal=garbage.sig; ${joe}`), undefined);
+  const out = await get('/clients/logout');
+  const cookies = out.headers.getSetCookie();
+  assert.equal(cookies.length, 2);
+  assert.ok(cookies.some((c) => /Path=\/clients;/.test(c)) && cookies.some((c) => /Path=\/;/.test(c)));
+});
+
 test('with CLIENT_PORTAL_USERS unset the legacy pair still works with full scope', async () => {
   delete process.env.CLIENT_PORTAL_USERS;
   const legacy = cookieOf(await login('legacy', 'legacy-pass'));

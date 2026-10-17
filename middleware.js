@@ -1,4 +1,4 @@
-// Edge Middleware: the client portal gate for /clients/*.
+// Edge Middleware: the client portal gate for /clients/* and for Joe's own /discovery-questionnaire.
 // A branded login page (GET /clients/login) sets a signed, HttpOnly session cookie;
 // every other /clients/* request must carry a valid cookie or is redirected to login.
 //
@@ -7,7 +7,10 @@
 // A login whose cookie is valid but whose scope does not cover /clients/<slug>/... gets a 403 page, not the content.
 // Legacy: if CLIENT_PORTAL_USERS is unset, the single CLIENT_PORTAL_USER / CLIENT_PORTAL_PASS pair is used with scope "*".
 // CLIENT_PORTAL_SECRET is the HMAC key for the cookie.
-export const config = { matcher: ['/clients/:path*'] };
+// /discovery-questionnaire is not a client folder: it is AroWise's own tool and opens only for a "*" login.
+// The cookie is set on Path=/ so it reaches both trees; sessions issued before that carry Path=/clients
+// and keep working there until they expire (logout clears both).
+export const config = { matcher: ['/clients/:path*', '/discovery-questionnaire', '/discovery-questionnaire/:path*'] };
 
 const COOKIE = 'aw_portal';
 const DAYS = 30;
@@ -29,8 +32,13 @@ function accounts() {
   return [];
 }
 
-/** The client slug a /clients/... path belongs to, or null for shared routes (login, logout, the bare /clients/). */
+const OWNER_ONLY = Symbol('owner-only');
+const isQuestionnaire = (path) => /^\/discovery-questionnaire(\/|$)/.test(path);
+
+/** The client slug a /clients/... path belongs to, null for shared routes (login, logout, the bare /clients/),
+ *  or OWNER_ONLY for the questionnaire. */
 function clientOf(path) {
+  if (isQuestionnaire(path)) return OWNER_ONLY;
   const m = path.match(/^\/clients\/([^/]+)/);
   if (!m || m[1] === 'login' || m[1] === 'logout') return null;
   return m[1];
@@ -39,6 +47,7 @@ function clientOf(path) {
 function allowed(account, slug) {
   if (!account) return false;
   if (slug === null) return true;
+  if (slug === OWNER_ONLY) return account.clients.includes('*');
   return account.clients.includes('*') || account.clients.includes(slug);
 }
 
@@ -47,16 +56,20 @@ async function sign(payload) {
   return b64u(await crypto.subtle.sign('HMAC', key, enc.encode(payload)));
 }
 
+// A browser can hold two aw_portal cookies (an old Path=/clients one and a Path=/ one); any valid one counts.
 async function validSession(request) {
-  const raw = (request.headers.get('cookie') || '').split(/;\s*/).find((c) => c.startsWith(COOKIE + '='));
-  if (!raw) return null;
-  const [payload, sig] = raw.slice(COOKIE.length + 1).split('.');
-  if (!payload || !sig) return null;
-  if ((await sign(payload)) !== sig) return null;
-  const [user, exp] = b64uDecode(payload).split('|');
-  if (!user || Number(exp) < Date.now()) return null;
-  return user;
+  const raws = (request.headers.get('cookie') || '').split(/;\s*/).filter((c) => c.startsWith(COOKIE + '='));
+  for (const raw of raws) {
+    const [payload, sig] = raw.slice(COOKIE.length + 1).split('.');
+    if (!payload || !sig) continue;
+    if ((await sign(payload)) !== sig) continue;
+    const [user, exp] = b64uDecode(payload).split('|');
+    if (user && Number(exp) >= Date.now()) return user;
+  }
+  return null;
 }
+
+const safeNext = (next) => ((next.startsWith('/clients/') && !next.startsWith('/clients/login')) || isQuestionnaire(next) ? next : '/clients/');
 
 const STYLE = `
 :root{--canvas:#141615;--surface:#1B1D1C;--raised:#232624;--border:#2D2D2D;--border2:#3B3F40;--text:#E8E4DD;--muted:#ADBFC7;--teal:#00C6CB;--teal-deep:#00514C;--red:#F24A1C}
@@ -118,7 +131,10 @@ export default async function middleware(request) {
   const path = url.pathname.replace(/\/$/, '');
 
   if (path === '/clients/logout') {
-    return new Response(null, { status: 303, headers: { Location: '/clients/login', 'Set-Cookie': `${COOKIE}=; Path=/clients; Max-Age=0; HttpOnly; Secure; SameSite=Lax` } });
+    const headers = new Headers({ Location: '/clients/login' });
+    headers.append('Set-Cookie', `${COOKIE}=; Path=/clients; Max-Age=0; HttpOnly; Secure; SameSite=Lax`);
+    headers.append('Set-Cookie', `${COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`);
+    return new Response(null, { status: 303, headers });
   }
 
   if (path === '/clients/login') {
@@ -126,17 +142,16 @@ export default async function middleware(request) {
       const form = await request.formData();
       const user = String(form.get('user') || '').trim();
       const pass = String(form.get('pass') || '');
-      let next = String(form.get('next') || '');
-      if (!next.startsWith('/clients/') || next.startsWith('/clients/login')) next = '/clients/';
+      const next = safeNext(String(form.get('next') || ''));
       const account = accounts().find((a) => a.user === user && a.pass === pass);
       if (account) {
         const payload = b64u(enc.encode(`${user}|${Date.now() + DAYS * 864e5}`));
-        const cookie = `${COOKIE}=${payload}.${await sign(payload)}; Path=/clients; Max-Age=${DAYS * 86400}; HttpOnly; Secure; SameSite=Lax`;
+        const cookie = `${COOKIE}=${payload}.${await sign(payload)}; Path=/; Max-Age=${DAYS * 86400}; HttpOnly; Secure; SameSite=Lax`;
         return new Response(null, { status: 303, headers: { Location: next, 'Set-Cookie': cookie, 'Cache-Control': 'no-store' } });
       }
       return html(page({ error: 'That username and password did not match.', next }), 401);
     }
-    return html(page({ next: url.searchParams.get('next') || '' }));
+    return html(page({ next: safeNext(url.searchParams.get('next') || '') }));
   }
 
   const user = await validSession(request);
