@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#141615">
+<title>Zapier vs Make vs n8n Pricing (October 2026) | AroWise Automation</title>
+<meta name="description" content="Zapier, Make and n8n prices as of October 2026, what each one bills for, and what the same workflow costs on all three. Plus the AI stack we build on.">
+<link rel="canonical" href="https://arowise.com/automation-services-comparison">
+<meta property="og:title" content="What Zapier, Make and n8n cost in 2026">
+<meta property="og:description" content="Zapier, Make and n8n prices as of October 2026, what each one bills for, and what the same workflow costs on all three. Plus the AI stack we build on.">
+<meta property="og:url" content="https://arowise.com/automation-services-comparison">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-20">
+<meta property="article:modified_time" content="2026-10-20">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#141615; --surface:#1B1D1C; --raised:#232624;
+    --text:#E8E4DD; --text-dim:#EDE8DF; --steel:#ADBFC7; --muted:#9AA4B2;
+    --border:#2D2D2D; --border-2:#3B3F40;
+    --teal:#00C6CB; --teal-hover:#1AD3D8; --ink-on-teal:#06100F;
+    --accent-fill:#00C6CB; --teal-lg:#00C6CB;
+    --ignition:#F24A1C; --ember:#B3513C; --gold:#E3A520; --slate:#6D7D84;
+    --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --maxw:1120px; --pad:20px;
+    --glow:0 0 0 1px var(--teal), 0 0 22px -2px color-mix(in srgb, var(--teal) 70%, transparent);
+    --cham-btn:polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+    --cham-tag:polygon(0 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%);
+    --cham-card:polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--canvas);color:var(--text);font:16px/1.62 var(--sans);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(color-mix(in srgb, var(--steel) 14%, transparent) 1px, transparent 1px);
+    background-size:30px 30px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 62%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 62%)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);position:relative;z-index:1}
+  .mono{font-family:var(--mono)}
+  .kick{font:600 11px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--teal)}
+  h1,h2,h3{margin:0}
+  a{color:var(--teal);text-decoration:none}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--teal-lg);outline-offset:4px}
+
+  /* ---------- masthead ---------- */
+  header.hero{padding:34px 0 8px;position:relative;z-index:1}
+  .brand{display:flex;align-items:center;gap:11px;color:inherit;text-decoration:none;
+    width:max-content;transition:opacity .16s}
+  .brand:hover{opacity:.78}
+  .brand:focus-visible{outline:2px solid var(--teal-lg);outline-offset:6px}
+  .mark{display:block;width:36px;height:36px;flex:0 0 auto}
+  .wordmark{font:700 20px/1 var(--sans);letter-spacing:-.03em;color:var(--text);
+    display:inline-block;white-space:nowrap}
+  .wordmark b{color:var(--teal);font-weight:700}
+  .hero .kick{display:block;margin:30px 0 0}
+  .hero h1{font:600 clamp(30px,6.6vw,52px)/1.06 var(--sans);letter-spacing:-.03em;
+    margin:14px 0 0;max-width:17ch;text-wrap:balance}
+  .hero h1 em{font-style:normal;color:var(--teal-lg)}
+  .hero .lede{font-size:clamp(15px,2.1vw,17.5px);line-height:1.55;color:var(--text-dim);
+    margin:20px 0 0;max-width:60ch}
+  .stamp{display:inline-flex;align-items:center;gap:9px;margin:22px 0 0;padding:8px 12px;
+    border:1px solid var(--border-2);clip-path:var(--cham-tag);
+    font:500 10.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+  .stamp .led{width:7px;height:7px;background:var(--teal);box-shadow:0 0 9px -1px var(--teal);
+    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+
+  main{padding:0 0 30px;position:relative;z-index:1}
+
+  /* ---------- section ---------- */
+  section.blk{padding:52px 0 0;scroll-margin-top:24px}
+  .blk-h{border-bottom:1px solid var(--border-2);padding-bottom:14px;margin-bottom:24px}
+  .blk-h h2{font:600 clamp(21px,4vw,29px)/1.14 var(--sans);letter-spacing:-.025em;
+    margin-top:9px;text-wrap:balance}
+  .blk-h h2 em{font-style:normal;color:var(--teal-lg)}
+  .blk-h p{margin:9px 0 0;font-size:15px;line-height:1.55;color:var(--text-dim);max-width:66ch}
+
+  /* ---------- the meter diagram (controlled weirdness) ---------- */
+  .meter{background:var(--surface);border:1px solid var(--border-2);clip-path:var(--cham-card);
+    padding:24px 20px 20px;position:relative;overflow:hidden}
+  .meter-lbl{font:600 9.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);display:block;margin-bottom:14px}
+  .chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+  .step{font:500 11.5px/1 var(--mono);letter-spacing:.02em;color:var(--steel);
+    background:var(--raised);border:1px solid var(--border-2);padding:9px 12px 9px 16px;
+    clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);white-space:nowrap}
+  .step.trig{color:var(--teal);border-color:color-mix(in srgb,var(--teal) 45%,transparent)}
+  .rails{display:grid;grid-template-columns:1fr;gap:0;margin-top:22px;
+    border-top:1px solid var(--border)}
+  .rail{display:grid;grid-template-columns:86px auto 1fr;gap:14px;align-items:center;
+    padding:15px 0;border-bottom:1px solid var(--border)}
+  .rail:last-child{border-bottom:0}
+  .rail-n{font:600 12.5px/1 var(--sans);letter-spacing:-.01em;color:var(--text)}
+  .ticks{display:flex;gap:3px;align-items:center;min-width:0;flex-wrap:wrap}
+  .tk{width:17px;height:22px;background:var(--slate);
+    clip-path:polygon(0 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%)}
+  .rail.win .tk{background:var(--teal);box-shadow:0 0 12px -3px var(--teal)}
+  .rail-v{font:600 12.5px/1 var(--mono);letter-spacing:.04em;color:var(--muted);white-space:nowrap;
+    justify-self:start}
+  .rail.win .rail-v{color:var(--teal)}
+  .meter-cap{margin:18px 0 0;font-size:14.5px;line-height:1.55;color:var(--text-dim);max-width:70ch}
+  .meter-cap b{color:var(--text);font-weight:600}
+
+  /* ---------- platform cards ---------- */
+  .grid3{display:grid;grid-template-columns:1fr;gap:14px}
+  .pf{background:var(--surface);border:1px solid var(--border);clip-path:var(--cham-card);
+    padding:22px 20px 18px;display:flex;flex-direction:column;min-width:0;
+    transition:border-color .18s}
+  .pf:hover{border-color:var(--border-2)}
+  .pf-top{display:block}
+  .pf-n{font:600 20px/1.2 var(--sans);letter-spacing:-.02em;color:var(--text);display:block}
+  .pf-kind{font:600 9.5px/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+    color:var(--muted);display:block;margin-bottom:8px}
+  .pf-what{margin:9px 0 0;font-size:14.2px;line-height:1.5;color:var(--steel)}
+  .price{margin:18px 0 0;padding:15px 0 14px;border-top:1px solid var(--border-2);
+    border-bottom:1px solid var(--border-2)}
+  .price .amt{font:600 38px/1 var(--sans);letter-spacing:-.035em;color:var(--teal);
+    display:inline-block}
+  .price .per{font:500 13px/1 var(--mono);color:var(--muted);margin-left:6px}
+  .price .qual{display:block;margin:9px 0 0;font-size:13.2px;line-height:1.45;color:var(--text-dim)}
+  .price .alt{display:block;margin:6px 0 0;font:500 11px/1.45 var(--mono);letter-spacing:.04em;
+    text-transform:uppercase;color:var(--muted)}
+  .spec{margin:15px 0 0;display:grid;gap:0}
+  .spec div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+    padding:8px 0;border-bottom:1px dotted var(--border-2);font-size:13.4px}
+  .spec div:last-child{border-bottom:0}
+  .spec dt,.spec .k{color:var(--muted);font:500 10.5px/1.5 var(--mono);letter-spacing:.09em;
+    text-transform:uppercase;flex:0 0 auto}
+  .spec .v{color:var(--text-dim);text-align:right;line-height:1.45}
+  .spec .v b{color:var(--teal);font-weight:600;font-family:var(--mono);font-size:12.8px}
+  .pc{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--border);display:grid;gap:11px}
+  .pc ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+  .pc li{position:relative;padding-left:20px;font-size:13.6px;line-height:1.48;color:var(--steel)}
+  .pc .up li::before{content:"";position:absolute;left:0;top:6px;width:9px;height:9px;
+    background:var(--teal);clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .pc .dn li::before{content:"";position:absolute;left:0;top:6px;width:9px;height:9px;
+    background:var(--ember);clip-path:polygon(0 0,100% 0,50% 100%)}
+  .pc-l{font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+    display:block;margin-bottom:9px}
+  .pc .up .pc-l{color:var(--teal)} .pc .dn .pc-l{color:var(--ember)}
+
+  /* ---------- bar figure ---------- */
+  .fig{background:var(--surface);border:1px solid var(--border-2);clip-path:var(--cham-card);
+    padding:22px 20px 18px}
+  .fig-t{font:600 16.5px/1.35 var(--sans);letter-spacing:-.015em;color:var(--text);margin:0}
+  .fig-s{margin:8px 0 0;font-size:14px;line-height:1.5;color:var(--text-dim);max-width:70ch}
+  .bars{margin:22px 0 0;display:grid;gap:3px}
+  .bar{display:grid;grid-template-columns:1fr;gap:5px;align-items:center;padding:8px 0}
+  .bar-n{font:600 13px/1.25 var(--sans);color:var(--text-dim);text-align:left}
+  .bar-t{position:relative;min-height:30px;display:flex;align-items:center;gap:10px;
+    flex-wrap:wrap;min-width:0}
+  .bar-f{height:30px;background:var(--teal);min-width:3px;flex:0 0 auto;
+    clip-path:polygon(0 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%)}
+  .bar-v{font:600 13.5px/1.35 var(--mono);letter-spacing:.02em;color:var(--text);min-width:0}
+  .bar-v span{color:var(--muted);font-weight:500;font-size:11.5px;letter-spacing:.06em;
+    display:inline-block}
+  .fig-n{margin:20px 0 0;padding-top:14px;border-top:1px solid var(--border);
+    font-size:13px;line-height:1.55;color:var(--muted);max-width:76ch}
+  .fig-n b{color:var(--steel);font-weight:600}
+
+  /* ---------- plain table ---------- */
+  .tw{margin:0}
+  table.cmp{width:100%;border-collapse:collapse}
+  .cl{display:none}
+  @media(max-width:699px){
+    .mx tbody th{width:46%;font-size:12.6px}
+    .mx th,.mx td{padding:10px 5px}
+    .mx thead th{font-size:9px;letter-spacing:.05em}
+    /* Four platform columns plus a row label does not fit a phone at the three-column
+       measurements, so the label gives up width and the headings are allowed to break. */
+    .mx4 tbody th{width:30%;font-size:12px}
+    .mx4 th,.mx4 td{padding:10px 3px}
+    .mx4 thead th{font-size:8px;letter-spacing:0;overflow-wrap:anywhere}
+    .mx4 .qual{font-size:8.5px;letter-spacing:.02em}
+  }
+  @media(max-width:399px){
+    /* Smallest phones still in use. Row labels give up more width before anything clips. */
+    .mx tbody th{width:38%;font-size:11.6px}
+    .mx th,.mx td{padding:9px 2px}
+    .mx thead th{font-size:8px;letter-spacing:0;overflow-wrap:anywhere}
+    .mx .qual{font-size:8.5px;letter-spacing:.02em}
+    .mx4 tbody th{width:28%}
+    .mx{table-layout:fixed}
+    .mx td,.mx th{overflow-wrap:anywhere}
+    /* A `display:block` tr inside a table still resolves against table layout, so the table,
+       its body and its caption all leave table display together. Column headers are hidden and
+       replaced by a real .cl label inside each cell, which keeps them in the accessibility tree
+       rather than relying on generated content. */
+    table.cmp{display:block}
+    table.cmp tbody{display:block}
+    table.cmp thead{display:none}
+    .cl{display:block;margin-bottom:4px;
+      font:600 9.5px/1.4 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+    table.cmp tbody tr{display:block;background:var(--raised);padding:4px 15px 12px;
+      margin-bottom:10px;border-left:2px solid var(--teal)}
+    table.cmp tbody th{display:block;width:auto;background:none;padding:12px 0 8px;border:0;
+      font-size:16px;color:var(--text)}
+    table.cmp tbody td{display:block;padding:9px 0 0;border:0}
+  }
+  table.cmp th,table.cmp td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--border);
+    font-size:13.6px;line-height:1.48;vertical-align:top}
+  table.cmp thead th{font:600 10px/1.3 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);border-bottom:1px solid var(--border-2);white-space:nowrap}
+  table.cmp tbody th{font:600 13.6px/1.45 var(--sans);color:var(--text-dim);width:23%;
+    background:color-mix(in srgb,var(--surface) 70%,transparent)}
+  table.cmp td{color:var(--steel)}
+  table.cmp td b{color:var(--teal);font-family:var(--mono);font-size:13px;font-weight:600;
+    white-space:nowrap}
+  table.cmp tbody tr:last-child th,table.cmp tbody tr:last-child td{border-bottom:0}
+
+
+  /* ---------- small multiples: cost against workload ---------- */
+  .sm{display:grid;grid-template-columns:1fr;gap:12px;margin:22px 0 0}
+  .smx{margin:0;background:var(--raised);border:1px solid var(--border);padding:15px 16px 12px;
+    clip-path:var(--cham-card);min-width:0}
+  .smx figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+    margin-bottom:11px}
+  .sm-n{font:600 15px/1.2 var(--sans);letter-spacing:-.015em;color:var(--text)}
+  .sm-r{font:600 11px/1 var(--mono);letter-spacing:.06em;color:var(--teal);white-space:nowrap}
+  .smx svg{display:block;width:100%;height:auto;overflow:visible}
+  .sm-grid{stroke:var(--border-2);stroke-width:.6}
+  .sm-t{fill:var(--muted);font-family:var(--mono);font-size:8px;letter-spacing:.06em}
+  .sm-area{fill:color-mix(in srgb,var(--teal) 16%,transparent)}
+  .sm-line{fill:none;stroke:var(--teal);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  .sm-dot{fill:var(--teal)}
+  .sm-ax{display:flex;justify-content:space-between;margin-top:7px;
+    font:500 9.5px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .sm-cap{margin:16px 0 0;padding-top:13px;border-top:1px solid var(--border);
+    font-size:13px;line-height:1.55;color:var(--muted);max-width:78ch}
+  .sm-cap b{color:var(--steel);font-weight:600}
+
+
+  /* ---------- volume calculator ---------- */
+  .calc{background:var(--surface);border:1px solid var(--border-2);clip-path:var(--cham-card);
+    padding:22px 20px 20px;margin:0}
+  .ctl{display:grid;grid-template-columns:1fr;gap:18px;padding-bottom:20px;margin-bottom:20px;
+    border-bottom:1px solid var(--border)}
+  .ctl label{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+    font:600 10.5px/1.4 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:11px}
+  .ctl output{font:600 17px/1 var(--sans);letter-spacing:-.02em;color:var(--teal);
+    text-transform:none;white-space:nowrap}
+  .ctl input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;
+    background:transparent;cursor:pointer;display:block;margin:0}
+  .ctl input[type=range]:focus-visible{outline:2px solid var(--teal-lg);outline-offset:4px}
+  .ctl input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--border-2)}
+  .ctl input[type=range]::-moz-range-track{height:3px;background:var(--border-2)}
+  .ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:18px;height:18px;margin-top:-7.5px;background:var(--teal);border:0;
+    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);box-shadow:0 0 12px -2px var(--teal)}
+  .ctl input[type=range]::-moz-range-thumb{width:18px;height:18px;background:var(--teal);border:0;
+    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+  .ctl-s{display:flex;justify-content:space-between;margin-top:5px;
+    font:500 9.5px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .sm-mark{stroke:var(--steel);stroke-width:.8;stroke-dasharray:2 3;opacity:.7}
+  .sm-hit{fill:var(--teal);stroke:var(--canvas);stroke-width:1.6}
+  .sm-read{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+    margin-top:11px;padding-top:11px;border-top:1px solid var(--border)}
+  .sm-price{font:600 23px/1 var(--sans);letter-spacing:-.03em;color:var(--text)}
+  .sm-price span{font:500 12px/1 var(--mono);color:var(--muted);margin-left:5px}
+  .sm-plan{font:500 10.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);text-align:right}
+  .sm-plan b{display:block;color:var(--steel);font-weight:600}
+  .calc .sm{margin:0}
+
+  /* ---------- capability matrix ---------- */
+  .mx{width:100%;border-collapse:collapse}
+  .mx th,.mx td{padding:11px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+  .mx thead th{font:600 10px/1.3 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+    color:var(--muted);border-bottom:1px solid var(--border-2);text-align:center}
+  .mx thead th:first-child{text-align:left}
+  .mx tbody th{text-align:left;font:500 13.4px/1.4 var(--sans);color:var(--text-dim);width:40%}
+  .mx tbody td{text-align:center}
+  .mx tbody tr:last-child th,.mx tbody tr:last-child td{border-bottom:0}
+  /* Marks carry a shape as well as a colour: a filled diamond, a half diamond and a bar are
+     distinguishable without colour vision, which a teal/grey pair on its own is not. */
+  .mk{display:inline-block;width:14px;height:14px;vertical-align:middle}
+  .mk.yes{background:var(--teal);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+  .mk.part{background:var(--gold);clip-path:polygon(0 25%,100% 25%,50% 75%)}
+  .mk.no{background:var(--border-2);clip-path:polygon(0 42%,100% 42%,100% 58%,0 58%)}
+  .mx .num{font:600 12.5px/1 var(--mono);color:var(--steel)}
+  .mx .qual{display:block;margin-top:5px;font:500 9.5px/1.3 var(--mono);letter-spacing:.06em;
+    text-transform:uppercase;color:var(--muted)}
+  .key{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin:14px 0 0;
+    font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .key span{display:inline-flex;align-items:center;gap:7px}
+
+  /* ---------- fee bars ---------- */
+  .fee{display:grid;grid-template-columns:1fr;gap:9px;margin:18px 0 0}
+  .fee-r{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+  .fee-n{font:500 13px/1.3 var(--sans);color:var(--text-dim);text-align:right}
+  .fee-t{display:flex;align-items:center;gap:10px;min-width:0}
+  .fee-b{height:20px;background:var(--teal);min-width:2px;
+    clip-path:polygon(0 0,100% 0,100% calc(100% - 3px),calc(100% - 3px) 100%,0 100%)}
+  .fee-b.zero{background:var(--border-2);width:2px}
+  .fee-v{font:600 12.5px/1.3 var(--mono);color:var(--text);min-width:0}
+  .fee-v i{font-style:normal;color:var(--muted);font-weight:500;font-size:11px;
+    display:block;margin-top:3px}
+  .fee-ax{display:flex;justify-content:space-between;margin:10px 0 0;padding-top:9px;
+    border-top:1px solid var(--border);
+    font:500 9.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- timeline rail ---------- */
+  .tl{position:relative;margin:24px 0 0;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--border-2)}
+  .tl-i{position:relative;padding:0 0 20px}
+  .tl-i:last-child{padding-bottom:0}
+  .tl-i::before{content:"";position:absolute;left:-24px;top:5px;width:11px;height:11px;
+    background:var(--slate);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+  .tl-i.soon::before{background:var(--ignition);box-shadow:0 0 11px -2px var(--ignition)}
+  .tl-d{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .tl-i.soon .tl-d{color:var(--ignition)}
+  .tl-t{display:block;margin-top:6px;font-size:14px;line-height:1.45;color:var(--text-dim)}
+
+  /* ---------- notes strip ---------- */
+  .notes{display:grid;grid-template-columns:1fr;gap:11px}
+  .note{background:var(--raised);border-left:2px solid var(--border-2);padding:14px 16px;min-width:0}
+  .note.warn{border-left-color:var(--gold)}
+  .note.stop{border-left-color:var(--ember)}
+  .note-l{font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);display:block;margin-bottom:8px}
+  .note.warn .note-l{color:var(--gold)} .note.stop .note-l{color:var(--ember)}
+  .note p{margin:0;font-size:13.8px;line-height:1.55;color:var(--text-dim)}
+
+  /* ---------- close ---------- */
+  .close{margin:56px 0 0;padding:30px 24px;background:var(--surface);border:1px solid var(--border-2);
+    clip-path:var(--cham-card);position:relative}
+  .close::after{content:"";position:absolute;right:0;bottom:0;width:14px;height:14px;
+    background:linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--accent-fill) 45%,transparent) 50%)}
+  .close h2{font:600 clamp(21px,3.4vw,28px)/1.2 var(--sans);letter-spacing:-.02em;margin:12px 0 0}
+  .close h2 em{font-style:normal;color:var(--teal-lg)}
+  .close p{font-size:15.4px;line-height:1.62;color:var(--text-dim);margin:16px 0 0;max-width:64ch}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent-fill);
+    border:1px solid var(--accent-fill);color:var(--ink-on-teal);padding:14px 20px;cursor:pointer;
+    font:600 13px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;clip-path:var(--cham-btn);
+    transition:background .18s,box-shadow .18s}
+  .btn:hover{background:var(--teal-hover);box-shadow:var(--glow)}
+  .btn.ghost{background:transparent;color:var(--text);border-color:var(--border-2)}
+  .btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
+
+  /* ---------- sources ---------- */
+  details.src{margin:34px 0 0;border-top:1px solid var(--border);padding-top:16px}
+  details.src summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;
+    font:600 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+    padding:4px 0;user-select:none;transition:color .16s}
+  details.src summary::-webkit-details-marker{display:none}
+  details.src summary:hover,details.src[open] summary{color:var(--teal)}
+  .dv-c{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+    transform:rotate(45deg) translate(-2px,-2px);transition:transform .22s}
+  details.src[open] .dv-c{transform:rotate(-135deg) translate(-3px,-3px)}
+  details.src ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+  details.src li{font-size:12.8px;line-height:1.5;color:var(--muted);word-break:break-word}
+  details.src li a{color:var(--steel);border-bottom:1px solid var(--border-2)}
+  details.src li a:hover{color:var(--teal);border-color:var(--teal)}
+
+  footer{padding:30px 0 46px;color:var(--muted);font-size:12.5px;
+    display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+  footer .mono{letter-spacing:.1em;text-transform:uppercase;font-size:10.5px}
+
+  /* Blocks inside the three platform cards are measured and matched by the script at the
+     foot of the page, so the price, the spec table and the two verdict lists start on the
+     same line across all three. Falls back to natural flow with no script. */
+  .pf-kind,.price,.spec,.pc,.when,.fw-for,.fw-h div{min-height:var(--h, auto)}
+
+  /* ---------- desktop ---------- */
+  @media(min-width:760px){
+    :root{--pad:34px}
+    header.hero{padding:52px 0 8px}
+    section.blk{padding:66px 0 0}
+    .grid3{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .notes{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .meter{padding:28px 28px 24px}
+    .rail{grid-template-columns:112px auto 1fr;gap:18px}
+    .fig{padding:26px 28px 22px}
+    .bar{grid-template-columns:92px 1fr;gap:12px}
+    .bar-n{text-align:right}
+    /* The fill is a percentage of its own column, and the readout owns a column of its own.
+       As one flex row the 100% bar consumed the track and shoved the label past the edge. */
+    .bar-t{flex-wrap:nowrap}
+    .bar-v span{display:block;margin-top:3px}
+    .close{padding:40px 38px}
+    .sm{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .ctl{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+    .calc{padding:26px 28px 24px}
+    .fee-r{grid-template-columns:120px 1fr}
+    .fee-v i{display:inline;margin-top:0}
+    .fee-ax{margin-left:132px}
+
+  }
+  @media(min-width:1024px){
+    .notes{grid-template-columns:repeat(3,minmax(0,1fr))}
+    /* One row, six nodes. Any fewer columns wraps to a second row and the rail, which is a
+       single line across the top, stops describing the lower half. */
+    .tl{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0 18px;padding:22px 0 0}
+    .tl::before{left:0;right:0;top:5px;bottom:auto;width:auto;height:1px}
+    .tl-i{padding:22px 0 0}
+    .tl-i::before{left:0;top:-1px}
+    .tl-t{font-size:13.2px}
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    body{background:#fff;color:#1a1a1a;font-size:10pt}
+    body::before,.cta,.no-print{display:none !important}
+    .wrap{max-width:100%;padding:0}
+    .hero h1{color:#111;font-size:22pt} .hero h1 em{color:#00646D}
+    .kick,.blk-h h2 em,.close h2 em{color:#00646D !important}
+    section.blk{page-break-inside:avoid;padding-top:16pt}
+    .blk-h h2,.fig-t,.pf-n{color:#111}
+    .pf,.fig,.meter,.close{background:#fff;border:1px solid #ccc;clip-path:none;page-break-inside:avoid}
+    .note{background:#f4f4f2}
+    .price .amt,.spec .v b,table.cmp td b,.rail.win .rail-v{color:#00646D}
+    .bar-f,.rail.win .tk{background:#00646D !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .tk{background:#aaa !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .pc li,.spec .v,table.cmp td,.note p{color:#333}
+    details.src{display:none}
+    a{color:#00646D}
+  }
+
+  /* ---------- build stack ---------- */
+  .grid4{display:grid;grid-template-columns:1fr;gap:14px}
+  .pf .role{font:600 9.5px/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+    color:var(--muted);display:block;margin-bottom:8px}
+  .pf.core{border-color:color-mix(in srgb,var(--teal) 45%,transparent)}
+  .pf.core .role{color:var(--teal)}
+  .pf.opt{border-style:dashed}
+  .pf .when{margin:14px 0 0;font-size:13.4px;line-height:1.5;color:var(--steel)}
+  .go{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:18px 0 0}
+  .go p{margin:0;font-size:14px;line-height:1.5;color:var(--text-dim);max-width:60ch}
+  table.pass{width:100%;border-collapse:collapse;margin:0}
+  table.pass caption{text-align:left;font:600 10.5px/1.4 var(--mono);letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);padding:0 0 10px}
+  table.pass th,table.pass td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--border);
+    font-size:13.6px;line-height:1.48;vertical-align:top}
+  table.pass tbody th{font:600 14px/1.4 var(--sans);color:var(--text-dim);width:22%;white-space:nowrap}
+  table.pass td{color:var(--steel)}
+  table.pass td.pr{font:600 12.5px/1.48 var(--mono);color:var(--muted);white-space:nowrap;width:18%}
+  table.pass tbody tr:last-child th,table.pass tbody tr:last-child td{border-bottom:0}
+  @media(max-width:599px){
+    table.pass,table.pass caption,table.pass tbody,table.pass tr,table.pass th,table.pass td{display:block;width:auto}
+    table.pass tr{padding:10px 0;border-bottom:1px solid var(--border)}
+    table.pass th,table.pass td{border:0;padding:2px 0}
+    table.pass tbody tr:last-child{border-bottom:0}
+  }
+
+  /* ---------- developer framework tiles ---------- */
+  .fw{display:grid;grid-template-columns:1fr;gap:12px}
+  .fwt{background:var(--surface);border:1px solid var(--border);clip-path:var(--cham-card);
+    padding:18px 18px 16px;display:flex;flex-direction:column;min-width:0;position:relative}
+  .fwt.ours{border-color:color-mix(in srgb,var(--teal) 55%,transparent)}
+  .fw-by{font:600 9.5px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+  .fw-n{font:600 18px/1.25 var(--sans);letter-spacing:-.02em;color:var(--text);margin:5px 0 0}
+  .fw-ours{display:inline-block;margin:9px 0 0;padding:5px 8px;font:600 9px/1 var(--mono);
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-on-teal);background:var(--teal);
+    clip-path:var(--cham-tag);align-self:flex-start}
+  .fw-st{margin:13px 0 0}
+  .fw-st-t{display:flex;justify-content:space-between;font:500 9.5px/1 var(--mono);letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted)}
+  .fw-st-t b{color:var(--text);font-weight:600;letter-spacing:.04em}
+  .fw-bar{height:6px;background:var(--border);margin-top:7px;position:relative}
+  .fw-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--teal)}
+  .fw-ch{display:flex;flex-wrap:wrap;gap:5px;margin:14px 0 0}
+  .ch{display:inline-flex;align-items:center;gap:6px;padding:6px 8px 6px 7px;
+    font:600 9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+    border:1px solid var(--border-2);color:var(--muted);background:var(--raised)}
+  .ch .mk{width:10px;height:10px}
+  .ch.y{color:var(--text-dim);border-color:color-mix(in srgb,var(--teal) 40%,transparent)}
+  .ch.p{color:var(--text-dim);border-color:color-mix(in srgb,var(--gold) 45%,transparent)}
+  .ch.n{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--slate)}
+  .fw-for{margin:14px 0 0;font-size:13.4px;line-height:1.5;color:var(--steel)}
+  .fw-h{margin:auto 0 0;padding-top:12px}
+  .fw-h div{border-top:1px dotted var(--border-2);padding-top:10px;font-size:12.8px;line-height:1.45;
+    color:var(--text-dim)}
+  .fw-h span{display:block;font:600 9px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:5px}
+  @media(min-width:760px){
+    .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .fw{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media(min-width:1024px){
+    .grid4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .fw{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
+  @media print{ .fwt{background:#fff;border:1px solid #ccc;clip-path:none} .fw-bar i{background:#00646D !important;print-color-adjust:exact;-webkit-print-color-adjust:exact} }
+
+  /* ---------- the short answer and the FAQ ---------- */
+  .hero h1{max-width:21ch}
+  .stamp{display:inline-block;line-height:1.9;max-width:100%}
+  .stamp .led{display:inline-block;vertical-align:middle;margin:-2px 9px 0 0}
+  .stamp a{color:var(--steel);border-bottom:1px solid var(--border-2)}
+  .stamp a:hover{color:var(--teal);border-color:var(--teal)}
+  .ans{background:var(--surface);border:1px solid var(--border-2);border-left:2px solid var(--teal);
+    clip-path:var(--cham-card);padding:22px 20px 20px}
+  .ans h2{font:600 clamp(20px,3.6vw,26px)/1.2 var(--sans);letter-spacing:-.02em;margin:9px 0 0}
+  .ans h2 em{font-style:normal;color:var(--teal-lg)}
+  .ans p{margin:13px 0 0;font-size:16px;line-height:1.6;color:var(--text-dim);max-width:68ch}
+  .ans p + p{font-size:14.5px;color:var(--steel)}
+  .faq{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--border)}
+  .faq-i{padding:18px 0 17px;border-bottom:1px solid var(--border)}
+  .faq-i h3{font:600 16px/1.35 var(--sans);letter-spacing:-.01em;color:var(--text)}
+  .faq-i p{margin:8px 0 0;font-size:14.4px;line-height:1.6;color:var(--steel);max-width:70ch}
+  .fw-for span{display:block;font:600 9px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:5px}
+  @media(min-width:760px){
+    .ans{padding:26px 30px 24px}
+    .faq{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:36px}
+  }
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://arowise.com/#organization",
+   "name": "AroWise Automation",
+   "url": "https://arowise.com/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://arowise.com/assets/arowise-icon-800.png"
+   },
+   "description": "Practical AI and automation for small businesses: cut the manual work, tighten the process, and get more output from the team you already have.",
+   "foundingDate": "2026",
+   "founder": {
+    "@id": "https://arowise.com/#joe-mascaro"
+   },
+   "email": "joe@arowise.com",
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Denver",
+    "addressRegion": "CO",
+    "addressCountry": "US"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://arowise.com/#joe-mascaro",
+   "name": "Joe Mascaro",
+   "jobTitle": "Founder",
+   "worksFor": {
+    "@id": "https://arowise.com/#organization"
+   },
+   "url": "https://arowise.com/#about",
+   "image": "https://arowise.com/assets/joe-framed-800.webp",
+   "sameAs": [
+    "https://www.linkedin.com/in/joemascaro/",
+    "https://x.com/joemsca"
+   ],
+   "description": "Builds AI automation for small businesses on n8n, Make and Claude. Co-founded and ran a building-materials company for 8 years, automated most of the repeatable work inside it, and exited in 2026."
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://arowise.com/#website",
+   "url": "https://arowise.com/",
+   "name": "AroWise Automation",
+   "publisher": {
+    "@id": "https://arowise.com/#organization"
+   }
+  },
+  {
+   "@type": "Article",
+   "@id": "https://arowise.com/automation-services-comparison#article",
+   "headline": "What Zapier, Make and n8n cost in 2026",
+   "description": "Zapier, Make and n8n prices as of October 2026, what each one bills for, and what the same workflow costs on all three. Plus the AI stack we build on.",
+   "datePublished": "2026-10-20",
+   "dateModified": "2026-10-20",
+   "author": {
+    "@id": "https://arowise.com/#joe-mascaro"
+   },
+   "publisher": {
+    "@id": "https://arowise.com/#organization"
+   },
+   "mainEntityOfPage": "https://arowise.com/automation-services-comparison",
+   "inLanguage": "en-US",
+   "isPartOf": {
+    "@id": "https://arowise.com/#website"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://arowise.com/automation-services-comparison#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is n8n free?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The software is free to run on your own server for your own business, including commercial use. n8n Cloud, where n8n hosts it for you, starts at $24 a month. What its license doesn't allow is reselling access to n8n or putting your own brand on it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is Make cheaper than Zapier?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Usually, and by a lot. Make's entry plan is $16 a month for 10,000 credits, and Zapier's is $29.99 for 750 tasks. Both charge for every step on every item, so a workflow that loops over a long list costs more on either one than it would on n8n."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is Zapier so expensive?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Zapier charges for each successful action, and its entry plan includes 750 of them. What you get for it is the biggest app library, 10,237 apps, and the easiest editor of the three. Triggers, filters, formatting and delay steps are free, so the real bill is lower than many comparisons claim."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What's the difference between a task, a credit and an execution?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A Zapier task is one successful action. A Make credit is one module run, and some AI modules cost more than one. An n8n execution is one full run of a workflow, however many steps it has, so five steps cost 5 tasks, 5 credits or 1 execution."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens if I go over my plan's limit?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Zapier holds the extra runs so you can replay them, or bills each task if you've turned that on, at 1.25 times the normal rate on annual plans and 2.5 times on monthly. Make stops your scenarios until you add credits. On n8n Cloud's Starter and Pro plans, new runs fail until the 1st of the month."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can n8n run AI agents?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. n8n has an AI Agent node that calls a model and can use tools and memory, and each agent run counts as one execution like any other workflow. You pay the model provider, such as Anthropic, directly for what the agent uses."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Should I self-host n8n or use n8n Cloud?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For most small businesses, n8n Cloud. A $12 to $24 server saves a few dollars a month, and then someone has to keep it updated and backed up. We only self-host when a client has to keep data on their own infrastructure, which is the case with patient records."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What's the best AI agent framework in 2026?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It depends on the team. CrewAI and LangGraph are the most used in Python, Mastra is the main TypeScript option, and the Claude Agent SDK suits agents that work with files and code. Most small businesses don't need one at all, because an agent built in n8n covers the common jobs."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Who owns the account when a consultant builds my automations?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "You should. We open every account in your name, you pay the vendors directly, and we work in it as an added user. If we stop working together, you remove our login and everything keeps running."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <a class="brand" href="https://arowise.com" aria-label="AroWise Automation home">
+      <img class="mark" src="data:image/png;base64,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" alt="" width="36" height="36">
+      <div class="wordmark">Aro<b>Wise</b> Automation</div>
+    </a>
+    <span class="kick">Platform Comparison</span>
+    <h1>What Zapier, Make and n8n <em>cost</em> in 2026</h1>
+    <p class="lede">A price comparison for small-business owners choosing an automation platform. Every number comes from the vendor's own pricing page, and the sliders below price your own workload on all three.</p>
+    <span class="stamp"><span class="led" aria-hidden="true"></span>By&nbsp;<a href="https://arowise.com/#about">Joe Mascaro</a> &middot; Published <time datetime="2026-10-20">20 Oct 2026</time> &middot; Updated <time datetime="2026-10-20">20 Oct 2026</time> &middot; Prices verified <time datetime="2026-10-10">10 Oct 2026</time>, USD</span>
+  </header>
+
+  <main>
+
+  <!-- ============ THE SHORT ANSWER ============ -->
+  <section class="blk" id="answer">
+    <div class="ans">
+      <span class="kick">The Short Answer</span>
+      <h2>Which is cheapest: Zapier, Make or <em>n8n</em>?</h2>
+      <p>It depends on how long your workflows are. For a handful of short ones, Make is cheapest at $16 a month for 10,000 credits, and its free plan runs two. Once a workflow has several steps, n8n pulls ahead, because it bills one execution per run however many steps it has: $24 a month for 2,500 runs. Zapier costs the most per step, from $29.99 for 750 tasks, and it's worth it when you need an app only Zapier connects to.</p>
+      <p>We've built on all three. For something quick and simple we'll often use Make, and for anything bigger, including AI agents, we build on n8n.</p>
+    </div>
+  </section>
+
+  <!-- ============ 1. THE METER ============ -->
+  <section class="blk" id="meter">
+    <div class="blk-h">
+      <span class="kick">How Usage Is Counted</span>
+      <h2>What does each platform count as one unit of <em>use</em>?</h2>
+    </div>
+
+    <div class="meter">
+      <span class="meter-lbl">One workflow &middot; Five actions &middot; One run</span>
+      <div class="chain">
+        <span class="step trig">New form entry</span>
+        <span class="step">Look up customer</span>
+        <span class="step">Create CRM record</span>
+        <span class="step">Send welcome email</span>
+        <span class="step">Post to Slack</span>
+        <span class="step">Update spreadsheet</span>
+      </div>
+
+      <div class="rails">
+        <div class="rail">
+          <span class="rail-n">Zapier</span>
+          <span class="ticks" aria-hidden="true"><i class="tk"></i><i class="tk"></i><i class="tk"></i><i class="tk"></i><i class="tk"></i></span>
+          <span class="rail-v">5 tasks</span>
+        </div>
+        <div class="rail">
+          <span class="rail-n">Make</span>
+          <span class="ticks" aria-hidden="true"><i class="tk"></i><i class="tk"></i><i class="tk"></i><i class="tk"></i><i class="tk"></i></span>
+          <span class="rail-v">5 credits</span>
+        </div>
+        <div class="rail win">
+          <span class="rail-n">n8n</span>
+          <span class="ticks" aria-hidden="true"><i class="tk"></i></span>
+          <span class="rail-v">1 execution</span>
+        </div>
+      </div>
+
+      <p class="meter-cap">Triggers are free on all three. Filters and formatting are free on Zapier too, so count only the steps that touch an outside app.</p>
+    </div>
+  </section>
+
+  <!-- ============ 2. COST CALCULATOR ============ -->
+  <section class="blk" id="cost">
+    <div class="blk-h">
+      <span class="kick">Cost At Your Volume</span>
+      <h2>What would your workload cost on each <em>one</em>?</h2>
+    </div>
+
+    <div class="calc">
+      <div class="ctl">
+        <div>
+          <label for="r-runs">Workflow runs a month <output id="o-runs" for="r-runs">1,000</output></label>
+          <input id="r-runs" type="range" min="0" max="9" step="1" value="4"
+                 aria-label="Workflow runs a month">
+          <div class="ctl-s"><span>50</span><span>10,000</span></div>
+        </div>
+        <div>
+          <label for="r-acts">Billable actions per run <output id="o-acts" for="r-acts">5</output></label>
+          <input id="r-acts" type="range" min="1" max="10" step="1" value="5"
+                 aria-label="Billable actions per run">
+          <div class="ctl-s"><span>1</span><span>10</span></div>
+        </div>
+      </div>
+
+      <div class="sm">
+      <figure class="smx" data-p="zapier">
+        <figcaption><span class="sm-n">Zapier</span><span class="sm-r" data-role="range">$29.99 to $433.50</span></figcaption>
+        <svg viewBox="0 0 240 118" role="img" aria-labelledby="t-zapier">
+          <title id="t-zapier">Zapier monthly cost against workflow volume</title>
+          <line class="sm-grid" x1="10" y1="98" x2="212" y2="98"/>
+          <line class="sm-grid" data-role="mid" x1="10" y1="53" x2="212" y2="53"/>
+          <text class="sm-t" data-role="midlbl" x="10" y="49">$225</text>
+          <path class="sm-area" data-role="area" d="M10.0,92.00 H32.4 H54.9 V86.30 H77.3 V71.30 H99.8 H122.2 V59.30 H144.7 V41.30 H167.1 V11.30 H189.6 H212.0 V98 H10.0 Z"/>
+          <path class="sm-line" data-role="line" d="M10.0,92.00 H32.4 H54.9 V86.30 H77.3 V71.30 H99.8 H122.2 V59.30 H144.7 V41.30 H167.1 V11.30 H189.6 H212.0"/>
+          <line class="sm-mark" data-role="mark" x1="99.8" y1="8" x2="99.8" y2="98"/>
+          <circle class="sm-hit" data-role="hit" cx="99.8" cy="71.30" r="3.6"/>
+        </svg>
+        <div class="sm-ax"><span>50 runs</span><span>10,000</span></div>
+        <div class="sm-read">
+          <span class="sm-price" data-role="price">$133.50<span>/mo</span></span>
+          <span class="sm-plan" data-role="plan"><b>Professional</b>5,000 tasks</span>
+        </div>
+      </figure>
+      <figure class="smx" data-p="n8n">
+        <figcaption><span class="sm-n">n8n</span><span class="sm-r" data-role="range">$24.00 to $60.00</span></figcaption>
+        <svg viewBox="0 0 240 118" role="img" aria-labelledby="t-n8n">
+          <title id="t-n8n">n8n monthly cost against workflow volume</title>
+          <line class="sm-grid" x1="10" y1="98" x2="212" y2="98"/>
+          <line class="sm-grid" data-role="mid" x1="10" y1="53" x2="212" y2="53"/>
+          <text class="sm-t" data-role="midlbl" x="10" y="49">$225</text>
+          <path class="sm-area" data-role="area" d="M10.0,93.20 H32.4 H54.9 H77.3 H99.8 H122.2 H144.7 V86.00 H167.1 H189.6 H212.0 V98 H10.0 Z"/>
+          <path class="sm-line" data-role="line" d="M10.0,93.20 H32.4 H54.9 H77.3 H99.8 H122.2 H144.7 V86.00 H167.1 H189.6 H212.0"/>
+          <line class="sm-mark" data-role="mark" x1="99.8" y1="8" x2="99.8" y2="98"/>
+          <circle class="sm-hit" data-role="hit" cx="99.8" cy="93.20" r="3.6"/>
+        </svg>
+        <div class="sm-ax"><span>50 runs</span><span>10,000</span></div>
+        <div class="sm-read">
+          <span class="sm-price" data-role="price">$24.00<span>/mo</span></span>
+          <span class="sm-plan" data-role="plan"><b>Starter</b>1,000 executions</span>
+        </div>
+      </figure>
+      <figure class="smx" data-p="make">
+        <figcaption><span class="sm-n">Make</span><span class="sm-r" data-role="range">$16.00 to $97.00</span></figcaption>
+        <svg viewBox="0 0 240 118" role="img" aria-labelledby="t-make">
+          <title id="t-make">Make monthly cost against workflow volume</title>
+          <line class="sm-grid" x1="10" y1="98" x2="212" y2="98"/>
+          <line class="sm-grid" data-role="mid" x1="10" y1="53" x2="212" y2="53"/>
+          <text class="sm-t" data-role="midlbl" x="10" y="49">$225</text>
+          <path class="sm-area" data-role="area" d="M10.0,95.60 H32.4 H54.9 H77.3 H99.8 H122.2 H144.7 V93.80 H167.1 V90.40 H189.6 H212.0 V83.60 V98 H10.0 Z"/>
+          <path class="sm-line" data-role="line" d="M10.0,95.60 H32.4 H54.9 H77.3 H99.8 H122.2 H144.7 V93.80 H167.1 V90.40 H189.6 H212.0 V83.60"/>
+          <line class="sm-mark" data-role="mark" x1="99.8" y1="8" x2="99.8" y2="98"/>
+          <circle class="sm-hit" data-role="hit" cx="99.8" cy="95.60" r="3.6"/>
+        </svg>
+        <div class="sm-ax"><span>50 runs</span><span>10,000</span></div>
+        <div class="sm-read">
+          <span class="sm-price" data-role="price">$16.00<span>/mo</span></span>
+          <span class="sm-plan" data-role="plan"><b>Core</b>5,000 credits</span>
+        </div>
+      </figure>
+      </div>
+
+      <p class="sm-cap"><b>All three panels share one scale, which resets as you move the sliders.</b> Prices are for monthly billing on the cheapest plan that covers the workload, and each step in a line is one of that platform's plan tiers. Count only the steps that touch an outside app, since triggers are free everywhere.</p>
+    </div>
+  </section>
+
+  <!-- ============ 3. NO-CODE PLATFORMS ============ -->
+  <section class="blk" id="no-code">
+    <div class="blk-h">
+      <span class="kick">No-Code Automation Platforms</span>
+      <h2>How do Zapier, Make and n8n compare <em>side by side</em>?</h2>
+    </div>
+
+    <div class="grid3">
+
+      <article class="pf">
+        <span class="pf-kind">Hosted &middot; No code</span><h3 class="pf-n">Zapier</h3>
+        <div class="price">
+          <span class="amt">$29.99</span><span class="per">/mo</span>
+          <span class="qual">Professional, 750 tasks, one user.</span>
+          <span class="alt">$19.99/mo billed annually</span>
+        </div>
+        <div class="spec">
+          <div><span class="k">Unit</span><span class="v">One action, <b>$0.040</b></span></div>
+          <div><span class="k">Free</span><span class="v">100 tasks, two-step</span></div>
+          <div><span class="k">Apps</span><span class="v">10,237</span></div>
+          <div><span class="k">Seats</span><span class="v">1, or 25 on Team</span></div>
+        </div>
+        <div class="pc">
+          <div class="dn"><span class="pc-l">Watch out</span><ul>
+            <li>Plan tiers jump in big steps, so a few extra tasks can cost you a whole tier.</li>
+          </ul></div>
+        </div>
+      </article>
+
+      <article class="pf">
+        <span class="pf-kind">Hosted &middot; Visual canvas</span><h3 class="pf-n">Make</h3>
+        <div class="price">
+          <span class="amt">$16</span><span class="per">/mo</span>
+          <span class="qual">Core, 10,000 credits a month.</span>
+          <span class="alt">$12/mo billed annually</span>
+        </div>
+        <div class="spec">
+          <div><span class="k">Unit</span><span class="v">One module, <b>$0.0016</b></span></div>
+          <div><span class="k">Free</span><span class="v">1,000 credits, two scenarios</span></div>
+          <div><span class="k">Apps</span><span class="v">3,500</span></div>
+          <div><span class="k">Seats</span><span class="v">Roles need the Teams plan</span></div>
+        </div>
+        <div class="pc">
+          <div class="dn"><span class="pc-l">Watch out</span><ul>
+            <li>A loop over 500 rows costs 500 credits, so the bill follows how the workflow was built.</li>
+          </ul></div>
+        </div>
+      </article>
+
+      <article class="pf">
+        <span class="pf-kind">Cloud or self-hosted</span><h3 class="pf-n">n8n</h3>
+        <div class="price">
+          <span class="amt">$24</span><span class="per">/mo</span>
+          <span class="qual">Starter, 2,500 executions a month.</span>
+          <span class="alt">$20/mo annually &middot; free to self-host</span>
+        </div>
+        <div class="spec">
+          <div><span class="k">Unit</span><span class="v">One run, <b>any steps</b></span></div>
+          <div><span class="k">Free</span><span class="v">Self-host, $12 to $24 server</span></div>
+          <div><span class="k">Apps</span><span class="v">2,329, plus any API</span></div>
+          <div><span class="k">Seats</span><span class="v">Unlimited, every plan</span></div>
+        </div>
+        <div class="pc">
+          <div class="dn"><span class="pc-l">Watch out</span><ul>
+            <li>Runs fail at the plan limit until the 1st, and polling every minute uses 43,000 a month.</li>
+          </ul></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="tw" style="margin-top:24px">
+      <table class="mx">
+        <thead>
+          <tr><th scope="col">&nbsp;</th><th scope="col">Zapier</th><th scope="col">Make</th><th scope="col">n8n</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Unlimited users on every plan</th>
+            <td><span class="mk no" role="img" aria-label="No"></span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span></td>
+            <td><span class="mk yes" role="img" aria-label="Yes"></span></td></tr>
+          <tr><th scope="row">Runs on your own server</th>
+            <td><span class="mk no" role="img" aria-label="No"></span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span></td>
+            <td><span class="mk yes" role="img" aria-label="Yes"></span></td></tr>
+          <tr><th scope="row">Branching costs nothing</th>
+            <td><span class="mk yes" role="img" aria-label="Yes"></span></td>
+            <td><span class="mk yes" role="img" aria-label="Yes"></span></td>
+            <td><span class="mk yes" role="img" aria-label="Yes"></span></td></tr>
+          <tr><th scope="row">A loop over 500 rows bills once</th>
+            <td><span class="mk no" role="img" aria-label="No"></span><span class="qual">Per item</span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span><span class="qual">Per item</span></td>
+            <td><span class="mk yes" role="img" aria-label="Yes"></span></td></tr>
+          <tr><th scope="row">Single sign-on under $100 a month</th>
+            <td><span class="mk yes" role="img" aria-label="Yes"></span><span class="qual">$69, yearly</span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span><span class="qual">$800</span></td></tr>
+          <tr><th scope="row">Keeps running past your quota</th>
+            <td><span class="mk part" role="img" aria-label="Partly"></span><span class="qual">Held, replayable</span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span><span class="qual">Hard stop</span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span><span class="qual">Runs fail</span></td></tr>
+          <tr><th scope="row">Free plan you can build on</th>
+            <td><span class="mk part" role="img" aria-label="Partly"></span><span class="qual">Two steps</span></td>
+            <td><span class="mk part" role="img" aria-label="Partly"></span><span class="qual">Two scenarios</span></td>
+            <td><span class="mk no" role="img" aria-label="No"></span><span class="qual">Trial only</span></td></tr>
+          <tr><th scope="row">App integrations</th>
+            <td><span class="num">10,237</span></td>
+            <td><span class="num">3,500</span></td>
+            <td><span class="num">2,329</span></td></tr>
+        </tbody>
+      </table>
+      <div class="key">
+        <span><span class="mk yes" aria-hidden="true"></span> Yes</span>
+        <span><span class="mk part" aria-hidden="true"></span> Partly</span>
+        <span><span class="mk no" aria-hidden="true"></span> No</span>
+      </div>
+    </div>
+
+    <div class="notes" style="margin-top:24px">
+      <div class="note warn">
+        <span class="note-l">Who owns the instance</span>
+        <p>n8n is source-available, which isn't quite open source. You can self-host it free for your own business, but you can't resell access to it, so the instance should be in your name.</p>
+      </div>
+      <div class="note warn">
+        <span class="note-l">Make renamed its unit</span>
+        <p>Make renamed operations to credits on 27 August 2025, one for one, so older comparisons that say operations still hold. Some AI modules now cost more than one credit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. WHAT WE BUILD ON ============ -->
+  <section class="blk" id="stack">
+    <div class="blk-h">
+      <span class="kick">What We Build On</span>
+      <h2>What do we build AI systems <em>on</em>?</h2>
+      <p>For AI work we use n8n, because it runs agents on the same plan and the same meter as every other workflow. We add a piece only when a job needs it, and we checked the dedicated agent platforms before settling on this.</p>
+    </div>
+
+    <div class="grid4">
+      <article class="pf core">
+        <span class="role">The engine &middot; Always</span><h3 class="pf-n">n8n Cloud</h3>
+        <div class="price">
+          <span class="amt">$24</span><span class="per">/mo</span>
+          <span class="qual">Starter, 2,500 runs a month.</span>
+          <span class="alt">Agents run on the same plan</span>
+        </div>
+        <p class="when">Runs every workflow, including the AI agents, and keeps a log of each run.</p>
+      </article>
+      <article class="pf core">
+        <span class="role">The model &middot; Always</span><h3 class="pf-n">Claude</h3>
+        <div class="price">
+          <span class="amt">$2</span><span class="per">/M tokens in</span>
+          <span class="qual">To read, on Sonnet 5. Writing is $10.</span>
+          <span class="alt">About $11 to $15 per 1,000 replies</span>
+        </div>
+        <p class="when">Writes the drafts and makes the judgment calls. You pay Anthropic directly for what you use.</p>
+      </article>
+      <article class="pf opt">
+        <span class="role">Memory &middot; When needed</span><h3 class="pf-n">Supabase</h3>
+        <div class="price">
+          <span class="amt">$25</span><span class="per">/mo</span>
+          <span class="qual">The Pro plan, a hosted database.</span>
+          <span class="alt">Free plan pauses after a week idle</span>
+        </div>
+        <p class="when">Added when a workflow has to remember customers or search your documents.</p>
+      </article>
+      <article class="pf opt">
+        <span class="role">Real code &middot; When needed</span><h3 class="pf-n">Modal</h3>
+        <div class="price">
+          <span class="amt">$0</span><span class="per">+ usage</span>
+          <span class="qual">Billed by the second.</span>
+          <span class="alt">First $30 each month is free</span>
+        </div>
+        <p class="when">Added for heavy jobs, like reading scanned forms or processing large files.</p>
+      </article>
+    </div>
+
+    <div class="go">
+      <a class="btn ghost" href="/how-we-build">How it's wired and who owns it</a>
+      <p>Every account is set up in your name. That page shows how the pieces connect.</p>
+    </div>
+
+    <div class="fig" style="margin-top:24px">
+      <table class="pass">
+        <caption>Agent platforms we looked at and passed on</caption>
+        <tbody>
+        <tr><th scope="row">Dify</th><td class="pr">$59/mo</td><td>Its credits are priced per model, so the bill is hard to predict.</td></tr>
+        <tr><th scope="row">Gumloop</th><td class="pr">$37/mo</td><td>It adds 8% to your model bill, and 16% if you bring your own key.</td></tr>
+        <tr><th scope="row">Activepieces</th><td class="pr">$20/mo</td><td>Its agents product sits under the paid commercial license.</td></tr>
+        <tr><th scope="row">Lindy</th><td class="pr">$29.99/mo</td><td>It charges per seat, so the bill grows with your team.</td></tr>
+        <tr><th scope="row">Relevance AI</th><td class="pr">Not listed</td><td>It took its prices off its public pricing page this summer.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 5. DEVELOPER FRAMEWORKS ============ -->
+  <section class="blk" id="frameworks">
+    <div class="blk-h">
+      <span class="kick">Developer Frameworks</span>
+      <h2>Which AI agent framework should a developer <em>use</em>?</h2>
+      <p>Unlike the platforms above, these are code libraries. A developer writes the agent, and it runs on a server someone pays for. Most small businesses never need one. They're sorted by GitHub stars as of 10 October 2026, which roughly tracks how many developers use each.</p>
+    </div>
+    <div class="key" style="margin:0 0 16px">
+      <span><span class="mk yes" aria-hidden="true"></span> Yes</span>
+      <span><span class="mk part" aria-hidden="true"></span> Partly</span>
+      <span><span class="mk no" aria-hidden="true"></span> No</span>
+    </div>
+    <div class="fw">
+      <article class="fwt">
+        <span class="fw-by">CrewAI</span><h3 class="fw-n">CrewAI</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>59,547</b></div><div class="fw-bar" aria-hidden="true"><i style="width:100.0%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>TypeScript</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Any model</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Version 1.0+</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Teams of agents that each play a role, set up quickly.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>CrewAI AMP, free for 50 runs a month. Above that, pricing is by quote.</div></div>
+      </article>
+      <article class="fwt">
+        <span class="fw-by">LangChain</span><h3 class="fw-n">LangGraph</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>43,033</b></div><div class="fw-bar" aria-hidden="true"><i style="width:72.3%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>TypeScript</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Any model</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Version 1.0+</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Engineers who want control over every step and branch.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>LangSmith, free for one seat, then $39 a seat a month plus usage.</div></div>
+      </article>
+      <article class="fwt">
+        <span class="fw-by">Agno</span><h3 class="fw-n">Agno</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>42,655</b></div><div class="fw-bar" aria-hidden="true"><i style="width:71.6%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>TypeScript</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Any model</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Version 1.0+</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Python teams that want the agent and its control panel from one vendor.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>AgentOS, free, or $150 a month for Pro.</div></div>
+      </article>
+      <article class="fwt">
+        <span class="fw-by">OpenAI</span><h3 class="fw-n">OpenAI Agents SDK</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>29,954</b></div><div class="fw-bar" aria-hidden="true"><i style="width:50.3%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>TypeScript</span><span class="ch p"><span class="mk part" role="img" aria-label="Partly"></span>Any model</span><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>Version 1.0+</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Teams already building on OpenAI who want a light setup.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>No hosted runtime. Traces show in OpenAI's dashboard.</div></div>
+      </article>
+      <article class="fwt">
+        <span class="fw-by">Mastra</span><h3 class="fw-n">Mastra</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>28,694</b></div><div class="fw-bar" aria-hidden="true"><i style="width:48.2%"></i></div></div>
+        <div class="fw-ch"><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>Python</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>TypeScript</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Any model</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Version 1.0+</span><span class="ch p"><span class="mk part" role="img" aria-label="Partly"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>TypeScript and Next.js product teams.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>Mastra Platform, free to start, or $250 a month for Teams.</div></div>
+      </article>
+      <article class="fwt">
+        <span class="fw-by">Google</span><h3 class="fw-n">Agent Development Kit</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>21,770</b></div><div class="fw-bar" aria-hidden="true"><i style="width:36.6%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>TypeScript</span><span class="ch p"><span class="mk part" role="img" aria-label="Partly"></span>Any model</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Version 1.0+</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Google Cloud shops and teams working in several languages.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>Agent Runtime, $0.085 per vCPU hour after 50 free hours a month.</div></div>
+      </article>
+      <article class="fwt">
+        <span class="fw-by">Pydantic</span><h3 class="fw-n">Pydantic AI</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>20,537</b></div><div class="fw-bar" aria-hidden="true"><i style="width:34.5%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>TypeScript</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Any model</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Version 1.0+</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Python teams that want typed, testable agents.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>Logfire for tracing, free, or $49 a month for Team.</div></div>
+      </article>
+      <article class="fwt">
+        <span class="fw-by">Microsoft</span><h3 class="fw-n">Agent Framework</h3>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>14,051</b></div><div class="fw-bar" aria-hidden="true"><i style="width:23.6%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>TypeScript</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Any model</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Version 1.0+</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Microsoft and .NET shops. It replaces AutoGen and Semantic Kernel.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>Azure Foundry hosted agents, about $0.10 per vCPU hour.</div></div>
+      </article>
+      <article class="fwt ours">
+        <span class="fw-by">Anthropic</span><h3 class="fw-n">Claude Agent SDK</h3><span class="fw-ours">What we use for code-heavy jobs</span>
+        <div class="fw-st"><div class="fw-st-t"><span>GitHub stars</span><b>8,246</b></div><div class="fw-bar" aria-hidden="true"><i style="width:13.8%"></i></div></div>
+        <div class="fw-ch"><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>Python</span><span class="ch y"><span class="mk yes" role="img" aria-label="Yes"></span>TypeScript</span><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>Any model</span><span class="ch n"><span class="mk no" role="img" aria-label="No"></span>Version 1.0+</span><span class="ch p"><span class="mk part" role="img" aria-label="Partly"></span>Open source</span></div>
+        <p class="fw-for"><span>Best for</span>Agents that work in files and code, the way Claude Code does.</p>
+        <div class="fw-h"><div><span>Paid hosting</span>Claude Managed Agents, $0.08 per running hour plus tokens.</div></div>
+      </article>
+    </div>
+    <div class="notes" style="margin-top:20px">
+      <div class="note">
+        <span class="note-l">Where these fit for us</span>
+        <p>When a job outgrows n8n, we write that piece with the Claude Agent SDK and run it on Modal. n8n still starts it and logs it, so nothing changes on your side.</p>
+      </div>
+      <div class="note warn">
+        <span class="note-l">Two licenses to read closely</span>
+        <p>The Claude Agent SDK runs under Anthropic's commercial terms, and Mastra keeps its enterprise features under a paid license. The other seven are MIT or Apache 2.0.</p>
+      </div>
+      <div class="note warn">
+        <span class="note-l">The names keep changing</span>
+        <p>LangGraph Platform is now LangSmith Deployment, Google's Agent Engine is now Agent Runtime, and Microsoft's AutoGen is in maintenance mode.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. RECENTLY CHANGED ============ -->
+  <section class="blk" id="changed">
+    <div class="blk-h">
+      <span class="kick">Recently Changed</span>
+      <h2>What's changed in the last few <em>months</em>?</h2>
+    </div>
+    <div class="tl">
+      <div class="tl-i"><span class="tl-d">May 2026</span><span class="tl-t">Asana buys Stack AI, which now has no self-serve paid plan.</span></div>
+      <div class="tl-i"><span class="tl-d">Aug 2026</span><span class="tl-t">Relevance AI takes its prices off its pricing page.</span></div>
+      <div class="tl-i"><span class="tl-d">26 Aug 2026</span><span class="tl-t">OpenAI shuts down its Assistants API.</span></div>
+      <div class="tl-i"><span class="tl-d">Sep 2026</span><span class="tl-t">Relay, a Zapier competitor, shuts down.</span></div>
+      <div class="tl-i soon"><span class="tl-d">30 Nov 2026</span><span class="tl-t">OpenAI's Agent Builder closes.</span></div>
+      <div class="tl-i soon"><span class="tl-d">31 Mar 2027</span><span class="tl-t">Pipedream shuts down its Workflows product.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="blk" id="faq">
+    <div class="blk-h">
+      <span class="kick">Common Questions</span>
+      <h2>Questions owners ask about these <em>platforms</em></h2>
+    </div>
+    <div class="faq">
+      <div class="faq-i"><h3>Is n8n free?</h3><p>The software is free to run on your own server for your own business, including commercial use. n8n Cloud, where n8n hosts it for you, starts at $24 a month. What its license doesn't allow is reselling access to n8n or putting your own brand on it.</p></div>
+      <div class="faq-i"><h3>Is Make cheaper than Zapier?</h3><p>Usually, and by a lot. Make's entry plan is $16 a month for 10,000 credits, and Zapier's is $29.99 for 750 tasks. Both charge for every step on every item, so a workflow that loops over a long list costs more on either one than it would on n8n.</p></div>
+      <div class="faq-i"><h3>Why is Zapier so expensive?</h3><p>Zapier charges for each successful action, and its entry plan includes 750 of them. What you get for it is the biggest app library, 10,237 apps, and the easiest editor of the three. Triggers, filters, formatting and delay steps are free, so the real bill is lower than many comparisons claim.</p></div>
+      <div class="faq-i"><h3>What's the difference between a task, a credit and an execution?</h3><p>A Zapier task is one successful action. A Make credit is one module run, and some AI modules cost more than one. An n8n execution is one full run of a workflow, however many steps it has, so five steps cost 5 tasks, 5 credits or 1 execution.</p></div>
+      <div class="faq-i"><h3>What happens if I go over my plan's limit?</h3><p>Zapier holds the extra runs so you can replay them, or bills each task if you've turned that on, at 1.25 times the normal rate on annual plans and 2.5 times on monthly. Make stops your scenarios until you add credits. On n8n Cloud's Starter and Pro plans, new runs fail until the 1st of the month.</p></div>
+      <div class="faq-i"><h3>Can n8n run AI agents?</h3><p>Yes. n8n has an AI Agent node that calls a model and can use tools and memory, and each agent run counts as one execution like any other workflow. You pay the model provider, such as Anthropic, directly for what the agent uses.</p></div>
+      <div class="faq-i"><h3>Should I self-host n8n or use n8n Cloud?</h3><p>For most small businesses, n8n Cloud. A $12 to $24 server saves a few dollars a month, and then someone has to keep it updated and backed up. We only self-host when a client has to keep data on their own infrastructure, which is the case with patient records.</p></div>
+      <div class="faq-i"><h3>What's the best AI agent framework in 2026?</h3><p>It depends on the team. CrewAI and LangGraph are the most used in Python, Mastra is the main TypeScript option, and the Claude Agent SDK suits agents that work with files and code. Most small businesses don't need one at all, because an agent built in n8n covers the common jobs.</p></div>
+      <div class="faq-i"><h3>Who owns the account when a consultant builds my automations?</h3><p>You should. We open every account in your name, you pay the vendors directly, and we work in it as an added user. If we stop working together, you remove our login and everything keeps running.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="close">
+    <span class="kick">Start Here</span>
+    <h2>Which setup fits your <em>business</em>?</h2>
+    <p>For most small businesses it's n8n and Claude, in accounts you own, and nothing more until a job calls for it.</p>
+    <p>Show us where your time goes and we'll send back a prioritized action plan, yours either way.</p>
+    <div class="cta no-print">
+      <a class="btn" href="https://cal.com/arowise/discovery" target="_blank" rel="noopener">Book a free consultation</a>
+      <a class="btn ghost" href="/how-we-build">How we build</a>
+    </div>
+  </section>
+
+  <details class="src">
+    <summary><span class="dv-c" aria-hidden="true"></span>Where these numbers came from</summary>
+    <ul>
+      <li>Read from each vendor's own pricing and documentation pages on 10 October 2026, in USD, billed monthly. Prices change without notice and vary by region.</li>
+      <li>The charts price one workflow on the smallest plan that covers the volume. Zapier tiers used: 750 to 100,000 tasks. Make: 10,000 to 300,000 credits. n8n Cloud: Starter 2,500, Pro 10,000 and Pro 50,000 executions.</li>
+      <li>Zapier &middot; <a href="https://zapier.com/pricing" target="_blank" rel="noopener nofollow">zapier.com/pricing</a> and the task-usage docs</li>
+      <li>Make &middot; <a href="https://www.make.com/en/pricing" target="_blank" rel="noopener nofollow">make.com/en/pricing</a> and help.make.com on credits</li>
+      <li>n8n &middot; <a href="https://n8n.io/pricing/" target="_blank" rel="noopener nofollow">n8n.io/pricing</a>, the execution-limit support article, and the Sustainable Use License</li>
+      <li>Claude &middot; <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener nofollow">Anthropic pricing</a>. The per-reply estimate assumes about 3,500 tokens read and 600 written on Sonnet 5.</li>
+      <li>Supabase &middot; <a href="https://supabase.com/pricing" target="_blank" rel="noopener nofollow">supabase.com/pricing</a>. Modal &middot; <a href="https://modal.com/pricing" target="_blank" rel="noopener nofollow">modal.com/pricing</a></li>
+      <li>Agent platforms &middot; dify.ai/pricing, gumloop.com/pricing, activepieces.com/pricing, relevanceai.com/pricing and lindy.ai/pricing</li>
+      <li>Frameworks &middot; star counts from the GitHub API on 10 October 2026, counting the main Python repository where a framework has several. Version history from PyPI and npm. Hosting prices from langchain.com/pricing, crewai.com/pricing, agno.com/pricing, mastra.ai/pricing, pydantic.dev/pricing, Google Cloud and Azure pricing, and Anthropic's pricing page.</li>
+    </ul>
+  </details>
+
+  <footer>
+    <span>&copy; 2026 AroWise Automation</span>
+    <span class="mono">Verified 10 Oct 2026</span>
+  </footer>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  // ---- Published monthly-billed plan ladders, read from each vendor's pricing page 2026-10-10.
+  // [units included, monthly price, plan name]. Nothing here is interpolated: the calculator only
+  // ever reports a tier that exists, and reports nothing at all past the last one we verified.
+  var LADDERS = {
+    zapier: {unit:'tasks', perRun:true,  tiers:[[750,29.99,'Professional'],[1500,58.50,'Professional'],
+      [2000,73.50,'Professional'],[5000,133.50,'Professional'],[10000,193.50,'Professional'],
+      [20000,283.50,'Professional'],[50000,433.50,'Professional'],[100000,733.50,'Professional']]},
+    make:   {unit:'credits', perRun:true, tiers:[[10000,16,'Core'],[20000,28,'Core'],[40000,51,'Core'],
+      [80000,97,'Core'],[150000,175,'Core'],[300000,321,'Core']]},
+    n8n:    {unit:'executions', perRun:false, tiers:[[2500,24,'Starter'],[10000,60,'Pro'],[50000,145,'Pro']]}
+  };
+  var RUNS = [50,100,250,500,1000,2000,3000,5000,7500,10000];
+  var ORDER = ['zapier','n8n','make'];
+
+  var runsEl = document.getElementById('r-runs'),
+      actsEl = document.getElementById('r-acts'),
+      runsOut = document.getElementById('o-runs'),
+      actsOut = document.getElementById('o-acts');
+  if (!runsEl || !actsEl) return;
+
+  var X0 = 10, X1 = 212, Y0 = 8, Y1 = 98;
+  var xs = RUNS.map(function(_, i){ return X0 + i * (X1 - X0) / (RUNS.length - 1); });
+  var fmt = function(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+  var money = function(v){ return '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+
+  // Cheapest tier that covers `need`. Null means the workload runs past the last verified tier,
+  // which is reported as such rather than guessed at.
+  function tierFor(key, runs, acts){
+    var L = LADDERS[key], need = L.perRun ? runs * acts : runs;
+    for (var i = 0; i < L.tiers.length; i++) if (L.tiers[i][0] >= need) {
+      return {price:L.tiers[i][1], plan:L.tiers[i][2], need:need, unit:L.unit};
+    }
+    return null;
+  }
+  // Round the axis up to a round number so the shared scale stays readable as it changes.
+  function niceTop(v){
+    var steps = [25,50,100,150,200,250,500,750,1000,1500,2000];
+    for (var i = 0; i < steps.length; i++){ var c = Math.ceil(v / steps[i]) * steps[i];
+      if (c >= v && c / steps[i] <= 10) return c; }
+    return Math.ceil(v / 1000) * 1000;
+  }
+  function stepPath(vals, top){
+    var y = function(v){ return Y1 - (v / top) * (Y1 - Y0); };
+    var d = 'M' + xs[0].toFixed(1) + ',' + y(vals[0]).toFixed(2);
+    for (var i = 1; i < vals.length; i++){
+      d += ' H' + xs[i].toFixed(1);
+      if (Math.abs(vals[i] - vals[i-1]) > 1e-9) d += ' V' + y(vals[i]).toFixed(2);
+    }
+    return d;
+  }
+
+  function render(){
+    var idx = parseInt(runsEl.value, 10), acts = parseInt(actsEl.value, 10);
+    var runs = RUNS[idx];
+    runsOut.textContent = fmt(runs);
+    actsOut.textContent = acts;
+
+    // One pass to collect every series, so the shared scale is set by the whole set, not by
+    // whichever panel happens to be drawn first.
+    var series = {}, seen = [];
+    ORDER.forEach(function(key){
+      series[key] = RUNS.map(function(r){ var t = tierFor(key, r, acts); return t ? t.price : null; });
+      series[key].forEach(function(v){ if (v !== null) seen.push(v); });
+    });
+    var top = niceTop(Math.max.apply(null, seen.concat([1])));
+
+    ORDER.forEach(function(key){
+      var fig = document.querySelector('.smx[data-p="' + key + '"]');
+      if (!fig) return;
+      var vals = series[key], known = vals.filter(function(v){ return v !== null; });
+      var q = function(sel){ return fig.querySelector('[data-role="' + sel + '"]'); };
+
+      // Draw only the verified span of the ladder.
+      var lastKnown = 0;
+      while (lastKnown + 1 < vals.length && vals[lastKnown + 1] !== null) lastKnown++;
+      var drawVals = vals.slice(0, lastKnown + 1);
+      var d = drawVals[0] === null ? '' : stepPath(drawVals, top);
+      q('line').setAttribute('d', d);
+      q('area').setAttribute('d', d ? d + ' V' + Y1 + ' H' + xs[0].toFixed(1) + ' Z' : '');
+
+      var mid = top / 2;
+      var midY = Y1 - (mid / top) * (Y1 - Y0);
+      q('mid').setAttribute('y1', midY); q('mid').setAttribute('y2', midY);
+      var ml = q('midlbl');
+      ml.setAttribute('y', midY - 4);
+      ml.textContent = '$' + (mid % 1 ? mid.toFixed(2) : fmt(mid));
+
+      var cur = tierFor(key, runs, acts);
+      var mark = q('mark'), hit = q('hit');
+      mark.setAttribute('x1', xs[idx].toFixed(1)); mark.setAttribute('x2', xs[idx].toFixed(1));
+      if (cur){
+        var cy = Y1 - (cur.price / top) * (Y1 - Y0);
+        hit.setAttribute('cx', xs[idx].toFixed(1)); hit.setAttribute('cy', cy.toFixed(2));
+        hit.style.display = '';
+        q('price').innerHTML = money(cur.price) + '<span>/mo</span>';
+        q('plan').innerHTML = '<b>' + cur.plan + '</b>' + fmt(cur.need) + ' ' + cur.unit;
+      } else {
+        hit.style.display = 'none';
+        q('price').innerHTML = 'Not priced<span>here</span>';
+        q('plan').innerHTML = '<b>Past our figures</b>ask the vendor';
+      }
+      q('range').textContent = known.length
+        ? money(Math.min.apply(null, known)) + ' to ' + money(Math.max.apply(null, known))
+        : 'not published';
+    });
+  }
+
+  runsEl.addEventListener('input', render);
+  actsEl.addEventListener('input', render);
+  render();
+})();
+</script>
+
+<script>
+(function(){
+  // The three platform cards are separate grid items, so their inner blocks do not share row
+  // tracks and the price, spec table and footnote land at different heights. Measure each group
+  // per row of cards and set a matching --h. Runs after fonts settle, and again on resize,
+  // because every one of these blocks is text that rewraps. No script means natural flow.
+  var GROUPS = ['.pf-kind', '.price', '.spec', '.pc', '.when', '.fw-for', '.fw-h div'];
+  function level(){
+    document.querySelectorAll('.grid3, .grid4, .fw').forEach(function(row){
+      var oneCol = getComputedStyle(row).gridTemplateColumns.split(' ').length < 2;
+      GROUPS.forEach(function(sel){
+        var els = row.querySelectorAll(sel);
+        if (oneCol) { els.forEach(function(el){ el.style.removeProperty('--h'); }); return; }
+        if (els.length < 2) return;
+        els.forEach(function(el){ el.style.removeProperty('--h'); });
+        var tallest = 0;
+        els.forEach(function(el){ tallest = Math.max(tallest, el.getBoundingClientRect().height); });
+        els.forEach(function(el){ el.style.setProperty('--h', Math.ceil(tallest) + 'px'); });
+      });
+    });
+  }
+  var t;
+  function debounced(){ clearTimeout(t); t = setTimeout(level, 120); }
+  window.addEventListener('resize', debounced);
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(level); } else { level(); }
+  window.addEventListener('load', level);
+})();
+</script>
+</body>
+</html>
