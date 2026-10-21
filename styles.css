@@ -184,6 +184,9 @@ ol, ul { margin: 0; padding: 0; }
 .site-footer { background: var(--void); color: var(--muted); padding: 28px 0; border-top: 1px solid var(--border); }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .footer-meta { font-size: .82rem; font-family: var(--mono); letter-spacing: .02em; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: .82rem; font-family: var(--mono); letter-spacing: .02em; }
+.footer-links a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+.footer-links a:hover, .footer-links a:focus-visible { color: var(--teal); border-color: var(--teal); }
 
 
 /* ============================================================
